@@ -28,5 +28,5 @@
 
 CVSROOT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} deb@users.sourceforge.net
 
-# CVSROOT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} ljarchive-commit@lists.sourceforge.net
-CVSROOT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} deb@users.sourceforge.net mckeja@users.sourceforge.net
+DEFAULT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} ljarchive-commit@lists.sourceforge.net
+# DEFAULT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} deb@users.sourceforge.net mckeja@users.sourceforge.net
