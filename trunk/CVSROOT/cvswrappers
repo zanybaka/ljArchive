@@ -21,3 +21,4 @@
 *.png -k 'b'
 *.ico -k 'b'
 *.dll -k 'b'
+*.suo -k 'b'
