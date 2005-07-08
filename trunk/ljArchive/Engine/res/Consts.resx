@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="ResMimeType">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="Version">
+		<value>1.0.0.0</value>
+	</resheader>
+	<resheader name="Reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="Writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="_xmlrpcpath">
+		<value>/interface/xmlrpc</value>
+	</data>
+	<data name="_useragent">
+		<value>ljArchive; ljArchive@fawx.com</value>
+	</data>
+	<data name="_datetimeformat">
+		<value>yyyy-MM-dd HH:mm:ss</value>
+	</data>
+	<data name="_exportcommentsmetapath">
+		<value>/export_comments.bml?get=comment_meta&amp;startid={0}</value>
+	</data>
+	<data name="_exportcommentsbodypath">
+		<value>/export_comments.bml?get=comment_body&amp;startid={0}</value>
+	</data>
+	<data name="_syncitemtypelogprefix">
+		<value>L-</value>
+	</data>
+	<data name="_usertransform">
+		<value>&lt;span style='white-space:nowrap;'&gt;&lt;a href="{0}/userinfo.bml?user={1}"&gt;&lt;img src="{0}{2}" alt="[info]" width="17" height="17" style="vertical-align: bottom; border: 0;"/&gt;&lt;/a&gt;&lt;a href="{0}/users/{1}"&gt;&lt;b&gt;{1}&lt;/b&gt;&lt;/a&gt;&lt;/span&gt;</value>
+	</data>
+	<data name="_searchstringtransform">
+		<value>&lt;span style="background-color: #{0};color: #{1};border: 1px solid #000"&gt;${2}&lt;/span&gt;</value>
+	</data>
+</root>
