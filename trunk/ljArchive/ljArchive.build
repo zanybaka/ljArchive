@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<project name = "ljArchive" default = "dist">
+  <property name = "dist" value = "dist"/>
+  <property name = "doc" value = "doc"/>
+
+  <target name = "check-version">
+    <fail message = "'version' property must be set to build."
+      unless = "${property::exists('version')}"/>
+    <property name = "prefix" value = "${dist}/ljArchive-${version}"/>
+  </target>
+
+  <target name = "init" depends = "check-version">
+    <mkdir dir = "${dist}"/>
+  </target>
+
+  <target name = "build" depends = "check-version">
+    <solution configuration = "Release" solutionfile = "ljArchive.sln"/>
+  </target>
+
+  <target name = "build-doc-solution" depends = "check-version">
+    <solution configuration = "Doc" solutionfile = "ljArchive.sln"/>
+  </target>
+
+  <target name = "build-doc" depends = "build-doc-solution">
+    <!-- use exec instead of ndoc so that it uses the config file -->
+    <exec program = "C:\Program Files\NDoc 1.3\bin\net\1.1\NDocConsole.exe">
+      <arg value = "-project=ljArchive.ndoc"/>
+    </exec>
+  </target>
+
+  <target name = "doc-zip" depends = "build-doc, init">
+    <zip zipfile = "${prefix}-doc.zip">
+      <fileset basedir = "${doc}">
+        <include name = "**/*"/>
+        <exclude name = "ljArchive Documentation.*"/>
+        <exclude name = "ndoc.log"/>
+      </fileset>
+    </zip>
+  </target>
+
+  <target name = "doc-chm" depends = "build-doc, init">
+    <copy file = "${doc}/ljArchive Documentation.chm"
+      tofile = "${prefix}-doc.chm"
+      overwrite = "true"/>
+  </target>
+
+  <target name = "build-installer" depends = "build, init">
+    <exec program = "C:\Program Files\NSIS\makensis.exe">
+      <arg file = "makesetup.nsi"/>
+    </exec>
+  </target>
+
+  <target name = "installer" depends = "build-installer">
+    <move file = "Setup.exe" tofile = "${prefix}.exe" overwrite = "true"/>
+  </target>
+
+  <target name = "src-zip" depends = "init">
+    <!-- consider using a clean cvs export, since NAnt can do CVS -->
+    <zip zipfile = "${prefix}-src.zip">
+      <fileset basedir = ".">
+        <include name = "**/*"/>
+        <exclude name = "**/dist/**"/>
+        <exclude name = "**/doc/**"/>
+        <exclude name = "**/bin/**"/>
+        <exclude name = "**/obj/**"/>
+        <exclude name = "**/*.suo"/>
+        <exclude name = "**/*.user"/>
+      </fileset>
+    </zip>
+  </target>
+
+  <target name = "common-lib" depends = "build">
+    <copy file = "Common/bin/Release/EF.ljArchive.Common.dll"
+      tofile = "${dist}/EF.ljArchive.Common-${version}.dll"
+      overwrite = "true"/>
+  </target>
+
+  <target name = "dist" depends = "installer, src-zip, doc-zip, doc-chm, common-lib"/>
+
+  <target name = "clean">
+    <delete dir = "${dist}"/>
+  </target>
+</project>
