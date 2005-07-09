@@ -389,16 +389,7 @@ namespace EF.ljArchive.WindowsForms
 			prefs = Genghis.Preferences.GetUserNode(this.GetType());
 
 			// tc
-			try
-			{
-				tc = new TemplateCollection(Path.Combine(Application.StartupPath, "templates"));
-			}
-			catch (ArgumentException)
-			{
-				throw new Exception("Template directory not found.");
-			}
-			if (tc.Count < 1)
-				throw new Exception("No templates found.");
+			tc = FindTemplateCollection();
 
 			// hjw
 			hjw = new EF.ljArchive.Engine.HTML.HTMLJournalWriter();
@@ -513,7 +504,22 @@ namespace EF.ljArchive.WindowsForms
 			moveToComment = -1;
 
 			// lastUpdateCheck
-			lastUpdateCheck = DateTime.Parse(prefs.GetString("lastUpdateCheck", DateTime.MinValue.ToString()));
+			// I'm open to a cleaner implementation of this.  --Deb
+			lastUpdateCheck = DateTime.MinValue;
+			try 
+			{
+				lastUpdateCheck = (DateTime) prefs.GetProperty("lastUpdateCheck", DateTime.MinValue);
+			} 
+			catch (FormatException)  {}
+			catch (InvalidCastException) {}
+
+			if (DateTime.MinValue == lastUpdateCheck) 
+			{
+				// Ah, well.  Reset out lastUpdateCheck and use MinValue.
+				// Done here so that if we fall through any of the exception handlers,
+				// we do the right things.
+				prefs.SetProperty("lastUpdateCheck", DateTime.MinValue);
+			}
 
 			// updateRequested
 			updateRequested = false;
@@ -1236,6 +1242,33 @@ namespace EF.ljArchive.WindowsForms
 				if (dvComments != null)
 					dvComments.RowFilter = string.Empty;
 			}
+		}
+
+		private static TemplateCollection FindTemplateCollection() 
+		{
+			TemplateCollection found = null;
+			try
+			{
+				found = new TemplateCollection(Path.Combine(Application.StartupPath, "templates"));
+			}
+			catch (ArgumentException)
+			{
+				// We might be in development, try that.
+				string path = Path.GetDirectoryName(Path.GetDirectoryName(Application.StartupPath));
+				path = Path.Combine(Path.Combine(path, "etc"), "templates");
+				try 
+				{
+					found = new TemplateCollection(path);
+				} 
+				catch (ArgumentException) 
+				{
+					throw new Exception("Template directory not found.");
+				}
+			}
+			if (found.Count < 1)
+				throw new Exception("No templates found.");
+
+			return found;
 		}
 		#endregion
 
