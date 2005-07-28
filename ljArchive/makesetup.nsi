@@ -3,9 +3,9 @@ SetCompressor lzma
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "ljArchive"
-!define PRODUCT_VERSION "0.9.4.3"
+!define PRODUCT_VERSION "0.9.5"
 !define PRODUCT_PUBLISHER "Erik Frey"
-!define PRODUCT_WEB_SITE "http://fawx.com/ljArchive/"
+!define PRODUCT_WEB_SITE "http://ljarchive.sourceforge.net/"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ljArchive.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"

@@ -75,7 +75,11 @@
       overwrite = "true"/>
   </target>
 
-  <target name = "dist" depends = "installer, src-zip, doc-zip, doc-chm, common-lib"/>
+  <target name = "manifest" depends = "init">
+    <echo file = "${dist}/Manifest">${version}</echo>
+  </target>
+
+  <target name = "dist" depends = "installer, src-zip, doc-zip, doc-chm, common-lib, manifest"/>
 
   <target name = "clean">
     <delete dir = "${dist}"/>
