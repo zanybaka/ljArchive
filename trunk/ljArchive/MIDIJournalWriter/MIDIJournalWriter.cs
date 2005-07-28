@@ -162,7 +162,7 @@ namespace EF.ljArchive.MIDIJournalWriter
 
 		public string URL
 		{
-			get { return "http://fawx.com/ljArchive/"; }
+			get { return "http://ljarchive.sourceforge.net/"; }
 		}
 
 		public Version Version

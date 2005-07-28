@@ -207,7 +207,7 @@ namespace EF.ljArchive.WindowsForms.Update
 		#endregion
 
 		private delegate void TS_CallBackDelegate(WebDownloadEventArgs wdea);
-		private const string _downloadURL = "http://fawx.com/ljArchive/bin/WindowsForms/update.zip";
+		private const string _downloadURL = "http://http://ljarchive.sourceforge.net/CurrentVersion/ljArchive.zip";
 		private const string _ljExecutable = "ljArchive.exe";
 		private const string _deleteFile = "_delete.txt";
 	}
