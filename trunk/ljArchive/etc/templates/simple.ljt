@@ -91,6 +91,10 @@
         <b>Current Mood:</b> <% CurrentMusic %>
         <br />
 <% /!CurrentMusic %>
+<% !TagList %>
+        <b>Tags:</b> <% TagList %>
+        <br />
+<% /!TagList %>
 <% !Subject %>
       <b>Subject:</b> <% Subject %>
       <br />

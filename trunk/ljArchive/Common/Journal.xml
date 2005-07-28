@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+<?xml version="1.0" encoding="utf-8" ?> 
 <doc>
   <members>
           <member name="T:EF.ljArchive.Common.Journal">
@@ -274,6 +274,13 @@
             <summary>
             Gets/sets the time of last edit.
             </summary>
+        </member>
+        <member name="P:EF.ljArchive.Common.Journal.EventsRow.TagList">
+            <summary>
+            Gets/sets the list of tags on this <see cref="T:EF.ljArchive.Common.Journal.EventsRow"/>.
+            </summary>
+            <remarks>If null, then there are no tags on this <see cref="T:EF.ljArchive.Common.Journal.EventsRow"/>
+            yet (or possibly the server doesn't support tags yet).</remarks>
         </member>
         <member name="T:EF.ljArchive.Common.Journal.UserPicsDataTable">
             <summary>

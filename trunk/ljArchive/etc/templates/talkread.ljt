@@ -78,6 +78,12 @@
             <td align="center">|</td><td ><% CurrentMusic %></td><td>]</td>
           </tr>
 <% /!CurrentMusic %>
+<% !TagList %>
+          <tr>
+            <td>[</td><td align="right"><b>tags</b></td>
+            <td align="center">|</td><td ><% TagList %></td><td>]</td>
+          </tr>
+<% /!TagList %>
         </table>
       </div>
     </div>
