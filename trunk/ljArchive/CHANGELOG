@@ -1,0 +1,22 @@
+2005-07-27  Deb Hooker <deb@users.sourceforge.net>
+
+* Bump version numbers as appropriate for a 0.9.5 release.
+
+* Basic support for tags.  (Nothing fancy, but at least we download
+  them and display them now.)
+
+* Update various URLs and informational strings to point to the
+  sourceforge homepage instead of to fawx.com for now.
+  (The sourceforge page will maintain a link to fawx.com, of course,
+  but as we update things we'd rather have people come to the up-to-date site
+  first.) Also update the online-update-check links to something we can
+  actually update as we release new releases.
+
+2005-07-09  Deb Hooker <deb@users.sourceforge.net>
+
+* ljArchive.build:  Add a really basic NAnt build file to build the various
+  release file packages.  Has hardcoded pathnames to executables in it, so it
+  needs work, but it's a start.
+
+* WindowsForms/Explorer.cs:  Handle FormatException and InvalidCastException
+  when trying to get the last update-check date.  (Fixes bug 1235116.)
