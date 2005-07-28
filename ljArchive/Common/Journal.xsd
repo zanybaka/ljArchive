@@ -43,6 +43,7 @@
 							<xs:element name="SyndicationURL" type="xs:string" minOccurs="0" />
 							<xs:element name="SyndicationID" type="xs:string" minOccurs="0" />
 							<xs:element name="LastRevision" type="xs:dateTime" minOccurs="0" />
+							<xs:element name="TagList" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>

@@ -136,6 +136,8 @@ namespace XMLJournalWriter
 					if (j.Moods.FindByID(er.CurrentMoodID) != null)
 						xtw.WriteElementString("current_mood", j.Moods.FindByID(er.CurrentMoodID).Name);
 				}
+				if (!er.IsTagListNull())
+					xtw.WriteElementString("taglist", er.TagList);
 				foreach (Journal.CommentsRow cr in j.Comments.Select("JItemID = " + er.ID.ToString()))
 				{
 					if (commentIDs != null && !((IList) commentIDs).Contains(cr.ID))
@@ -197,7 +199,7 @@ namespace XMLJournalWriter
 
 		public string URL
 		{
-			get { return "http://fawx.com/ljArchive/"; }
+			get { return "http://ljarchive.sourceforge.net/"; }
 		}
 
 		public Version Version

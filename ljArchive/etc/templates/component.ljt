@@ -313,6 +313,8 @@
 													<% CurrentMood %> <br /><% /!CurrentMood %>
 												   <% !CurrentMusic %><strong>Current Music:</strong> 
 													<% CurrentMusic %> <br /><% /!CurrentMusic %>
+												   <% !TagList %><strong>Tags:</strong> 
+													<% TagList %> <br /><% /!TagList %>
 												</p>
 											</div>
 										</td>

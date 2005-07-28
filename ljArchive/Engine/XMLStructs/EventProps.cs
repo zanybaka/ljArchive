@@ -11,7 +11,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	{
 		public EventProps(string current_mood, int current_moodid, string current_music, int opt_preformatted,
 			int opt_nocomments, string picture_keyword, int opt_backdated, int opt_noemail, int unknown8bit,
-			int hasscreened, int revnum, int commentalter, string syn_link, int revtime, string syn_id)
+			int hasscreened, int revnum, int commentalter, string syn_link, int revtime, string syn_id, string taglist)
 		{
 			this.current_mood = current_mood;
 			this.current_moodid = current_moodid;
@@ -28,6 +28,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 			this.syn_link = syn_link;
 			this.revtime = revtime;
 			this.syn_id = syn_id;
+			this.taglist = taglist;
 		}
 		[XmlRpcMissingMapping(MappingAction.Ignore)]
 		public string current_mood;
@@ -59,5 +60,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 		public int revtime;
 		[XmlRpcMissingMapping(MappingAction.Ignore)]
 		public string syn_id;
+		[XmlRpcMissingMapping(MappingAction.Ignore)]
+		public string taglist;
 	}
 }

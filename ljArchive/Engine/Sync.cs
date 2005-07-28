@@ -554,6 +554,7 @@ namespace EF.ljArchive.Engine
 				er.SyndicationURL = e.props.syn_link;
 				er.SyndicationID = e.props.syn_id;
 				er.LastRevision = new DateTime(1970, 1, 1).AddSeconds(e.props.revtime);
+				er.TagList = e.props.taglist;
 			}
 			j.Events.EndLoadData();
 

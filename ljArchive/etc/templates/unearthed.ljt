@@ -223,7 +223,8 @@ body {
             <div class="currents">
               <% !CurrentMood %><strong>Current Mood:</strong> <% CurrentMood %><br /><% /!CurrentMood %>
               <% !CurrentMusic %><strong>Current Music:</strong> <% CurrentMusic %><br /><% /!CurrentMusic %>
-              <% !CurrentMood %>&nbsp;<% /!CurrentMood %><% !CurrentMusic %>&nbsp;<% /!CurrentMusic %>
+              <% !TagList %><strong>Tags:</strong> <% TagList %><br /><% /!TagList %>
+              <% !CurrentMood %>&nbsp;<% /!CurrentMood %><% !CurrentMusic %>&nbsp;<% /!CurrentMusic %><% !TagList %>&nbsp;<% /!TagList %>
             </div>
             <% Body %>
           </td>
