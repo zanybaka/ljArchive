@@ -185,8 +185,8 @@ namespace EF.ljArchive.WindowsForms
 			this.llEmail.Size = new System.Drawing.Size(274, 44);
 			this.llEmail.TabIndex = 15;
 			this.llEmail.TabStop = true;
-			this.llEmail.Text = "Have you found a bug?  If so, email ljArchive@fawx.com and supply the following i" +
-				"nfo:";
+			this.llEmail.Text = "Have you found a bug?  If so, email ljarchive-support@lists.sourceforge.net" +
+				" and supply the following info:";
 			this.llEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llEmail_LinkClicked);
 			// 
 			// lineControl1
@@ -267,6 +267,6 @@ namespace EF.ljArchive.WindowsForms
 			SyncCancel
 		}
 
-		private const string email = "ljArchive@fawx.com";
+		private const string email = "ljarchive-support@lists.sourceforge.net";
 	}
 }
