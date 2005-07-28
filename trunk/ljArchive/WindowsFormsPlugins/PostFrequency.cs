@@ -164,7 +164,7 @@ namespace EF.ljArchive.Plugins.WindowsForms
 
 		public Version Version
 		{
-			get { return new Version(0, 9, 3, 0); }
+			get { return new Version(0, 9, 3, 1); }
 		}
 
 		public object Settings

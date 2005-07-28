@@ -195,7 +195,7 @@ namespace EF.ljArchive.Plugins.WindowsForms
 
 		public Version Version
 		{
-			get { return new Version(0, 9, 4, 0); }
+			get { return new Version(0, 9, 4, 1); }
 		}
 
 		public int SelectedEventID

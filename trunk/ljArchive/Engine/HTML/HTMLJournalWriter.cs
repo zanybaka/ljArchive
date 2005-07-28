@@ -86,7 +86,7 @@ namespace EF.ljArchive.Engine.HTML
 		{
 			get
 			{
-				return new Version(0, 9, 8, 0);
+				return new Version(0, 9, 8, 1);
 			}
 		}
 
