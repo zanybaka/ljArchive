@@ -14,7 +14,7 @@ namespace EF.ljArchive.Engine.HTML
 	/// </summary>
 	/// <remarks><para><see cref="HTMLJournalWriter"/> uses a template system to format the output it writes
 	/// to the <see cref="Stream"/>.  For a complete description of this template system, please visit the
-	/// <a href="http://fawx.com/ljArchive/" target="_blank">web site</a>.</para>
+	/// <a href="http://ljarchive.sourceforge.net/" target="_blank">web site</a>.</para>
 	/// </remarks>
 	/// <example>Here's an example of writing to an html file using <see cref="HTMLJournalWriter"/>.
 	/// <code>
@@ -78,7 +78,7 @@ namespace EF.ljArchive.Engine.HTML
 		{
 			get
 			{
-				return "http://fawx.com/ljArchive/";
+				return "http://ljarchive.sourceforge.net/";
 			}
 		}
 
@@ -132,7 +132,7 @@ namespace EF.ljArchive.Engine.HTML
 		/// </summary>
 		/// <remarks>The transform string is based on a template system that tells <see cref="HTMLJournalWriter"/>
 		/// how to render events and comments to an HTML stream.  For a complete description of the template system,
-		/// please visit the <a href="http://fawx.com/ljArchive/" target="_blank">web site</a>.</remarks>
+		/// please visit the <a href="http://ljarchive.sourceforge.net/" target="_blank">web site</a>.</remarks>
 		public string Transform
 		{
 			get { return this.transform; }

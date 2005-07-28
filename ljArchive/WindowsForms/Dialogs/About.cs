@@ -75,7 +75,7 @@ namespace EF.ljArchive.WindowsForms
 			this.llURL.Size = new System.Drawing.Size(127, 16);
 			this.llURL.TabIndex = 1;
 			this.llURL.TabStop = true;
-			this.llURL.Text = "http://fawx.com/ljArchive";
+			this.llURL.Text = "http://ljarchive.sourceforge.net/";
 			this.llURL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llURL_LinkClicked);
 			// 
 			// btnOK

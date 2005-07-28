@@ -988,7 +988,7 @@ namespace EF.ljArchive.WindowsForms
 			{
 				try
 				{
-					System.Diagnostics.Process.Start("http://fawx.com/ljArchive");
+					System.Diagnostics.Process.Start("http://ljarchive.sourceforge.net/");
 				}
 				catch (System.ComponentModel.Win32Exception) {}
 			}

@@ -43,7 +43,7 @@
 		<value>/interface/xmlrpc</value>
 	</data>
 	<data name="_useragent">
-		<value>ljArchive; ljArchive@fawx.com</value>
+		<value>ljArchive; ljarchive-support@lists.sourceforge.net</value>
 	</data>
 	<data name="_datetimeformat">
 		<value>yyyy-MM-dd HH:mm:ss</value>

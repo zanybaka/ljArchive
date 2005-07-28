@@ -124,7 +124,7 @@
 		<value>Fermer</value>
 	</data>
 	<data name="About.lblAbout.Text">
-		<value>ljArchive version {0}, par Erik Frey</value>
+		<value>ljArchive version {0}, par Erik Frey (édition de sourceforge)</value>
 	</data>
 	<data name="About.btnOK.Text">
 		<value>OK</value>
@@ -189,7 +189,7 @@
     &lt;h1&gt;Bienvenue à ljArchive!&lt;/h1&gt;
     &lt;p&gt;Pour créer une nouvelle archive de journal, choissisez du menu &lt;b&gt;Fichier|Nouvelle Archive...&lt;/b&gt;.&lt;/p&gt;
     &lt;p&gt;Une fois que vous avez téléchargés votre journal, soyez certain d'éssayer les plugins!  Vous pouvez les acceder en selectionnant le menu &lt;b&gt;Outils|Plugins...&lt;/b&gt;.&lt;/p&gt;
-    &lt;p&gt;Pour questions, infos sur le createur, et infos techniques en ce qui concerne ce logiciel, priez de visiter le &lt;a href="http://fawx.com/ljArchive/"&gt;site web de ljArchive&lt;/a&gt;.
+    &lt;p&gt;Pour questions, infos sur le createur, et infos techniques en ce qui concerne ce logiciel, priez de visiter le &lt;a href="http://ljarchive.sourceforge.net/"&gt;site web de ljArchive&lt;/a&gt;.
     &lt;p&gt;Amusez vous bien!&lt;/b&gt;
   &lt;/body&gt;
 &lt;/html&gt;</value>

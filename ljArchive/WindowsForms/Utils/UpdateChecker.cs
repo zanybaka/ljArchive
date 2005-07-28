@@ -57,7 +57,7 @@ namespace EF.ljArchive.WindowsForms
 			return false;
 		}
 
-		private const string _manifestURL = "http://fawx.com/ljArchive/bin/WindowsForms/CurrentVersion";
+		private const string _manifestURL = "http://ljarchive.sourceforge.net/CurrentVersion/Manifest";
 		static private Thread t;
 		static private UpdateExistsCallBack uccb;
 	}
