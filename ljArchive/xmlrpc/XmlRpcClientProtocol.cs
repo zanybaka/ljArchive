@@ -79,7 +79,7 @@ namespace CookComputing.XmlRpc
             serializer.XmlEncoding = xmlEncoding;
           serializer.UseIndentation = _useIndentation;
           serializer.Indentation = _indentation;
-          serializer.SerializeRequest(reqStm, req); 
+		  serializer.SerializeRequest(reqStm, req);
         }
         finally
         {
@@ -594,7 +594,7 @@ namespace CookComputing.XmlRpc
     private Encoding xmlEncoding = null;
     private Version protocolVersion = new Version(1,1);
     private bool keepAlive = true;
-    private bool _useIndentation = true;
+    private bool _useIndentation = false;
     private int _indentation = 2;
 		#region Component Designer generated code
     /// <summary>

@@ -50,11 +50,11 @@ namespace CookComputing.XmlRpc
       {
         XmlRpcFaultException fex;
         if (ex is XmlRpcException)
-          fex = new XmlRpcFaultException(0, ((XmlRpcException)ex).Message);
+          fex = new XmlRpcFaultException("0", ((XmlRpcException)ex).Message);
         else if (ex is XmlRpcFaultException)
           fex = (XmlRpcFaultException)ex;
         else 
-          fex = new XmlRpcFaultException(0, ex.Message);
+          fex = new XmlRpcFaultException("0", ex.Message);
         XmlRpcSerializer serializer = new XmlRpcSerializer();
         Stream responseStream = new MemoryStream();
         serializer.SerializeFaultResponse(responseStream, fex);
@@ -134,12 +134,12 @@ namespace CookComputing.XmlRpc
       XmlRpcMethodInfo mthdInfo = svcInfo.GetMethod(MethodName);
       if (mthdInfo == null)
       {
-        throw new XmlRpcFaultException(880, 
+        throw new XmlRpcFaultException("880", 
           "Request for information on unsupported method");
       }
       if (mthdInfo.IsHidden)
       {
-        throw new XmlRpcFaultException(881, 
+        throw new XmlRpcFaultException("881", 
           "Information not available on this method");
       }
       //XmlRpcTypes.CheckIsXmlRpcMethod(mi);
@@ -167,12 +167,12 @@ namespace CookComputing.XmlRpc
       XmlRpcMethodInfo mthdInfo = svcInfo.GetMethod(MethodName);
       if (mthdInfo == null)
       {
-        throw new XmlRpcFaultException(880, 
+        throw new XmlRpcFaultException("880", 
           "Request for information on unsupported method");
       }
       if (mthdInfo.IsHidden)
       {
-        throw new XmlRpcFaultException(881, 
+		  throw new XmlRpcFaultException("881", 
           "Information not available for this method");
       }
       return mthdInfo.Doc;
