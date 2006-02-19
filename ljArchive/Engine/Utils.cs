@@ -58,7 +58,11 @@ namespace EF.ljArchive.Engine
 			if (ljsession != null && ljsession.Length > 0)
 			{
 				wr.CookieContainer = new CookieContainer();
+				// Old-style session cookies, just in case.
 				wr.CookieContainer.Add(new Cookie("ljsession", ljsession, "/", uri.Host));
+				// New-style session cookies.
+				wr.CookieContainer.Add(new Cookie("ljmastersession", ljsession, "/", uri.Host));
+				wr.CookieContainer.Add(new Cookie("ljloggedin", ljsession.Substring(ljsession.IndexOf(":") + 1, ljsession.LastIndexOf(":") - ljsession.IndexOf(":") - 1), "/", uri.Host));
 			}
 			return wr;
 		}
