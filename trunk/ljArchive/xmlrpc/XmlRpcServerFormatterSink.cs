@@ -152,7 +152,7 @@ namespace CookComputing.XmlRpc
       else
       {
         serializer.SerializeFaultResponse(responseStream,
-          new XmlRpcFaultException(1, retMsg.Exception.Message));
+          new XmlRpcFaultException("1", retMsg.Exception.Message));
       }
       responseHeaders["Content-Type"] = "text/xml; charset=\"utf-8\"";
     }

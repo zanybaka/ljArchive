@@ -38,7 +38,8 @@ namespace CookComputing.XmlRpc
 
   struct Fault
   {
-    public int faultCode;
+    // At least for right now, LJ appears to send us fault codes as strings.
+    public string faultCode;
     public string faultString;
   }
 
@@ -1217,7 +1218,7 @@ namespace CookComputing.XmlRpc
           "struct element missing from fault response.");
       }
       Fault fault;
-      fault.faultCode = 0;
+      fault.faultCode = "0";
       fault.faultString = "";
       fault = (Fault)ParseValue(structNode, typeof(Fault), parseStack, 
         mappingAction);
@@ -1226,7 +1227,7 @@ namespace CookComputing.XmlRpc
 
     struct FaultStruct
     {
-      public int faultCode;
+      public string faultCode;
       public string faultString;
     }
 

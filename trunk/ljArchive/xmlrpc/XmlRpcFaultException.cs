@@ -35,8 +35,8 @@ namespace CookComputing.XmlRpc
   { 
     // constructors
     //
-    public XmlRpcFaultException(int TheCode, string TheString)
-      : base("Server returned a fault exception.")
+    public XmlRpcFaultException(string TheCode, string TheString)
+      : base(string.Format("Server returned a fault ({0}):  {1}", TheCode, TheString))
     {
       m_faultCode = TheCode;
       m_faultString = TheString;
@@ -48,13 +48,13 @@ namespace CookComputing.XmlRpc
       StreamingContext context) 
       : base(info, context) 
     {
-      m_faultCode = (int)info.GetValue("m_faultCode", typeof(int));
-      m_faultString = (String)info.GetValue("m_faultString", typeof(string));
+      m_faultCode = (string)info.GetValue("m_faultCode", typeof(string));
+      m_faultString = (string)info.GetValue("m_faultString", typeof(string));
     }
 
     // properties
     //
-    public int FaultCode 
+    public string FaultCode 
     {
       get { return m_faultCode; } 
     }
@@ -77,7 +77,7 @@ namespace CookComputing.XmlRpc
         
     // data
     //
-    int m_faultCode;
+    string m_faultCode;
     string m_faultString;
   }
 }
