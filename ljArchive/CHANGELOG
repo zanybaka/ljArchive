@@ -1,3 +1,13 @@
+2006-02-19  Deb Hooker <deb@users.sourceforge.net>
+
+* Bump version numbers for 0.9.6.
+
+* Use the new LJ session cookies (we still set the old one as well,
+  in case we're communicating with a site that uses old-style cookies).
+
+* Some low-level changes to the XMLRPC protocol to match what LJ is
+  now doing.  Hopefully this'll stop all the XmlRpc errors.
+
 2005-07-27  Deb Hooker <deb@users.sourceforge.net>
 
 * Bump version numbers as appropriate for a 0.9.5 release.
