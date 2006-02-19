@@ -147,6 +147,7 @@ namespace XMLJournalWriter
 					if (cr.ParentID != 0)
 						xtw.WriteElementString("parent_itemid", cr.ParentID.ToString());
 					xtw.WriteElementString("eventtime", cr.Date.ToString(DateTimeFormat));
+					xtw.WriteElementString("subject", cr.Subject);
 					xtw.WriteElementString("event", cr.Body);
 					xtw.WriteStartElement("author");
 					xtw.WriteElementString("name", j.Users.FindByID(cr.PosterID).User);
