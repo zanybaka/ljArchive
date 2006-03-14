@@ -1,0 +1,113 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1B4B0A58-0AFB-4090-91DD-18912CC7DE65}</ProjectGuid>
+    <RootNamespace>xmlrpc</RootNamespace>
+    <AssemblyName>CookComputing.XmlRpcLocal</AssemblyName>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon />
+    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <StartupObject />
+    <NoConfig>false</NoConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Doc|AnyCPU' ">
+    <NoStdLib>false</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn />
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Doc\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Drawing">
+      <HintPath>..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Drawing.dll</HintPath>
+      <Private />
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>..\..\..\..\WINNT\Microsoft.NET\Framework\v1.0.3705\System.Windows.Forms.dll</HintPath>
+      <Private />
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="IHttpRequest.cs" />
+    <Compile Include="IHttpRequestHandler.cs" />
+    <Compile Include="IHttpResponse.cs" />
+    <Compile Include="util.cs" />
+    <Compile Include="XmlRpcAsyncResult.cs" />
+    <Compile Include="XmlRpcBeginAttribute.cs" />
+    <Compile Include="XmlRpcBoolean.cs" />
+    <Compile Include="XmlRpcClientFormatterSink.cs" />
+    <Compile Include="XmlRpcClientFormatterSinkProvider.cs" />
+    <Compile Include="XmlRpcClientProtocol.cs" />
+    <Compile Include="XmlRpcDateTime.cs" />
+    <Compile Include="XmlRpcDocWriter.cs" />
+    <Compile Include="XmlRpcDouble.cs" />
+    <Compile Include="XmlRpcEndAttribute.cs" />
+    <Compile Include="XmlRpcException.cs" />
+    <Compile Include="XmlRpcFaultException.cs" />
+    <Compile Include="XmlRpcHttpRequest.cs" />
+    <Compile Include="XmlRpcHttpResponse.cs" />
+    <Compile Include="XmlRpcHttpServerProtocol.cs" />
+    <Compile Include="XmlRpcInt.cs" />
+    <Compile Include="XmlRpcMemberAttribute.cs" />
+    <Compile Include="XmlRpcMethodAttribute.cs" />
+    <Compile Include="XmlRpcMethodInfo.cs" />
+    <Compile Include="XmlRpcMissingMappingAttribute.cs" />
+    <Compile Include="XmlRpcParameterAttribute.cs" />
+    <Compile Include="XmlRpcParameterInfo.cs" />
+    <Compile Include="XmlRpcProxyGen.cs" />
+    <Compile Include="XmlRpcRequest.cs" />
+    <Compile Include="XmlRpcResponse.cs" />
+    <Compile Include="XmlRpcReturnValueAttribute.cs" />
+    <Compile Include="XmlRpcSerializer.cs" />
+    <Compile Include="XmlRpcServerFormatterSink.cs" />
+    <Compile Include="XmlRpcServerFormatterSinkProvider.cs" />
+    <Compile Include="XmlRpcServerProtocol.cs" />
+    <Compile Include="XmlRpcService.cs" />
+    <Compile Include="XmlRpcServiceAttribute.cs" />
+    <Compile Include="XmlRpcServiceInfo.cs" />
+    <Compile Include="XmlRpcStruct.cs" />
+    <Compile Include="XmlRpcUrlAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

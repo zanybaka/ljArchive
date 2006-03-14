@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// The parameters for calling <see cref="ILJServer.GetEvents"/>.
 	/// </summary>
-	internal struct GetEventsParams
+	public struct GetEventsParams
 	{
 		public GetEventsParams(string username, string auth_method, string auth_challenge, string auth_response,
 			int ver, int truncate, int prefersubject, int noprops, string selecttype, string lastsync, int year,

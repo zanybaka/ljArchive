@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// An XML UserMap.
 	/// </summary>
-	internal struct UserMap
+	public struct UserMap
 	{
 		public UserMap(int id, string user)
 		{

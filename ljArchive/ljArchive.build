@@ -14,11 +14,27 @@
   </target>
 
   <target name = "build" depends = "check-version">
-    <solution configuration = "Release" solutionfile = "ljArchive.sln"/>
+    <!-- .net 2.0 aximp behaves differently than 1.1 (properly references runtime callable wrapper) so we
+    can't rely on vs2003's project files to do aximp properly on .net 2.0 -->
+    <tlbimp output="WindowsFormsPlugins/obj/Interop.AgentObjects.dll"
+      typelib="${path::combine(path::get-directory-name(environment::get-folder-path('System')), 'msagent/agentctl.dll')}"
+      namespace="AgentObjects"
+      verbose="true" sysarray="true">
+      <arg value="/nologo" />
+    </tlbimp>
+    <aximp output="WindowsFormsPlugins/obj/AxInterop.AgentObjects.dll"
+      ocx="${path::combine(path::get-directory-name(environment::get-folder-path('System')), 'msagent/agentctl.dll')}"
+      rcw="WindowsFormsPlugins/obj/Interop.AgentObjects.dll"
+      verbose="true">
+      <arg value="/nologo" />
+    </aximp>
+    <copy todir="bin/Release/plugins" file="WindowsFormsPlugins/obj/Interop.AgentObjects.dll" />
+    <copy todir="bin/Release/plugins" file="WindowsFormsPlugins/obj/AxInterop.AgentObjects.dll" />
+    <solution verbose = "true" configuration = "Release" solutionfile = "ljArchive.2003.sln"/>
   </target>
 
   <target name = "build-doc-solution" depends = "check-version">
-    <solution configuration = "Doc" solutionfile = "ljArchive.sln"/>
+    <solution configuration = "Doc" solutionfile = "ljArchive.2003.sln"/>
   </target>
 
   <target name = "build-doc" depends = "build-doc-solution">
@@ -82,6 +98,14 @@
   <target name = "dist" depends = "installer, src-zip, doc-zip, doc-chm, common-lib, manifest"/>
 
   <target name = "clean">
-    <delete dir = "${dist}"/>
+    <delete>
+      <fileset>
+        <include name="${dist}/**" />
+        <include name="bin/**" />
+        <include name="*/bin/**" />
+        <include name="*/doc/**" />
+        <include name="*/obj/**" />
+      </fileset>
+    </delete>
   </target>
 </project>

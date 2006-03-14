@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// The response from calling <see cref="ILJServer.SessionGenerate"/>.
 	/// </summary>
-	internal struct SessionGenerateResponse
+	public struct SessionGenerateResponse
 	{
 		public SessionGenerateResponse(string ljsession)
 		{

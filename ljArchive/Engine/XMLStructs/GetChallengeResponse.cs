@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// The response from calling <see cref="ILJServer.GetChallenge"/>.
 	/// </summary>
-	internal struct GetChallengeResponse
+	public struct GetChallengeResponse
 	{
 		public GetChallengeResponse(string auth_scheme, string challenge, int expire_time, int server_time)
 		{

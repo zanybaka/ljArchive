@@ -509,7 +509,7 @@ namespace EF.ljArchive.WindowsForms
 			try 
 			{
 				lastUpdateCheck = (DateTime) prefs.GetProperty("lastUpdateCheck", DateTime.MinValue);
-			} 
+			}
 			catch (FormatException)  {}
 			catch (InvalidCastException) {}
 
@@ -1247,6 +1247,7 @@ namespace EF.ljArchive.WindowsForms
 		private static TemplateCollection FindTemplateCollection() 
 		{
 			TemplateCollection found = null;
+			#if DEBUG
 			try
 			{
 				found = new TemplateCollection(Path.Combine(Application.StartupPath, "templates"));
@@ -1256,15 +1257,11 @@ namespace EF.ljArchive.WindowsForms
 				// We might be in development, try that.
 				string path = Path.GetDirectoryName(Path.GetDirectoryName(Application.StartupPath));
 				path = Path.Combine(Path.Combine(path, "etc"), "templates");
-				try 
-				{
-					found = new TemplateCollection(path);
-				} 
-				catch (ArgumentException) 
-				{
-					throw new Exception("Template directory not found.");
-				}
+				found = new TemplateCollection(path);
 			}
+			#else
+			found = new TemplateCollection(Path.Combine(Application.StartupPath, "templates"));
+			#endif
 			if (found.Count < 1)
 				throw new Exception("No templates found.");
 

@@ -6,7 +6,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// The response from calling <see cref="ILJServer.Login"/>.
 	/// </summary>
-	internal struct LoginResponse
+	public struct LoginResponse
 	{
 		public LoginResponse(string fullname, string message, FriendGroup[] friendgroups, string[] usejournals,
 			Mood[] moods, string[] pickws, string[] pickwurls, string defaultpicurl, int fastserver, int userid,

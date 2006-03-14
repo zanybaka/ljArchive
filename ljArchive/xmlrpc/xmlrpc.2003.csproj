@@ -174,11 +174,6 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "XmlRpcClientProtocol.resx"
-                    DependentUpon = "XmlRpcClientProtocol.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
                     RelPath = "XmlRpcDateTime.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

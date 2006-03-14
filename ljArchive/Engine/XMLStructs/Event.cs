@@ -6,7 +6,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// An XML Event.
 	/// </summary>
-	internal struct Event
+	public struct Event
 	{
 		public Event(int itemid, string eventtime, string security, System.Int32 allowmask, string subject,
 			string eventText, string poster, EventProps props)
