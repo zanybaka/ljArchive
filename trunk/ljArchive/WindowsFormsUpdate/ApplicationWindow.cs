@@ -108,7 +108,8 @@ namespace EF.ljArchive.WindowsForms.Update
 
 		private void WebDownloader_CallBack(WebDownloadEventArgs wdea)
 		{
-			this.Invoke(new TS_CallBackDelegate(TS_CallBack), new object[] {wdea});
+			if (this.IsHandleCreated)
+				this.Invoke(new TS_CallBackDelegate(TS_CallBack), new object[] {wdea});
 		}
 
 		private void TS_CallBack(WebDownloadEventArgs wdea)

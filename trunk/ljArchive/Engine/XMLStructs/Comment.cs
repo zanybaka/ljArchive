@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// An XML Comment.
 	/// </summary>
-	internal struct Comment
+	public struct Comment
 	{
 		public Comment(int id, int posterid, string state, int jitemid, int parentid, string body, string subject,
 			DateTime date)

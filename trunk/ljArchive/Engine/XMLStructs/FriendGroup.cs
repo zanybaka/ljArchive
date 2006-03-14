@@ -6,7 +6,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// An XML FriendGroup.
 	/// </summary>
-	internal struct FriendGroup
+	public struct FriendGroup
 	{
 		public FriendGroup(int id, string name, int sortorder, int isPublic)
 		{

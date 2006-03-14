@@ -6,7 +6,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// An XML Menu.
 	/// </summary>
-	internal class Menu
+	public class Menu
 	{
 		public Menu(string text, string url, Menu sub)
 		{

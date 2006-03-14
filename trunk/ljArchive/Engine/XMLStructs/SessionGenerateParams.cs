@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// The parameters for calling <see cref="ILJServer.SessionGenerate"/>.
 	/// </summary>
-	internal struct SessionGenerateParams
+	public struct SessionGenerateParams
 	{
 		public SessionGenerateParams(string username, string auth_method, string auth_challenge, string auth_response,
 			int ver, string expiration, int ipfixed)

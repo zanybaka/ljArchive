@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// The response from calling <see cref="ILJServer.GetEvents"/>.
 	/// </summary>
-	internal struct GetEventsResponse
+	public struct GetEventsResponse
 	{
 		public GetEventsResponse(Event[] events)
 		{

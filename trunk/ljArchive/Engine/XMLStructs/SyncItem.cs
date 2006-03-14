@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// An XML SyncItem.
 	/// </summary>
-	internal struct SyncItem
+	public struct SyncItem
 	{
 		public SyncItem(string item, string action, string time)
 		{

@@ -8,7 +8,7 @@ namespace EF.ljArchive.Engine
 	/// LJServer proxy interface used by xml-rpc.
 	/// </summary>
 	[XmlRpcUrl("http://www.livejournal.com/interface/xmlrpc")]
-	internal interface ILJServer
+	public interface ILJServer
 	{
 		[XmlRpcMethod("LJ.XMLRPC.login")]
 		LoginResponse Login(LoginParams loginParams);

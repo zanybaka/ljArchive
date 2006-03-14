@@ -91,7 +91,7 @@ namespace EF.ljArchive.Common {
         
         [System.ComponentModel.Browsable(false)]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public EventsDataTable Events {
+        new public EventsDataTable Events {
             get {
                 return this.tableEvents;
             }

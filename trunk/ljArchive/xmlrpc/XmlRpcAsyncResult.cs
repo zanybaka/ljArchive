@@ -160,7 +160,7 @@ namespace CookComputing.XmlRpc
           exception = ex;
       }
       if (userCallback != null)
-        userCallback.Invoke(this);
+        userCallback(this);
     }
 
     internal WebResponse WaitForResponse()

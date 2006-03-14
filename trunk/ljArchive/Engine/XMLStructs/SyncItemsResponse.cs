@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// The response from calling <see cref="ILJServer.SyncItems"/>.
 	/// </summary>
-	internal struct SyncItemsResponse
+	public struct SyncItemsResponse
 	{
 		public SyncItemsResponse(SyncItem[] syncitems, int count, int total)
 		{

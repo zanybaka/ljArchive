@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// An XML Mood.
 	/// </summary>
-	internal struct Mood
+	public struct Mood
 	{
 		public Mood(int id, string name, int parent)
 		{

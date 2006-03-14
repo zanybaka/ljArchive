@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// The parameters for calling <see cref="ILJServer.SyncItems"/>.
 	/// </summary>
-	internal struct SyncItemsParams
+	public struct SyncItemsParams
 	{
 		public SyncItemsParams(string username, string auth_method, string auth_challenge, string auth_response,
 			int ver, string lastsync)

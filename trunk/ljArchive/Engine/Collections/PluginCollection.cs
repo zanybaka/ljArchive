@@ -21,7 +21,7 @@ namespace EF.ljArchive.Engine.Collections
 			DirectoryInfo di = new DirectoryInfo(path);
 
 			if (!di.Exists)
-				throw new ArgumentException("path not found.", "path");
+				return;
 
 			foreach (FileInfo fi in di.GetFiles())
 			{

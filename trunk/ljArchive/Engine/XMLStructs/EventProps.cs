@@ -7,7 +7,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// An XML EventProps.
 	/// </summary>
 	/// <remarks>Metadata for an <see cref="Event"/>.</remarks>
-	internal struct EventProps
+	public struct EventProps
 	{
 		public EventProps(string current_mood, int current_moodid, string current_music, int opt_preformatted,
 			int opt_nocomments, string picture_keyword, int opt_backdated, int opt_noemail, int unknown8bit,

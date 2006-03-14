@@ -5,7 +5,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	/// <summary>
 	/// The parameters for calling <see cref="ILJServer.Login"/>.
 	/// </summary>
-	internal struct LoginParams
+	public struct LoginParams
 	{
 		public LoginParams(string username, string auth_method, string auth_challenge, string auth_response, int ver,
 			string clientversion, int getmoods, int getmenus, int getpickws, int getpickwurls)
