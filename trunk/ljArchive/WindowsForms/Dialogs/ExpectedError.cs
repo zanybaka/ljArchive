@@ -4,7 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Dialogs
 {
 	/// <summary>
 	/// Summary description for ExpectedError.
@@ -12,7 +12,7 @@ namespace EF.ljArchive.WindowsForms
 	public class ExpectedError : System.Windows.Forms.Form
 	{
 		internal System.Windows.Forms.Button btnCopyToClipboard;
-		private EF.ljArchive.WindowsForms.LineControl lineControl1;
+		private EF.ljArchive.WindowsForms.Controls.LineControl lineControl1;
 		private System.Windows.Forms.LinkLabel llMoreInfo;
 		private System.Windows.Forms.Label lblErrorInfo;
 		private System.Windows.Forms.PictureBox pbIcon;
@@ -86,7 +86,7 @@ namespace EF.ljArchive.WindowsForms
 			this.pnlBottom = new System.Windows.Forms.Panel();
 			this.txtException = new System.Windows.Forms.TextBox();
 			this.llEmail = new System.Windows.Forms.LinkLabel();
-			this.lineControl1 = new EF.ljArchive.WindowsForms.LineControl();
+			this.lineControl1 = new EF.ljArchive.WindowsForms.Controls.LineControl();
 			this.pnlTop.SuspendLayout();
 			this.pnlBottom.SuspendLayout();
 			this.SuspendLayout();

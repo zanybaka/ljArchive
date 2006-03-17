@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using EF.ljArchive.Engine.Collections;
 using Reflector.UserInterface;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Controls
 {
 	/// <summary>
 	/// Summary description for CommandBarManager.
@@ -15,6 +15,8 @@ namespace EF.ljArchive.WindowsForms
 		{
 			this.plugins = plugins;
 			this.journalWriters = journalWriters;
+			
+			
 
 			// the bars
 			menuBar = new CommandBar(CommandBarStyle.Menu);
@@ -31,7 +33,7 @@ namespace EF.ljArchive.WindowsForms
 				new EventHandler(CommandButton_Click));
 			JournalSettings = new CommandBarButton(Images.Edit, Localizer.GetString(this.GetType(),
 				"JournalSettings.Text"), new EventHandler(CommandButton_Click));
-			GotoDayEntry = new CommandBarButton(Images.Redo, Localizer.GetString(this.GetType(), "GotoDayEntry.Text"),
+			GotoEntry = new CommandBarButton(Images.Redo, Localizer.GetString(this.GetType(), "GotoEntry.Text"),
 				new EventHandler(CommandButton_Click), Keys.Control | Keys.D);
 			GoBack = new CommandBarButton(Images.Back, Localizer.GetString(this.GetType(), "GoBack.Text"),
 				new EventHandler(CommandButton_Click), Keys.Control | Keys.Left);
@@ -83,7 +85,7 @@ namespace EF.ljArchive.WindowsForms
 			editMenu = menuBar.Items.AddMenu(Localizer.GetString(this.GetType(), "editMenu.Text"));
 			editMenu.Items.Add(JournalSettings);
 			editMenu.Items.AddSeparator();
-			editMenu.Items.Add(GotoDayEntry);
+			editMenu.Items.Add(GotoEntry);
 			editMenu.Items.AddSeparator();
 			editMenu.Items.Add(GoBack);
 			editMenu.Items.Add(GoForward);
@@ -133,7 +135,7 @@ namespace EF.ljArchive.WindowsForms
 					case CommandStates.FileClosed:
 						NewArchive.IsEnabled = true; Open.IsEnabled = true; Print.IsEnabled = false;
 						exportMenu.IsEnabled = false; Exit.IsEnabled = true; JournalSettings.IsEnabled = false;
-						GotoDayEntry.IsEnabled = false; GoBack.IsEnabled = false; GoForward.IsEnabled = false;
+						GotoEntry.IsEnabled = false; GoBack.IsEnabled = false; GoForward.IsEnabled = false;
 						Find.IsEnabled = false; Calendar.IsEnabled = false; Grid.IsEnabled = false;
 						HtmlSettings.IsEnabled = false; Sync.IsEnabled = false; Abort.IsEnabled = false;
 						Options.IsEnabled = true; pluginsMenu.IsEnabled = false; Website.IsEnabled = true;
@@ -142,7 +144,7 @@ namespace EF.ljArchive.WindowsForms
 					case CommandStates.Syncing:
 						NewArchive.IsEnabled = false; Open.IsEnabled = false; Print.IsEnabled = false;
 						exportMenu.IsEnabled = false; Exit.IsEnabled = true; JournalSettings.IsEnabled = false;
-						GotoDayEntry.IsEnabled = true; GoBack.IsEnabled = true; GoForward.IsEnabled = true;
+						GotoEntry.IsEnabled = true; GoBack.IsEnabled = true; GoForward.IsEnabled = true;
 						Find.IsEnabled = true; Calendar.IsEnabled = true; Grid.IsEnabled = true;
 						HtmlSettings.IsEnabled = true; Sync.IsEnabled = false; Abort.IsEnabled = true;
 						Options.IsEnabled = false; pluginsMenu.IsEnabled = false; Website.IsEnabled = true;
@@ -151,7 +153,7 @@ namespace EF.ljArchive.WindowsForms
 					case CommandStates.Normal:
 						NewArchive.IsEnabled = true; Open.IsEnabled = true; Print.IsEnabled = true;
 						exportMenu.IsEnabled = true; Exit.IsEnabled = true; JournalSettings.IsEnabled = true;
-						GotoDayEntry.IsEnabled = true; GoBack.IsEnabled = true; GoForward.IsEnabled = true;
+						GotoEntry.IsEnabled = true; GoBack.IsEnabled = true; GoForward.IsEnabled = true;
 						Find.IsEnabled = true; Calendar.IsEnabled = true; Grid.IsEnabled = true;
 						HtmlSettings.IsEnabled = true; Sync.IsEnabled = true; Abort.IsEnabled = false;
 						Options.IsEnabled = true; pluginsMenu.IsEnabled = true; Website.IsEnabled = true;
@@ -166,7 +168,7 @@ namespace EF.ljArchive.WindowsForms
 		public CommandBarButton Print;
 		public CommandBarButton Exit;
 		public CommandBarButton JournalSettings;
-		public CommandBarButton GotoDayEntry;
+		public CommandBarButton GotoEntry;
 		public CommandBarButton GoBack;
 		public CommandBarButton GoForward;
 		public CommandBarCheckBox Find;
@@ -221,7 +223,7 @@ namespace EF.ljArchive.WindowsForms
 	
 			static Images()
 			{
-				Bitmap bitmap = new Bitmap(typeof(Images), "res.Glyphs16.png");
+				Bitmap bitmap = new Bitmap(typeof(Explorer), "res.Glyphs16.png");
 				int count = (int) (bitmap.Width / bitmap.Height);
 				images = new Image[count];
 				Rectangle rectangle = new Rectangle(0, 0, bitmap.Height, bitmap.Height);

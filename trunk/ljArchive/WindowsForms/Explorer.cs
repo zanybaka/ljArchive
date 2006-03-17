@@ -20,10 +20,10 @@ namespace EF.ljArchive.WindowsForms
 		private Genghis.Windows.Forms.ContainerStatusBarPanel sbpProgressBar;
 		private System.Windows.Forms.PropertyGrid templateProperties;
 		private System.Windows.Forms.ComboBox templatePicker;
-		private EF.ljArchive.WindowsForms.FindPanel findPanel;
+		private EF.ljArchive.WindowsForms.Controls.FindPanel findPanel;
 		private System.Windows.Forms.Panel shim;
-		private EF.ljArchive.WindowsForms.DataGridList dgEvents;
-		private EF.ljArchive.WindowsForms.DataGridList dgComments;
+		private EF.ljArchive.WindowsForms.Controls.DataGridList dgEvents;
+		private EF.ljArchive.WindowsForms.Controls.DataGridList dgComments;
 		private System.Windows.Forms.Splitter tabControlSplitter;
 		private System.Windows.Forms.TabPage tpEvents;
 		private System.Windows.Forms.TabPage tpComments;
@@ -77,12 +77,12 @@ namespace EF.ljArchive.WindowsForms
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(Explorer));
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tpEvents = new System.Windows.Forms.TabPage();
-			this.dgEvents = new EF.ljArchive.WindowsForms.DataGridList();
+			this.dgEvents = new EF.ljArchive.WindowsForms.Controls.DataGridList();
 			this.eventsTableStyle = new System.Windows.Forms.DataGridTableStyle();
 			this.eventsSplitter = new System.Windows.Forms.Splitter();
 			this.calendarPanel = new EF.ljArchive.WindowsForms.Controls.CalendarPanel();
 			this.tpComments = new System.Windows.Forms.TabPage();
-			this.dgComments = new EF.ljArchive.WindowsForms.DataGridList();
+			this.dgComments = new EF.ljArchive.WindowsForms.Controls.DataGridList();
 			this.commentsTableStyle = new System.Windows.Forms.DataGridTableStyle();
 			this.tabControlSplitter = new System.Windows.Forms.Splitter();
 			this.statusBar = new Genghis.Windows.Forms.ContainerStatusBar();
@@ -93,7 +93,7 @@ namespace EF.ljArchive.WindowsForms
 			this.templateProperties = new System.Windows.Forms.PropertyGrid();
 			this.templatePicker = new System.Windows.Forms.ComboBox();
 			this.htmlSettingsPaneSplitter = new System.Windows.Forms.Splitter();
-			this.findPanel = new EF.ljArchive.WindowsForms.FindPanel();
+			this.findPanel = new EF.ljArchive.WindowsForms.Controls.FindPanel();
 			this.shim = new System.Windows.Forms.Panel();
 			this.ofd = new System.Windows.Forms.OpenFileDialog();
 			this.windowSerializer = new Genghis.Windows.Forms.WindowSerializer();
@@ -406,9 +406,9 @@ namespace EF.ljArchive.WindowsForms
 			journalWriters.Settings = prefs.GetString("journalWriters.Settings", journalWriters.Settings);
 
 			// cbm
-			cbm = new CommandBarManager(plugins, journalWriters);
+			cbm = new Controls.CommandBarManager(plugins, journalWriters);
 			cbm.CommandClick += new System.EventHandler(cbm_Command_Click);
-			cbm.CommandState = CommandBarManager.CommandStates.FileClosed;
+			cbm.CommandState = EF.ljArchive.WindowsForms.Controls.CommandBarManager.CommandStates.FileClosed;
 			cbm.Grid.IsChecked = prefs.GetBoolean("cbm.Grid.IsChecked", cbm.Grid.IsChecked);
 			cbm.Find.IsChecked = prefs.GetBoolean("cbm.Find.IsChecked", cbm.Find.IsChecked);
 			cbm.Calendar.IsChecked = prefs.GetBoolean("cbm.Calendar.IsChecked", cbm.Calendar.IsChecked);
@@ -458,15 +458,15 @@ namespace EF.ljArchive.WindowsForms
 			// dgEvents
 			imageMap.Add("private", new Bitmap(this.GetType(), "res.IconPrivate.png"));
 			imageMap.Add("usemask", new Bitmap(this.GetType(), "res.IconProtected.png"));
-			col = new DataGridImageColumn("Security", string.Empty, 20, imageMap);
+			col = new Controls.DataGridImageColumn("Security", string.Empty, 20, imageMap);
 			eventsTableStyle.GridColumnStyles.Add(col);
-			col = new DataGridTextViewColumn("ID", "ID", 80, false);
+			col = new Controls.DataGridTextViewColumn("ID", "ID", 80, false);
 			eventsTableStyle.GridColumnStyles.Add(col);
-			col = new DataGridTextViewColumn("Date", "Date", 120, false);
+			col = new Controls.DataGridTextViewColumn("Date", "Date", 120, false);
 			eventsTableStyle.GridColumnStyles.Add(col);
-			col = new DataGridTextViewColumn("Subject", "Subject", 240, false);
+			col = new Controls.DataGridTextViewColumn("Subject", "Subject", 240, false);
 			eventsTableStyle.GridColumnStyles.Add(col);
-			col = new DataGridTextViewColumn("Body", "Event Text", 480, true);
+			col = new Controls.DataGridTextViewColumn("Body", "Event Text", 480, true);
 			eventsTableStyle.GridColumnStyles.Add(col);
 			// fix for upgrading users:
 			fix = prefs.GetString("dgEvents.ColumnSettings", string.Empty);
@@ -480,17 +480,17 @@ namespace EF.ljArchive.WindowsForms
 			commentsTableStyle.GridColumnStyles.Clear();
 			imageMap = new Hashtable();
 			imageMap.Add("D", new Bitmap(this.GetType(), "res.IconDeleted.png"));
-			col = new DataGridImageColumn("State", string.Empty, 20, imageMap);
+			col = new Controls.DataGridImageColumn("State", string.Empty, 20, imageMap);
 			commentsTableStyle.GridColumnStyles.Add(col);
-			col = new DataGridTextViewColumn("ID", "ID", 80, false);
+			col = new Controls.DataGridTextViewColumn("ID", "ID", 80, false);
 			commentsTableStyle.GridColumnStyles.Add(col);
-			col = new DataGridTextViewColumn("PosterUserName", "User", 120, false);
+			col = new Controls.DataGridTextViewColumn("PosterUserName", "User", 120, false);
 			commentsTableStyle.GridColumnStyles.Add(col);
-			col = new DataGridTextViewColumn("Date", "Date", 120, false);
+			col = new Controls.DataGridTextViewColumn("Date", "Date", 120, false);
 			commentsTableStyle.GridColumnStyles.Add(col);
-			col = new DataGridTextViewColumn("Subject", "Subject", 120, true);
+			col = new Controls.DataGridTextViewColumn("Subject", "Subject", 120, true);
 			commentsTableStyle.GridColumnStyles.Add(col);
-			col = new DataGridTextViewColumn("Body", "Body", 120, true);
+			col = new Controls.DataGridTextViewColumn("Body", "Body", 120, true);
 			commentsTableStyle.GridColumnStyles.Add(col);
 			// fix for upgrading users:
 			fix = prefs.GetString("dgComments.ColumnSettings", string.Empty);
@@ -557,7 +557,7 @@ namespace EF.ljArchive.WindowsForms
 						gpb.Value = ((15 * soe.Param1) / soe.Param2);
 					break;
 				case Engine.SyncOperation.Merge:
-					cbm.CommandState = CommandBarManager.CommandStates.FileClosed;
+					cbm.CommandState = EF.ljArchive.WindowsForms.Controls.CommandBarManager.CommandStates.FileClosed;
 					UnBind();
 					sbpProgressText.Text = Localizer.GetString("SyncOperation.Merge");
 					break;
@@ -568,7 +568,7 @@ namespace EF.ljArchive.WindowsForms
 						Bind();
 					}
 					gpb.Value = 0;
-					cbm.CommandState = CommandBarManager.CommandStates.Normal;
+					cbm.CommandState = EF.ljArchive.WindowsForms.Controls.CommandBarManager.CommandStates.Normal;
 					sbpProgressText.Text = string.Format(Localizer.GetString("SyncOperation.Success"),
 						soe.Param1, soe.Param2);;
 					break;
@@ -579,7 +579,7 @@ namespace EF.ljArchive.WindowsForms
 						Bind();
 					}
 					gpb.Value = 0;
-					cbm.CommandState = CommandBarManager.CommandStates.Normal;
+					cbm.CommandState = EF.ljArchive.WindowsForms.Controls.CommandBarManager.CommandStates.Normal;
 					sbpProgressText.Text = string.Format(Localizer.GetString("SyncOperation.PartialSync"),
 						soe.Param1, soe.Param2);;
 					ReportError();
@@ -587,7 +587,7 @@ namespace EF.ljArchive.WindowsForms
 				case Engine.SyncOperation.Failure:
 					Bind();
 					gpb.Value = 0;
-					cbm.CommandState = CommandBarManager.CommandStates.Normal;
+					cbm.CommandState = EF.ljArchive.WindowsForms.Controls.CommandBarManager.CommandStates.Normal;
 					sbpProgressText.Text = Localizer.GetString("SyncOperation.Failure");
 					ReportError();
 					break;
@@ -607,15 +607,15 @@ namespace EF.ljArchive.WindowsForms
 							Localizer.GetString("ExpectedError.ExpectedErrorCategories.SyncCancel");
 						break;
 					default:
-						ExpectedError.Go((ExpectedError.ExpectedErrorCategories)
-							Enum.Parse(typeof(ExpectedError.ExpectedErrorCategories), "Sync" +
+						Dialogs.ExpectedError.Go((Dialogs.ExpectedError.ExpectedErrorCategories)
+							Enum.Parse(typeof(Dialogs.ExpectedError.ExpectedErrorCategories), "Sync" +
 							ese.ExpectedError.ToString()), ese, this);
 						break;
 				}
 			}
 			else
 			{
-				GeneralError.Go(Engine.Sync.SyncException.ToString(), this);
+				Dialogs.GeneralError.Go(Engine.Sync.SyncException.ToString(), this);
 			}
 		}
 
@@ -631,18 +631,18 @@ namespace EF.ljArchive.WindowsForms
 						UnBind();
 					j = jNew;
 					Bind();
-					cbm.CommandState = CommandBarManager.CommandStates.Normal;
+					cbm.CommandState = EF.ljArchive.WindowsForms.Controls.CommandBarManager.CommandStates.Normal;
 				}
 			}
 			catch (System.InvalidCastException ice)
 			{
 				if (showError)
-					ExpectedError.Go(ExpectedError.ExpectedErrorCategories.BadFileFormat, ice, this);
+					Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.BadFileFormat, ice, this);
 			}
 			catch (System.IO.FileNotFoundException fnfe)
 			{
 				if (showError)
-					ExpectedError.Go(ExpectedError.ExpectedErrorCategories.BadFileFormat, fnfe, this);
+					Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.BadFileFormat, fnfe, this);
 			}
 			cbm.Grid.IsChecked &= (j != null);
 			cbm_Command_Click(cbm.Grid, EventArgs.Empty);
@@ -671,11 +671,11 @@ namespace EF.ljArchive.WindowsForms
 			Type t = this.GetType();
 			Genghis.Windows.Forms.WizardSheet ws =
 				new Genghis.Windows.Forms.WizardSheet("Create New Journal Archive");
-			NewJournalArchiveIntroPage njaip = new NewJournalArchiveIntroPage(Localizer.GetString(t,
+			Controls.NewJournalArchiveIntroPage njaip = new Controls.NewJournalArchiveIntroPage(Localizer.GetString(t,
 				"njaip.PageTitle"), Localizer.GetString(t, "njaip.PageDescription"));
-			NewJournalArchiveAccountSettings njaas = new NewJournalArchiveAccountSettings(Localizer.GetString(t,
+			Controls.NewJournalArchiveAccountSettings njaas = new Controls.NewJournalArchiveAccountSettings(Localizer.GetString(t,
 				"njaas.PageTitle"), Localizer.GetString(t, "njaas.PageDescription"));
-			NewJournalArchiveFinish njaf = new NewJournalArchiveFinish(Localizer.GetString(t,
+			Controls.NewJournalArchiveFinish njaf = new Controls.NewJournalArchiveFinish(Localizer.GetString(t,
 				"njaf.PageTitle"), Localizer.GetString(t, "njaf.PageDescription"));
 			ws.AddPage(njaip);
 			ws.AddPage(njaas);
@@ -846,7 +846,8 @@ namespace EF.ljArchive.WindowsForms
 
 		private void UpdateExists()
 		{
-			this.Invoke(new TS_UpdateExistsDelegate(TS_UpdateExists));
+			if (this.IsHandleCreated)
+				this.Invoke(new TS_UpdateExistsDelegate(TS_UpdateExists));
 		}
 
 		private void TS_UpdateExists()
@@ -962,7 +963,7 @@ namespace EF.ljArchive.WindowsForms
 			}
 			else if (sender == cbm.About)
 			{
-				(new About()).ShowDialog();
+				(new Dialogs.About()).ShowDialog();
 			}
 			else if (sender == cbm.Open)
 			{
@@ -973,7 +974,7 @@ namespace EF.ljArchive.WindowsForms
 			}
 			else if (sender == cbm.Sync)
 			{
-				cbm.CommandState = CommandBarManager.CommandStates.Syncing;
+				cbm.CommandState = EF.ljArchive.WindowsForms.Controls.CommandBarManager.CommandStates.Syncing;
 				Engine.Sync.Start(j, new Engine.SyncOperationCallBack(Sync_SyncOperationCallBack));
 			}
 			else if (sender == cbm.Abort)
@@ -992,13 +993,16 @@ namespace EF.ljArchive.WindowsForms
 				}
 				catch (System.ComponentModel.Win32Exception) {}
 			}
-			else if (sender == cbm.GotoDayEntry)
+			else if (sender == cbm.GotoEntry)
 			{
 				BindingManagerBase bm = this.BindingContext[dgEvents.DataSource, dgEvents.DataMember];
 				DataRowView drv = (DataRowView) bm.Current;
 				Common.Journal.EventsRow er = (Common.Journal.EventsRow) drv.Row;
-				Uri baseURI = new Uri(j.Options.ServerURL), uri = new Uri(baseURI, "/users/" +
-					j.Options.UserName + "/" + er.Date.ToString("yyyy\\/MM\\/dd\\/"));
+				Uri baseURI = new Uri(j.Options.ServerURL);
+				Uri uri = new Uri(baseURI, string.Format("/{0}/{1}/{2}.html",
+				                                     (j.Options.UseJournal.Length > 0 ? "community" : "users"),
+				                                     (j.Options.UseJournal.Length > 0 ? j.Options.UseJournal : j.Options.UserName),
+				                                     er.ID * 256 + er.Anum));
 				try
 				{
 					System.Diagnostics.Process.Start(uri.AbsoluteUri);
@@ -1011,7 +1015,7 @@ namespace EF.ljArchive.WindowsForms
 			}
 			else if (sender == cbm.JournalSettings)
 			{
-				Properties.Go(j);
+				Dialogs.Properties.Go(j);
 			}
 			else if (sender == cbm.Exit)
 			{
@@ -1020,8 +1024,8 @@ namespace EF.ljArchive.WindowsForms
 			else if (sender == cbm.Options)
 			{
 				DockStyle d = tabControl.Dock;
-				Options.Go(ref d, ref lastUpdateCheck, ref syncOnStartup);
-				if (Options.UpdateCheckRequested)
+				Dialogs.Options.Go(ref d, ref lastUpdateCheck, ref syncOnStartup);
+				if (Dialogs.Options.UpdateCheckRequested)
 				{
 					AskUpdate();
 					return;
@@ -1042,7 +1046,8 @@ namespace EF.ljArchive.WindowsForms
 
 		private void Sync_SyncOperationCallBack(Engine.SyncOperationEventArgs soe)
 		{
-			this.Invoke(new UpdateStatusDelegate(UpdateStatus), new object[] {soe});
+			if (this.IsHandleCreated)
+				this.Invoke(new UpdateStatusDelegate(UpdateStatus), new object[] {soe});
 		}
 
 		private void templateProperties_PropertyValueChanged(object s, System.Windows.Forms.PropertyValueChangedEventArgs e)
@@ -1177,14 +1182,14 @@ namespace EF.ljArchive.WindowsForms
 				hjw.SelectedCommentID = -1;
 				hjw.EntrySearchString = string.Empty;
 				hjw.CommentSearchString = string.Empty;
-				Export.Go(j, ijw);
+				Dialogs.Export.Go(j, ijw);
 				hjw.CommentSearchString = commentSearchString;
 				hjw.EntrySearchString = entrySearchString;
 				hjw.SelectedCommentID = selectedCommentID;
 			}
 			else
 			{
-				Export.Go(j, ijw);
+				Dialogs.Export.Go(j, ijw);
 			}
 		}
 
@@ -1279,7 +1284,7 @@ namespace EF.ljArchive.WindowsForms
 
 		#region Private Instance Fields
 		private Genghis.Preferences prefs;
-		private CommandBarManager cbm;
+		private Controls.CommandBarManager cbm;
 		private EF.ljArchive.Engine.Journal j;
 		private delegate void UpdateStatusDelegate(Engine.SyncOperationEventArgs soe);
 		private Engine.Collections.PluginCollection plugins;

@@ -26,13 +26,13 @@ namespace EF.ljArchive.Engine
 		/// <summary>
 		/// Creates a new instance of the <see cref="Journal"/> class.
 		/// </summary>
-		public Journal(string serverURL, string userName, string password, bool getComments)
+		public Journal(string serverURL, string userName, string password, bool getComments, string useJournal)
 		{
 			this.Relations.Add("FK_Users_Comments", this.Users.Columns["ID"],
 				this.Comments.Columns["PosterID"], false);
 			this.Comments.Columns.Add("PosterUserName", typeof(string), "Parent.User");
 			base.Options.AddOptionsRow(serverURL, null, null, userName, null,
-				DateTime.MinValue, getComments);
+				DateTime.MinValue, getComments, useJournal);
 			SetPassword(password);
 		}
 		#endregion

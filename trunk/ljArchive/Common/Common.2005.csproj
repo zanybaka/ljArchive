@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -7,18 +7,19 @@
     <RootNamespace>EF.ljArchive.Common</RootNamespace>
     <AssemblyName>EF.ljArchive.Common</AssemblyName>
     <OutputType>Library</OutputType>
-    <ApplicationIcon />
     <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
-    <PreBuildEvent />
-    <PostBuildEvent />
-    <StartupObject />
     <NoConfig>false</NoConfig>
+    <DebugType>None</DebugType>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <NoWarn />
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <Optimize>false</Optimize>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -29,7 +30,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <NoWarn />
     <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
@@ -41,7 +41,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Doc|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <NoWarn />
     <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
@@ -53,19 +52,15 @@
   <ItemGroup>
     <Reference Include="System">
       <HintPath>C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.dll</HintPath>
-      <Private />
     </Reference>
     <Reference Include="System.Data">
       <HintPath>C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Data.dll</HintPath>
-      <Private />
     </Reference>
     <Reference Include="System.Xml">
       <HintPath>C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.XML.dll</HintPath>
-      <Private />
     </Reference>
     <Reference Include="System.Drawing">
       <HintPath>C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll</HintPath>
-      <Private />
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -73,7 +68,6 @@
     <Compile Include="IJournalWriter.cs" />
     <Compile Include="IPlugin.cs" />
     <None Include="Journal.xml" />
-    <Content Include="Journal.xsd" />
     <Compile Include="Journal.cs">
       <DependentUpon>Journal.xsd</DependentUpon>
     </Compile>
@@ -81,7 +75,8 @@
       <DependentUpon>Journal.xsd</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Journal.xsd" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

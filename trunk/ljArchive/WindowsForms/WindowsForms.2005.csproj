@@ -11,11 +11,17 @@
     <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
     <StartupObject>EF.ljArchive.WindowsForms.EntryPoint</StartupObject>
     <NoConfig>false</NoConfig>
+    <DebugType>None</DebugType>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -26,7 +32,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -37,7 +42,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Doc|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>

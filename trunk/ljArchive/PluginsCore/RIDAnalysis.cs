@@ -213,7 +213,7 @@ namespace EF.ljArchive.Plugins.Core
 				sb.Append(bar);
 			}
 			sb.Append("</table>");
-			sb.Append("<a style='color: #fff' href='http://fawx.com/ljArchive/rid.htm'>What does this mean?</a><br />&nbsp;");
+			sb.Append("<a style='color: #fff' href='http://fawx.com/software/ljarchive/rid'>What does this mean?</a><br />&nbsp;");
 			sb.Append("</div>");
 			sb.Append("</div>");
 			sb.Append("<!-- END RID ANALYSIS CODE -->");

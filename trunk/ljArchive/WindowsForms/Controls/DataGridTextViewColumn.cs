@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Text.RegularExpressions;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Controls
 {
 	/// <summary>
 	/// Summary description for DataGridTextViewColumn.

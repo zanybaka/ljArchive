@@ -15,7 +15,8 @@ namespace EF.ljArchive.WindowsForms
 		static void Main() 
 		{
 			Explorer e = null;
-
+			if (System.Environment.Version.Major > 1) // .NET 2.0 XP styles
+				System.Windows.Forms.Application.EnableVisualStyles();
 #if DEBUG
 			e = new Explorer();
 			Application.Run(e);
@@ -27,7 +28,7 @@ namespace EF.ljArchive.WindowsForms
 			}
 			catch (Exception ex)
 			{
-				GeneralError.Go("ljArchive encountered the following fatal error: " + ex.ToString(), null);
+				Dialogs.GeneralError.Go("ljArchive encountered the following fatal error: " + ex.ToString(), null);
 			}
 #endif
 			if (e != null && e.UpdateRequested)

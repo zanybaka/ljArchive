@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Controls
 {
 	/// <summary>
 	/// Summary description for DataGridImageColumn.

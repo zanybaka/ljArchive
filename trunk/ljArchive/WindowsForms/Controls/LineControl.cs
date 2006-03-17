@@ -3,7 +3,7 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Controls
 {
 	/// <summary>
 	/// Summary description for LineControl.

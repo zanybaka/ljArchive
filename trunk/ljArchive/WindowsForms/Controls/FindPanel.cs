@@ -5,14 +5,14 @@ using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Controls
 {
 	/// <summary>
 	/// Summary description for FindPanel.
 	/// </summary>
 	public class FindPanel : System.Windows.Forms.UserControl
 	{
-		private EF.ljArchive.WindowsForms.LineControl lineControl1;
+		private EF.ljArchive.WindowsForms.Controls.LineControl lineControl1;
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Button btnGo;
 		private System.Windows.Forms.TextBox txtSearchText;
@@ -61,7 +61,7 @@ namespace EF.ljArchive.WindowsForms
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(FindPanel));
 			this.btnGo = new System.Windows.Forms.Button();
-			this.lineControl1 = new EF.ljArchive.WindowsForms.LineControl();
+			this.lineControl1 = new EF.ljArchive.WindowsForms.Controls.LineControl();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.txtSearchText = new System.Windows.Forms.TextBox();
 			this.lblFindJournalItems = new System.Windows.Forms.Label();

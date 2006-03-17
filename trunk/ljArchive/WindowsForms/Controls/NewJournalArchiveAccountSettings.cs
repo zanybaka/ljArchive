@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Controls
 {
 	public class NewJournalArchiveAccountSettings : Genghis.Windows.Forms.WizardPage
 	{
@@ -13,7 +13,6 @@ namespace EF.ljArchive.WindowsForms
 		private System.Windows.Forms.GroupBox grpLogin;
 		private System.Windows.Forms.TextBox txtLogin;
 		private System.Windows.Forms.Label lblLogin;
-		private System.Windows.Forms.Label lblAlternateServer;
 		private System.Windows.Forms.Label lblPassword;
 		private System.Windows.Forms.TextBox txtPassword;
 		private System.Windows.Forms.GroupBox grpAlternateServer;
@@ -27,7 +26,7 @@ namespace EF.ljArchive.WindowsForms
 			InitializeComponent();
 
 			Localizer.SetControlText(this.GetType(), grpLogin, lblLogin, lblPassword, grpOptions, chkGetComments,
-				grpAlternateServer, lblAlternateServer, chkAlternateServer);
+				grpAlternateServer, chkAlternateServer, grpCommunity, chkCommunity);
 		}
 
 		/// <summary>
@@ -52,7 +51,6 @@ namespace EF.ljArchive.WindowsForms
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.lblAlternateServer = new System.Windows.Forms.Label();
 			this.chkAlternateServer = new System.Windows.Forms.CheckBox();
 			this.txtServerURL = new System.Windows.Forms.TextBox();
 			this.grpLogin = new System.Windows.Forms.GroupBox();
@@ -63,34 +61,30 @@ namespace EF.ljArchive.WindowsForms
 			this.grpAlternateServer = new System.Windows.Forms.GroupBox();
 			this.chkGetComments = new System.Windows.Forms.CheckBox();
 			this.grpOptions = new System.Windows.Forms.GroupBox();
+			this.grpCommunity = new System.Windows.Forms.GroupBox();
+			this.cmbCommunity = new System.Windows.Forms.ComboBox();
+			this.chkCommunity = new System.Windows.Forms.CheckBox();
 			this.grpLogin.SuspendLayout();
 			this.grpAlternateServer.SuspendLayout();
 			this.grpOptions.SuspendLayout();
+			this.grpCommunity.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// lblAlternateServer
-			// 
-			this.lblAlternateServer.Location = new System.Drawing.Point(8, 16);
-			this.lblAlternateServer.Name = "lblAlternateServer";
-			this.lblAlternateServer.Size = new System.Drawing.Size(368, 24);
-			this.lblAlternateServer.TabIndex = 2;
-			this.lblAlternateServer.Text = "If you are trying to connect to a different LiveJournal server, check here:";
 			// 
 			// chkAlternateServer
 			// 
-			this.chkAlternateServer.Location = new System.Drawing.Point(24, 48);
+			this.chkAlternateServer.Location = new System.Drawing.Point(24, 20);
 			this.chkAlternateServer.Name = "chkAlternateServer";
 			this.chkAlternateServer.Size = new System.Drawing.Size(320, 16);
 			this.chkAlternateServer.TabIndex = 3;
-			this.chkAlternateServer.Text = "I want to connect to the following alternate address:";
+			this.chkAlternateServer.Text = "I want to connect to the following server:";
 			this.chkAlternateServer.CheckedChanged += new System.EventHandler(this.chkAlternateServer_CheckedChanged);
 			// 
 			// txtServerURL
 			// 
 			this.txtServerURL.Enabled = false;
-			this.txtServerURL.Location = new System.Drawing.Point(24, 72);
+			this.txtServerURL.Location = new System.Drawing.Point(24, 44);
 			this.txtServerURL.Name = "txtServerURL";
-			this.txtServerURL.Size = new System.Drawing.Size(352, 20);
+			this.txtServerURL.Size = new System.Drawing.Size(352, 21);
 			this.txtServerURL.TabIndex = 4;
 			this.txtServerURL.Text = "http://www.livejournal.com";
 			// 
@@ -111,9 +105,8 @@ namespace EF.ljArchive.WindowsForms
 			// 
 			this.txtLogin.Location = new System.Drawing.Point(88, 22);
 			this.txtLogin.Name = "txtLogin";
-			this.txtLogin.Size = new System.Drawing.Size(128, 20);
+			this.txtLogin.Size = new System.Drawing.Size(128, 21);
 			this.txtLogin.TabIndex = 0;
-			this.txtLogin.Text = "";
 			this.txtLogin.TextChanged += new System.EventHandler(this.txtLogin_TextChanged);
 			// 
 			// txtPassword
@@ -121,9 +114,8 @@ namespace EF.ljArchive.WindowsForms
 			this.txtPassword.Location = new System.Drawing.Point(88, 56);
 			this.txtPassword.Name = "txtPassword";
 			this.txtPassword.PasswordChar = '*';
-			this.txtPassword.Size = new System.Drawing.Size(128, 20);
+			this.txtPassword.Size = new System.Drawing.Size(128, 21);
 			this.txtPassword.TabIndex = 2;
-			this.txtPassword.Text = "";
 			this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
 			// 
 			// lblPassword
@@ -146,10 +138,9 @@ namespace EF.ljArchive.WindowsForms
 			// 
 			this.grpAlternateServer.Controls.Add(this.txtServerURL);
 			this.grpAlternateServer.Controls.Add(this.chkAlternateServer);
-			this.grpAlternateServer.Controls.Add(this.lblAlternateServer);
-			this.grpAlternateServer.Location = new System.Drawing.Point(8, 160);
+			this.grpAlternateServer.Location = new System.Drawing.Point(8, 158);
 			this.grpAlternateServer.Name = "grpAlternateServer";
-			this.grpAlternateServer.Size = new System.Drawing.Size(384, 104);
+			this.grpAlternateServer.Size = new System.Drawing.Size(384, 77);
 			this.grpAlternateServer.TabIndex = 7;
 			this.grpAlternateServer.TabStop = false;
 			this.grpAlternateServer.Text = "Alternate Server";
@@ -176,28 +167,70 @@ namespace EF.ljArchive.WindowsForms
 			this.grpOptions.TabStop = false;
 			this.grpOptions.Text = "Options";
 			// 
+			// grpCommunity
+			// 
+			this.grpCommunity.Controls.Add(this.cmbCommunity);
+			this.grpCommunity.Controls.Add(this.chkCommunity);
+			this.grpCommunity.Location = new System.Drawing.Point(8, 241);
+			this.grpCommunity.Name = "grpCommunity";
+			this.grpCommunity.Size = new System.Drawing.Size(384, 75);
+			this.grpCommunity.TabIndex = 10;
+			this.grpCommunity.TabStop = false;
+			this.grpCommunity.Text = "Community";
+			// 
+			// cmbCommunity
+			// 
+			this.cmbCommunity.Enabled = false;
+			this.cmbCommunity.Location = new System.Drawing.Point(24, 43);
+			this.cmbCommunity.Name = "cmbCommunity";
+			this.cmbCommunity.Size = new System.Drawing.Size(352, 21);
+			this.cmbCommunity.TabIndex = 4;
+			this.cmbCommunity.DropDown += new System.EventHandler(this.cmbCommunity_DropDown);
+			// 
+			// chkCommunity
+			// 
+			this.chkCommunity.Location = new System.Drawing.Point(24, 20);
+			this.chkCommunity.Name = "chkCommunity";
+			this.chkCommunity.Size = new System.Drawing.Size(320, 16);
+			this.chkCommunity.TabIndex = 3;
+			this.chkCommunity.Text = "I want to archive the following community:";
+			this.chkCommunity.CheckedChanged += new System.EventHandler(this.chkCommunity_CheckedChanged);
+			// 
 			// NewJournalArchiveAccountSettings
 			// 
+			this.Controls.Add(this.grpCommunity);
 			this.Controls.Add(this.grpOptions);
 			this.Controls.Add(this.grpAlternateServer);
 			this.Controls.Add(this.grpLogin);
 			this.Name = "NewJournalArchiveAccountSettings";
+			this.Size = new System.Drawing.Size(400, 327);
 			this.Enter += new System.EventHandler(this.NewJournalArchiveAccountSettings_Enter);
 			this.Leave += new System.EventHandler(this.NewJournalArchiveAccountSettings_Leave);
 			this.Controls.SetChildIndex(this.grpLogin, 0);
 			this.Controls.SetChildIndex(this.grpAlternateServer, 0);
 			this.Controls.SetChildIndex(this.grpOptions, 0);
+			this.Controls.SetChildIndex(this.grpCommunity, 0);
 			this.grpLogin.ResumeLayout(false);
+			this.grpLogin.PerformLayout();
 			this.grpAlternateServer.ResumeLayout(false);
+			this.grpAlternateServer.PerformLayout();
 			this.grpOptions.ResumeLayout(false);
+			this.grpCommunity.ResumeLayout(false);
 			this.ResumeLayout(false);
-
 		}
+		private System.Windows.Forms.CheckBox chkCommunity;
+		private System.Windows.Forms.ComboBox cmbCommunity;
+		private System.Windows.Forms.GroupBox grpCommunity;
 		#endregion
 
 		private void chkAlternateServer_CheckedChanged(object sender, System.EventArgs e)
 		{
 			txtServerURL.Enabled = chkAlternateServer.Checked;
+		}
+		
+		void chkCommunity_CheckedChanged(object sender, System.EventArgs e)
+		{
+			cmbCommunity.Enabled = chkCommunity.Checked;
 		}
 
 		private void txtLogin_TextChanged(object sender, System.EventArgs e)
@@ -245,7 +278,21 @@ namespace EF.ljArchive.WindowsForms
 		{
 			get
 			{
-				return txtServerURL.Text;
+				if (chkAlternateServer.Checked)
+					return txtServerURL.Text;
+				else
+					return "http://www.livejournal.com/";
+			}
+		}
+		
+		public string UseJournal
+		{
+			get
+			{
+				if (chkCommunity.Checked)
+					return cmbCommunity.Text;
+				else
+					return string.Empty;
 			}
 		}
 
@@ -254,6 +301,27 @@ namespace EF.ljArchive.WindowsForms
 			get
 			{
 				return chkGetComments.Checked;
+			}
+		}
+		
+		void cmbCommunity_DropDown(object sender, System.EventArgs e)
+		{
+			cmbCommunity.Items.Clear();
+			try
+			{
+				cmbCommunity.Items.AddRange(Engine.Server.GetUseJournals(this.UserName, this.Password, this.ServerURL));
+			}
+			catch (EF.ljArchive.Engine.ExpectedSyncException ese)
+			{
+				switch (ese.ExpectedError)
+				{
+					case EF.ljArchive.Engine.ExpectedError.InvalidPassword:
+						Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.SyncInvalidPassword, ese, this.ParentForm);
+						break;
+					case EF.ljArchive.Engine.ExpectedError.ServerNotResponding:
+						Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.SyncServerNotResponding, ese, this.ParentForm);
+						break;
+				}
 			}
 		}
 	}

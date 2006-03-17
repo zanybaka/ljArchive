@@ -15,6 +15,7 @@
 							<xs:element name="HPassword" type="xs:string" minOccurs="0" />
 							<xs:element name="LastSync" type="xs:dateTime" minOccurs="0" />
 							<xs:element name="GetComments" type="xs:boolean" minOccurs="0" />
+							<xs:element name="UseJournal" type="xs:string" minOccurs="0" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -28,6 +29,7 @@
 							<xs:element name="Subject" type="xs:string" minOccurs="0" />
 							<xs:element name="Body" type="xs:string" minOccurs="0" />
 							<xs:element name="Poster" type="xs:string" minOccurs="0" />
+							<xs:element name="Anum" type="xs:int" minOccurs="0" />
 							<xs:element name="CurrentMood" type="xs:string" minOccurs="0" />
 							<xs:element name="CurrentMoodID" type="xs:int" minOccurs="0" />
 							<xs:element name="CurrentMusic" type="xs:string" minOccurs="0" />

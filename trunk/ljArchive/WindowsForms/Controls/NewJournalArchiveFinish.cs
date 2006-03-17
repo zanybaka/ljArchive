@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Controls
 {
 	public class NewJournalArchiveFinish : Genghis.Windows.Forms.WizardPage
 	{
@@ -69,7 +69,7 @@ namespace EF.ljArchive.WindowsForms
 		private void NewJournalArchiveFinish_Enter(object sender, System.EventArgs e)
 		{
 			NewJournalArchiveAccountSettings njas = (NewJournalArchiveAccountSettings) this.WizardSheet.Pages[1];
-			newJournal = new Engine.Journal(njas.ServerURL, njas.UserName, njas.Password, njas.GetComments);
+			newJournal = new Engine.Journal(njas.ServerURL, njas.UserName, njas.Password, njas.GetComments, njas.UseJournal);
 			this.WizardSheet.EnableFinishButton = true;
 		}
 
