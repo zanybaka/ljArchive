@@ -4,7 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Dialogs
 {
 	/// <summary>
 	/// Summary description for Properties.
@@ -146,6 +146,7 @@ namespace EF.ljArchive.WindowsForms
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOK.Location = new System.Drawing.Point(160, 368);
 			this.btnOK.Name = "btnOK";
+			this.btnOK.Size = new System.Drawing.Size(75, 23);
 			this.btnOK.TabIndex = 0;
 			this.btnOK.Text = "O&K";
 			// 
@@ -154,6 +155,7 @@ namespace EF.ljArchive.WindowsForms
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.Location = new System.Drawing.Point(256, 368);
 			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 1;
 			this.btnCancel.Text = "Cancel";
 			// 
@@ -162,7 +164,7 @@ namespace EF.ljArchive.WindowsForms
 			this.lblLocationTag.AutoSize = true;
 			this.lblLocationTag.Location = new System.Drawing.Point(16, 64);
 			this.lblLocationTag.Name = "lblLocationTag";
-			this.lblLocationTag.Size = new System.Drawing.Size(50, 16);
+			this.lblLocationTag.Size = new System.Drawing.Size(51, 13);
 			this.lblLocationTag.TabIndex = 2;
 			this.lblLocationTag.Text = "Location:";
 			// 
@@ -170,7 +172,7 @@ namespace EF.ljArchive.WindowsForms
 			// 
 			this.lblLocation.Location = new System.Drawing.Point(144, 64);
 			this.lblLocation.Name = "lblLocation";
-			this.lblLocation.Size = new System.Drawing.Size(192, 16);
+			this.lblLocation.Size = new System.Drawing.Size(192, 40);
 			this.lblLocation.TabIndex = 3;
 			// 
 			// lblSizeTag
@@ -178,7 +180,7 @@ namespace EF.ljArchive.WindowsForms
 			this.lblSizeTag.AutoSize = true;
 			this.lblSizeTag.Location = new System.Drawing.Point(16, 104);
 			this.lblSizeTag.Name = "lblSizeTag";
-			this.lblSizeTag.Size = new System.Drawing.Size(29, 16);
+			this.lblSizeTag.Size = new System.Drawing.Size(30, 13);
 			this.lblSizeTag.TabIndex = 4;
 			this.lblSizeTag.Text = "Size:";
 			// 
@@ -225,9 +227,8 @@ namespace EF.ljArchive.WindowsForms
 			this.txtPassword.Location = new System.Drawing.Point(120, 56);
 			this.txtPassword.Name = "txtPassword";
 			this.txtPassword.PasswordChar = '*';
-			this.txtPassword.Size = new System.Drawing.Size(192, 20);
+			this.txtPassword.Size = new System.Drawing.Size(192, 21);
 			this.txtPassword.TabIndex = 3;
-			this.txtPassword.Text = "";
 			// 
 			// lblPassword
 			// 
@@ -241,9 +242,8 @@ namespace EF.ljArchive.WindowsForms
 			// 
 			this.txtServerURL.Location = new System.Drawing.Point(120, 22);
 			this.txtServerURL.Name = "txtServerURL";
-			this.txtServerURL.Size = new System.Drawing.Size(192, 20);
+			this.txtServerURL.Size = new System.Drawing.Size(192, 21);
 			this.txtServerURL.TabIndex = 1;
-			this.txtServerURL.Text = "";
 			// 
 			// lblServerURL
 			// 
@@ -266,7 +266,7 @@ namespace EF.ljArchive.WindowsForms
 			this.lblEntryCountTag.AutoSize = true;
 			this.lblEntryCountTag.Location = new System.Drawing.Point(16, 144);
 			this.lblEntryCountTag.Name = "lblEntryCountTag";
-			this.lblEntryCountTag.Size = new System.Drawing.Size(67, 16);
+			this.lblEntryCountTag.Size = new System.Drawing.Size(69, 13);
 			this.lblEntryCountTag.TabIndex = 7;
 			this.lblEntryCountTag.Text = "Entry Count:";
 			// 
@@ -282,7 +282,7 @@ namespace EF.ljArchive.WindowsForms
 			this.lblUsernameTag.AutoSize = true;
 			this.lblUsernameTag.Location = new System.Drawing.Point(16, 24);
 			this.lblUsernameTag.Name = "lblUsernameTag";
-			this.lblUsernameTag.Size = new System.Drawing.Size(60, 16);
+			this.lblUsernameTag.Size = new System.Drawing.Size(59, 13);
 			this.lblUsernameTag.TabIndex = 9;
 			this.lblUsernameTag.Text = "Username:";
 			// 
@@ -299,14 +299,14 @@ namespace EF.ljArchive.WindowsForms
 			this.lblCommentCountTag.AutoSize = true;
 			this.lblCommentCountTag.Location = new System.Drawing.Point(16, 184);
 			this.lblCommentCountTag.Name = "lblCommentCountTag";
-			this.lblCommentCountTag.Size = new System.Drawing.Size(90, 16);
+			this.lblCommentCountTag.Size = new System.Drawing.Size(88, 13);
 			this.lblCommentCountTag.TabIndex = 11;
 			this.lblCommentCountTag.Text = "Comment Count:";
 			// 
 			// Properties
 			// 
 			this.AcceptButton = this.btnOK;
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+			this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
 			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(344, 399);
 			this.Controls.Add(this.lblCommentCount);
@@ -328,8 +328,9 @@ namespace EF.ljArchive.WindowsForms
 			this.Name = "Properties";
 			this.Text = "{0} Properties";
 			this.grpJournalSettings.ResumeLayout(false);
+			this.grpJournalSettings.PerformLayout();
 			this.ResumeLayout(false);
-
+			this.PerformLayout();
 		}
 		#endregion
 

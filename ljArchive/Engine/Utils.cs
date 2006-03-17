@@ -127,4 +127,52 @@ namespace EF.ljArchive.Engine
 
 		static private MD5CryptoServiceProvider md5;
 	}
+
+	/// <summary>
+	/// Miscellaneous functions for talking to an LJ server.
+	/// </summary>
+	public class Server
+	{
+		/// <summary>
+		/// Get journals a user has community access to.
+		/// </summary>
+		/// <param name="username">The user's username.</param>
+		/// <param name="password">The user's password.</param>
+		/// <param name="serverURL">The server's URL.</param>
+		/// <returns></returns>
+		static public string[] GetUseJournals(string username, string password, string serverURL)
+		{
+			ILJServer iLJ;
+			XMLStructs.GetChallengeResponse gcr;
+			string auth_response;
+			XMLStructs.LoginParams lp;
+			XMLStructs.LoginResponse lr;
+
+			try
+			{
+				iLJ = LJServerFactory.Create(serverURL);
+				gcr = iLJ.GetChallenge();
+				auth_response = MD5Hasher.Compute(gcr.challenge + MD5Hasher.Compute(password));
+				lp = new XMLStructs.LoginParams(username, "challenge", gcr.challenge, auth_response, 1, clientVersion,
+				0, 0, 1, 1);
+				lr = iLJ.Login(lp);
+			}
+			catch (CookComputing.XmlRpc.XmlRpcFaultException xfe)
+			{
+				throw new ExpectedSyncException(ExpectedError.InvalidPassword, xfe);
+			}
+			catch (System.Net.WebException we)
+			{
+				throw new ExpectedSyncException(ExpectedError.ServerNotResponding, we);
+			}
+			catch (CookComputing.XmlRpc.XmlRpcServerException xse)
+			{
+				throw new ExpectedSyncException(ExpectedError.ServerNotResponding, xse);
+			}
+			return lr.usejournals;
+		}
+		
+		static private readonly string clientVersion = Environment.OSVersion.Platform.ToString() + "-.NET/" +
+			System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+	}
 }

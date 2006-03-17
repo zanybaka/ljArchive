@@ -8,7 +8,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 	public struct SyncItemsParams
 	{
 		public SyncItemsParams(string username, string auth_method, string auth_challenge, string auth_response,
-			int ver, string lastsync)
+			int ver, string lastsync, string usejournal)
 		{
 			this.username = username;
 			this.auth_method = auth_method;
@@ -16,6 +16,7 @@ namespace EF.ljArchive.Engine.XMLStructs
 			this.auth_response = auth_response;
 			this.ver = ver;
 			this.lastsync = lastsync;
+			this.usejournal = usejournal;
 		}
 		public string username;
 		public string auth_method;
@@ -23,5 +24,6 @@ namespace EF.ljArchive.Engine.XMLStructs
 		public string auth_response;
 		public int ver;
 		public string lastsync;
+		public string usejournal;
 	}
 }

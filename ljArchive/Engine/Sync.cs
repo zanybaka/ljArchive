@@ -337,7 +337,7 @@ namespace EF.ljArchive.Engine
 				gcr = iLJ.GetChallenge();
 				auth_response = MD5Hasher.Compute(gcr.challenge + or.HPassword);
 				sip = new SyncItemsParams(or.UserName, "challenge", gcr.challenge, auth_response, 1,
-					lastSyncString);
+					lastSyncString, or.UseJournal);
 				sir = iLJ.SyncItems(sip);
 				total = (total == -1 ? sir.total : total);
 				count += sir.count;
@@ -366,7 +366,7 @@ namespace EF.ljArchive.Engine
 				string auth_response = MD5Hasher.Compute(gcr.challenge + or.HPassword);
 				GetEventsParams gep = new GetEventsParams(or.UserName, "challenge", gcr.challenge,
 					auth_response, 1, 0, 0, 0, "syncitems", oldestTime.ToString(_datetimeformat), 0, 0, 0, 0,
-					string.Empty, 0, "unix", string.Empty);
+					string.Empty, 0, "unix", or.UseJournal);
 				GetEventsResponse ger;
 				socb(new SyncOperationEventArgs(SyncOperation.GetEvents, total - sic.Count, total));
 				ger = iLJ.GetEvents(gep);
@@ -400,6 +400,8 @@ namespace EF.ljArchive.Engine
 			// it doesn't make sense to call a full export comments meta AND a full export comments body
 			// see http://www.livejournal.com/developer/exporting.bml for more info
 			Uri uri = new Uri(new Uri(or.ServerURL), string.Format(_exportcommentsmetapath, serverMaxID + 1));
+			if (or.UseJournal.Length > 0)
+				uri = new Uri(uri.AbsoluteUri + string.Format("&authas={0}", or.UseJournal));
 			HttpWebRequest w = HttpWebRequestFactory.Create(uri.AbsoluteUri, sgr.ljsession);
 			using (Stream s = w.GetResponse().GetResponseStream())
 			{
@@ -431,6 +433,8 @@ namespace EF.ljArchive.Engine
 			while (count < serverMaxID)
 			{
 				Uri uri = new Uri(new Uri(or.ServerURL), string.Format(_exportcommentsbodypath, count + 1));
+				if (or.UseJournal.Length > 0)
+					uri = new Uri(uri.AbsoluteUri + string.Format("&authas={0}", or.UseJournal));
 				HttpWebRequest w = HttpWebRequestFactory.Create(uri.AbsoluteUri, sgr.ljsession);
 				socb(new SyncOperationEventArgs(SyncOperation.ExportCommentsBody, count - localMaxID,
 					serverMaxID - localMaxID));
@@ -539,6 +543,7 @@ namespace EF.ljArchive.Engine
 				er.Subject = e.subject;
 				er.Body = e.eventText;
 				er.Poster = e.poster;
+				er.Anum = e.anum;
 				er.CurrentMood = e.props.current_mood;
 				er.CurrentMoodID = e.props.current_moodid;
 				er.CurrentMusic = e.props.current_music;

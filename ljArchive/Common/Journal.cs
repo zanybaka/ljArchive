@@ -289,6 +289,8 @@ namespace EF.ljArchive.Common {
             
             private DataColumn columnGetComments;
             
+            private DataColumn columnUseJournal;
+            
             internal OptionsDataTable() : 
                     base("Options") {
                 this.InitClass();
@@ -359,6 +361,12 @@ namespace EF.ljArchive.Common {
                 }
             }
             
+            internal DataColumn UseJournalColumn {
+                get {
+                    return this.columnUseJournal;
+                }
+            }
+            
             public OptionsRow this[int index] {
                 get {
                     return ((OptionsRow)(this.Rows[index]));
@@ -377,7 +385,7 @@ namespace EF.ljArchive.Common {
                 this.Rows.Add(row);
             }
             
-            public OptionsRow AddOptionsRow(string ServerURL, string DefaultPicURL, string FullName, string UserName, string HPassword, System.DateTime LastSync, bool GetComments) {
+            public OptionsRow AddOptionsRow(string ServerURL, string DefaultPicURL, string FullName, string UserName, string HPassword, System.DateTime LastSync, bool GetComments, string UseJournal) {
                 OptionsRow rowOptionsRow = ((OptionsRow)(this.NewRow()));
                 rowOptionsRow.ItemArray = new object[] {
                         ServerURL,
@@ -386,7 +394,8 @@ namespace EF.ljArchive.Common {
                         UserName,
                         HPassword,
                         LastSync,
-                        GetComments};
+                        GetComments,
+                        UseJournal};
                 this.Rows.Add(rowOptionsRow);
                 return rowOptionsRow;
             }
@@ -413,6 +422,7 @@ namespace EF.ljArchive.Common {
                 this.columnHPassword = this.Columns["HPassword"];
                 this.columnLastSync = this.Columns["LastSync"];
                 this.columnGetComments = this.Columns["GetComments"];
+                this.columnUseJournal = this.Columns["UseJournal"];
             }
             
             private void InitClass() {
@@ -430,6 +440,8 @@ namespace EF.ljArchive.Common {
                 this.Columns.Add(this.columnLastSync);
                 this.columnGetComments = new DataColumn("GetComments", typeof(bool), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnGetComments);
+                this.columnUseJournal = new DataColumn("UseJournal", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnUseJournal);
             }
             
             public OptionsRow NewOptionsRow() {
@@ -585,6 +597,20 @@ namespace EF.ljArchive.Common {
                 }
             }
             
+            public string UseJournal {
+                get {
+                    try {
+                        return ((string)(this[this.tableOptions.UseJournalColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOptions.UseJournalColumn] = value;
+                }
+            }
+            
             public bool IsServerURLNull() {
                 return this.IsNull(this.tableOptions.ServerURLColumn);
             }
@@ -640,6 +666,14 @@ namespace EF.ljArchive.Common {
             public void SetGetCommentsNull() {
                 this[this.tableOptions.GetCommentsColumn] = System.Convert.DBNull;
             }
+            
+            public bool IsUseJournalNull() {
+                return this.IsNull(this.tableOptions.UseJournalColumn);
+            }
+            
+            public void SetUseJournalNull() {
+                this[this.tableOptions.UseJournalColumn] = System.Convert.DBNull;
+            }
         }
         
         [System.Diagnostics.DebuggerStepThrough()]
@@ -683,6 +717,8 @@ namespace EF.ljArchive.Common {
             private DataColumn columnBody;
             
             private DataColumn columnPoster;
+            
+            private DataColumn columnAnum;
             
             private DataColumn columnCurrentMood;
             
@@ -783,6 +819,12 @@ namespace EF.ljArchive.Common {
             internal DataColumn PosterColumn {
                 get {
                     return this.columnPoster;
+                }
+            }
+
+            internal DataColumn AnumColumn {
+                get {
+                    return this.columnAnum;
                 }
             }
             
@@ -908,6 +950,7 @@ namespace EF.ljArchive.Common {
                         string Subject, 
                         string Body, 
                         string Poster, 
+                        int Anum,
                         string CurrentMood, 
                         int CurrentMoodID, 
                         string CurrentMusic, 
@@ -933,6 +976,7 @@ namespace EF.ljArchive.Common {
                         Subject,
                         Body,
                         Poster,
+                        Anum,
                         CurrentMood,
                         CurrentMoodID,
                         CurrentMusic,
@@ -980,6 +1024,7 @@ namespace EF.ljArchive.Common {
                 this.columnSubject = this.Columns["Subject"];
                 this.columnBody = this.Columns["Body"];
                 this.columnPoster = this.Columns["Poster"];
+                this.columnAnum = this.Columns["Anum"];
                 this.columnCurrentMood = this.Columns["CurrentMood"];
                 this.columnCurrentMoodID = this.Columns["CurrentMoodID"];
                 this.columnCurrentMusic = this.Columns["CurrentMusic"];
@@ -1013,6 +1058,8 @@ namespace EF.ljArchive.Common {
                 this.Columns.Add(this.columnBody);
                 this.columnPoster = new DataColumn("Poster", typeof(string), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnPoster);
+                this.columnAnum = new DataColumn("Anum", typeof(int), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnAnum);
                 this.columnCurrentMood = new DataColumn("CurrentMood", typeof(string), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnCurrentMood);
                 this.columnCurrentMoodID = new DataColumn("CurrentMoodID", typeof(int), null, System.Data.MappingType.Element);
@@ -1196,6 +1243,20 @@ namespace EF.ljArchive.Common {
                 }
                 set {
                     this[this.tableEvents.PosterColumn] = value;
+                }
+            }
+            
+            public int Anum {
+                get {
+                    try {
+                        return ((int)(this[this.tableEvents.AnumColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEvents.AnumColumn] = value;
                 }
             }
             
@@ -1469,6 +1530,14 @@ namespace EF.ljArchive.Common {
             
             public void SetPosterNull() {
                 this[this.tableEvents.PosterColumn] = System.Convert.DBNull;
+            }
+            
+            public bool IsAnumNull() {
+                return this.IsNull(this.tableEvents.AnumColumn);
+            }
+            
+            public void SetAnumNull() {
+                this[this.tableEvents.AnumColumn] = System.Convert.DBNull;
             }
             
             public bool IsCurrentMoodNull() {

@@ -4,7 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace EF.ljArchive.WindowsForms
+namespace EF.ljArchive.WindowsForms.Dialogs
 {
 	/// <summary>
 	/// Summary description for GeneralError.
@@ -16,7 +16,7 @@ namespace EF.ljArchive.WindowsForms
 		internal System.Windows.Forms.Button btnCopyToClipboard;
 		internal System.Windows.Forms.Button btnClose;
 		internal System.Windows.Forms.Label lblFoundTheFollowingError;
-		private EF.ljArchive.WindowsForms.LineControl lineControl1;
+		private EF.ljArchive.WindowsForms.Controls.LineControl lineControl1;
 		private System.Windows.Forms.Label lblTitle;
 		/// <summary>
 		/// Required designer variable.
@@ -71,7 +71,7 @@ namespace EF.ljArchive.WindowsForms
 			this.btnClose = new System.Windows.Forms.Button();
 			this.btnCopyToClipboard = new System.Windows.Forms.Button();
 			this.lblFoundTheFollowingError = new System.Windows.Forms.Label();
-			this.lineControl1 = new EF.ljArchive.WindowsForms.LineControl();
+			this.lineControl1 = new EF.ljArchive.WindowsForms.Controls.LineControl();
 			this.lblTitle = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
