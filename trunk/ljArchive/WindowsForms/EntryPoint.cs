@@ -15,6 +15,10 @@ namespace EF.ljArchive.WindowsForms
 		static void Main() 
 		{
 			Explorer e = null;
+			
+			// run internally system invariant to avoid date weirdness
+			System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+
 			if (System.Environment.Version.Major > 1) // .NET 2.0 XP styles
 				System.Windows.Forms.Application.EnableVisualStyles();
 #if DEBUG
