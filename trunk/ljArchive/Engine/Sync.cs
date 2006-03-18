@@ -341,7 +341,7 @@ namespace EF.ljArchive.Engine
 				gcr = iLJ.GetChallenge();
 				auth_response = MD5Hasher.Compute(gcr.challenge + or.HPassword);
 				sip = new SyncItemsParams(or.UserName, "challenge", gcr.challenge, auth_response, 1,
-					lastSyncString, or.UseJournal);
+				                          lastSyncString, (or.IsUseJournalNull() ? string.Empty : or.UseJournal));
 				sir = iLJ.SyncItems(sip);
 				total = (total == -1 ? sir.total : total);
 				count += sir.count;
@@ -370,7 +370,7 @@ namespace EF.ljArchive.Engine
 				string auth_response = MD5Hasher.Compute(gcr.challenge + or.HPassword);
 				GetEventsParams gep = new GetEventsParams(or.UserName, "challenge", gcr.challenge,
 					auth_response, 1, 0, 0, 0, "syncitems", oldestTime.ToString(_datetimeformat), 0, 0, 0, 0,
-					string.Empty, 0, "unix", or.UseJournal);
+					string.Empty, 0, "unix", (or.IsUseJournalNull() ? string.Empty : or.UseJournal));
 				GetEventsResponse ger;
 				socb(new SyncOperationEventArgs(SyncOperation.GetEvents, total - sic.Count, total));
 				ger = iLJ.GetEvents(gep);
