@@ -183,7 +183,7 @@ namespace EF.ljArchive.Engine.HTML
 					rowFilter += " AND ID IN(" + IntJoin(commentIDs) + ")";
 				DataRow[] drs = j.Comments.Select(rowFilter);
 				CommentNode cn = new CommentNode(null, null);
-				if (drs.Length > 0)
+				if (drs.Length > 0 && !AllDeleted(drs))
 				{
 					sw.Write(commentsHeader);
 					foreach (Journal.CommentsRow cr in drs)
@@ -230,10 +230,36 @@ namespace EF.ljArchive.Engine.HTML
 					if (id.StartsWith("!"))
 					{
 						string idToBlock = id.Substring(1);
-						if (options.Table.Columns.Contains(idToBlock) && options.IsNull(idToBlock))
-							idstack.Add(idToBlock);
-						else
-							tw.Write(block);
+						switch (idToBlock)
+						{
+							case "defaultpicurl":
+								if ((options.IsUseJournalNull() && options.IsDefaultPicURLNull())
+								    || (!options.IsUseJournalNull() && options.IsCommunityPicURLNull()))
+									idstack.Add(idToBlock);
+								break;
+							default:
+								if (idToBlock.StartsWith("!"))
+								{
+									if (options.Table.Columns.Contains(idToBlock.Substring(1)))
+									{
+										if (!options.IsNull(idToBlock.Substring(1)))
+											idstack.Add(idToBlock);
+									}
+									else
+										tw.Write(block);
+								}
+								else
+								{
+									if (options.Table.Columns.Contains(idToBlock))
+									{
+										if (options.IsNull(idToBlock))
+											idstack.Add(idToBlock);
+									}
+									else
+										tw.Write(block);
+								}
+								break;
+						}
 						continue;
 					}
 					// check the id stack for removals
@@ -254,6 +280,9 @@ namespace EF.ljArchive.Engine.HTML
 						{
 							case "userinfoiconpath":
 								tw.Write(hjws.UserInfoIconPath);
+								break;
+							case "communityinfoiconpath":
+								tw.Write(hjws.CommunityInfoIconPath);
 								break;
 							case "spacerpath":
 								tw.Write(hjws.SpacerPath);
@@ -294,6 +323,12 @@ namespace EF.ljArchive.Engine.HTML
 							case "entryfootertextcolor":
 								tw.Write(GetHTMLColor(hjws.EntryFooterTextColor));
 								break;
+							case "defaultpicurl":
+								if (options.IsUseJournalNull())
+									tw.Write(options.DefaultPicURL);
+								else
+									tw.Write(options.CommunityPicURL);
+								break;
 							default:
 								if (id != "hpassword" && options.Table.Columns.Contains(id))
 									tw.Write(options[id]);
@@ -331,8 +366,9 @@ namespace EF.ljArchive.Engine.HTML
 						switch (idToBlock)
 						{
 							case "userpicurl":
-								if ((er.IsPictureKeywordNull() || updt.FindByPicKeyword(er.PictureKeyword) == null)
-									&& (options.IsDefaultPicURLNull()))
+								if ((!er.IsPosterNull() && er.Poster != options.UserName)
+								    || ((er.IsPictureKeywordNull() || updt.FindByPicKeyword(er.PictureKeyword) == null)
+								        && (options.IsDefaultPicURLNull())))
 									idstack.Add(idToBlock);
 								break;
 							case "currentmood":
@@ -365,13 +401,16 @@ namespace EF.ljArchive.Engine.HTML
 						switch (id)
 						{
 							case "userpicurl":
-								Journal.UserPicsRow ur = null;
-								if (!er.IsPictureKeywordNull())
-									ur = updt.FindByPicKeyword(er.PictureKeyword);
-								if (ur != null)
-									tw.Write(ur.PicURL);
-								else if (!options.IsDefaultPicURLNull())
-									tw.Write(options.DefaultPicURL);
+								if (er.IsPosterNull() || er.Poster == options.UserName)
+								{
+									Journal.UserPicsRow ur = null;
+									if (!er.IsPictureKeywordNull())
+										ur = updt.FindByPicKeyword(er.PictureKeyword);
+									if (ur != null)
+										tw.Write(ur.PicURL);
+									else if (!options.IsDefaultPicURLNull())
+										tw.Write(options.DefaultPicURL);
+								}
 								break;
 							case "currentmood":
 								if (!er.IsCurrentMoodNull())
@@ -384,6 +423,12 @@ namespace EF.ljArchive.Engine.HTML
 									tw.Write(hjws.ProtectedIconPath);
 								else if (!er.IsSecurityNull() && er.Security == "private")
 									tw.Write(hjws.PrivateIconPath);
+								break;
+							case "posterusername":
+								if (!options.IsUseJournalNull() && !er.IsPosterNull())
+									tw.Write(er.Poster);
+								else
+									tw.Write(options.UserName);
 								break;
 							default:
 								if (id == "subject" || id == "currentmusic" || id == "body")
@@ -508,6 +553,11 @@ namespace EF.ljArchive.Engine.HTML
 							string user = mode.Substring(4).Trim(new char[] {' ', '=', '"'});
 							tw.Write(string.Format(_usertransform, options.ServerURL, user, hjws.UserInfoIconPath));
 						}
+						if (mode.StartsWith("comm"))
+						{
+							string comm = mode.Substring(4).Trim(new char[] {' ', '=', '"'});
+							tw.Write(string.Format(_usertransform, options.ServerURL, comm, hjws.CommunityInfoIconPath));
+						}
 					}
 					else if (hjws.BlockImages && id.StartsWith("img"))
 					{
@@ -621,6 +671,19 @@ namespace EF.ljArchive.Engine.HTML
 				sb.Append(i);
 			}
 			return sb.ToString().Substring(1);
+		}
+		
+		/// <summary>
+		/// Returns true if all rows have deleted state.
+		/// </summary>
+		/// <param name="drs">Datarows to check if all in delete state.</param>
+		/// <returns>true if all rows have deleted state.</returns>
+		private bool AllDeleted(DataRow[] drs)
+		{
+			foreach (DataRow dr in drs)
+				if ((string) dr["State"] != "D")
+					return false;
+			return true;
 		}
 		#endregion
 

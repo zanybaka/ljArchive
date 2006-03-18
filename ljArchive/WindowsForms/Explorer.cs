@@ -644,6 +644,11 @@ namespace EF.ljArchive.WindowsForms
 				if (showError)
 					Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.BadFileFormat, fnfe, this);
 			}
+			catch (System.Reflection.TargetInvocationException tie)
+			{
+				if (showError)
+					Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.BadFileFormat, tie, this);				
+			}
 			cbm.Grid.IsChecked &= (j != null);
 			cbm_Command_Click(cbm.Grid, EventArgs.Empty);
 			cbm.HtmlSettings.IsChecked &= (j != null);
@@ -1000,9 +1005,9 @@ namespace EF.ljArchive.WindowsForms
 				Common.Journal.EventsRow er = (Common.Journal.EventsRow) drv.Row;
 				Uri baseURI = new Uri(j.Options.ServerURL);
 				Uri uri = new Uri(baseURI, string.Format("/{0}/{1}/{2}.html",
-				                                     (j.Options.UseJournal.Length > 0 ? "community" : "users"),
-				                                     (j.Options.UseJournal.Length > 0 ? j.Options.UseJournal : j.Options.UserName),
-				                                     er.ID * 256 + er.Anum));
+				                                         (j.Options.IsUseJournalNull() ? "users" : "community"),
+				                                         (j.Options.IsUseJournalNull() ? j.Options.UserName : j.Options.UseJournal),
+				                                         er.ID * 256 + er.Anum));
 				try
 				{
 					System.Diagnostics.Process.Start(uri.AbsoluteUri);

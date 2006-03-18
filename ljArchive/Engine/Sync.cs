@@ -218,6 +218,7 @@ namespace EF.ljArchive.Engine
 			CommentCollection cc = null;
 			UserMapCollection umc = null;
 			LoginResponse lr = new LoginResponse();
+			string communityPicURL = null;
 			DateTime lastSync = DateTime.MinValue;
 			SessionGenerateResponse sgr;
 			int serverMaxID, localMaxID;
@@ -238,7 +239,7 @@ namespace EF.ljArchive.Engine
 				// STEP 2: Login
 				socb(new SyncOperationEventArgs(SyncOperation.Login, 0, 0));
 				lr = new LoginResponse();
-				Login(or, iLJ, ref lr);
+				Login(or, iLJ, ref lr, ref communityPicURL);
 
 				// STEP 3: SyncItems
 				socb(new SyncOperationEventArgs(SyncOperation.SyncItems, 0, 0));
@@ -277,7 +278,7 @@ namespace EF.ljArchive.Engine
 				if (syncException == null)
 				{
 					socb(new SyncOperationEventArgs(SyncOperation.Merge, 0, 0));
-					Merge(j, ec, cc, umc, deletedsic, lr, lastSync);
+					Merge(j, ec, cc, umc, deletedsic, lr, communityPicURL, lastSync);
 					socb(new SyncOperationEventArgs(SyncOperation.Success, ec.Count, cc.Count));
 				}
 				else if (syncException.GetType() == typeof(ExpectedSyncException)
@@ -289,7 +290,7 @@ namespace EF.ljArchive.Engine
 					socb(new SyncOperationEventArgs(SyncOperation.Merge, 0, 0));
 					if (sic.Count > 0)
 						lastSync = DateTime.Parse(sic.GetOldest().time).AddSeconds(-1);
-					Merge(j, ec, cc, umc, deletedsic, lr, lastSync);
+					Merge(j, ec, cc, umc, deletedsic, lr, communityPicURL, lastSync);
 					socb(new SyncOperationEventArgs(SyncOperation.PartialSync, ec.Count, cc.Count));
 				}
 				else
@@ -304,7 +305,7 @@ namespace EF.ljArchive.Engine
 			}
 		}
 
-		static private void Login(Journal.OptionsRow or, ILJServer iLJ, ref LoginResponse lr)
+		static private void Login(Journal.OptionsRow or, ILJServer iLJ, ref LoginResponse lr, ref string communityPicURL)
 		{
 			// logging in to the server gets back a lot of assorted metadata we need to store
 			GetChallengeResponse gcr;
@@ -316,6 +317,9 @@ namespace EF.ljArchive.Engine
 			lp = new LoginParams(or.UserName, "challenge", gcr.challenge, auth_response, 1, clientVersion,
 				j.GetMaxMoodID(), 0, 1, 1);
 			lr = iLJ.Login(lp);
+			// if downloading a community, we want the community's default user pic, not the user's
+			if (!or.IsUseJournalNull())
+				communityPicURL = Server.GetDefaultPicURL(or.UseJournal, or.ServerURL, true);
 		}
 
 		static private void SyncItems(Journal.OptionsRow or, ILJServer iLJ, ref SyncItemCollection sic,
@@ -400,7 +404,7 @@ namespace EF.ljArchive.Engine
 			// it doesn't make sense to call a full export comments meta AND a full export comments body
 			// see http://www.livejournal.com/developer/exporting.bml for more info
 			Uri uri = new Uri(new Uri(or.ServerURL), string.Format(_exportcommentsmetapath, serverMaxID + 1));
-			if (or.UseJournal.Length > 0)
+			if (!or.IsUseJournalNull())
 				uri = new Uri(uri.AbsoluteUri + string.Format("&authas={0}", or.UseJournal));
 			HttpWebRequest w = HttpWebRequestFactory.Create(uri.AbsoluteUri, sgr.ljsession);
 			using (Stream s = w.GetResponse().GetResponseStream())
@@ -433,7 +437,7 @@ namespace EF.ljArchive.Engine
 			while (count < serverMaxID)
 			{
 				Uri uri = new Uri(new Uri(or.ServerURL), string.Format(_exportcommentsbodypath, count + 1));
-				if (or.UseJournal.Length > 0)
+				if (!or.IsUseJournalNull())
 					uri = new Uri(uri.AbsoluteUri + string.Format("&authas={0}", or.UseJournal));
 				HttpWebRequest w = HttpWebRequestFactory.Create(uri.AbsoluteUri, sgr.ljsession);
 				socb(new SyncOperationEventArgs(SyncOperation.ExportCommentsBody, count - localMaxID,
@@ -494,7 +498,7 @@ namespace EF.ljArchive.Engine
 		}
 
 		static private void Merge(Journal j, EventCollection ec, CommentCollection cc, UserMapCollection umc,
-			SyncItemCollection deletedsic, LoginResponse lr, DateTime lastSync)
+			SyncItemCollection deletedsic, LoginResponse lr, string communityPicURL, DateTime lastSync)
 		{
 			// update various metadata
 
@@ -599,6 +603,7 @@ namespace EF.ljArchive.Engine
 			// update options
 			j.Options.DefaultPicURL = (lr.defaultpicurl != null && lr.defaultpicurl.Length > 0 ?
 				lr.defaultpicurl : null);
+			j.Options.CommunityPicURL = communityPicURL;
 			j.Options.FullName = (lr.fullname != null && lr.fullname.Length > 0 ? lr.fullname : null);
 			j.Options.LastSync = lastSync;
 		}

@@ -57,9 +57,15 @@
         background-color: #<% EntryFooterBackgroundColor %>;
       }      
     </style>
+    <title><% UseJournal %><% !!UseJournal %><% FullName %><% /!!UseJournal %></title>
   </head>
   <body>
+<% !UseJournal %>
+  Here's the journal of the <% UseJournal %> community:<br />&nbsp;
+<% /!UseJournal %>
+<% !!UseJournal %>
   Here's the journal of <% UserName %>, also known as <% FullName %>:<br />&nbsp;
+<% /!!UseJournal %>
 <% /SECTIONPAGEHEADER %>
 
 
@@ -79,6 +85,10 @@
       <img src="<% UserPicURL %>" title="<% Picture_Keyword %>" alt="">
       <br />
 <% /!UserPicURL %>
+<% !UseJournal %>
+      <b>Poster:</b> <% PosterUserName %>
+      <br />
+<% /!UseJournal %>
 <% !SecurityIconpath %>
       <b>Security:</b> <img src="<% ServerURL %><% SecurityIconpath %>"> (<% Security %>)
       <br />

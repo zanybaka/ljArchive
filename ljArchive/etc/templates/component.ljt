@@ -151,7 +151,7 @@
 			margin-bottom: 1px;
 		}
 		</style>
-		<title><% UserName %></title>
+		<title><% UseJournal %><% !!UseJournal %><% FullName %><% /!!UseJournal %></title>
 	</head>
 	<body marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
 		<div><img src="<% ServerURL %>/palimg/component/clear.gif" width="1" height="3"
@@ -188,7 +188,12 @@
 									alt="" border="0" /></td>
 							<td class="tabBg" width="100%"><!-- HEADER CONTENT -->
 								<div class="userTitle">
+<% !!UseJournal %>
 									<% FullName %>
+<% /!!UseJournal %>
+<% !UseJournal %>
+									<% UseJournal %>
+<% /!UseJournal %>
 								</div>
 							</td>
 							<td class="tabBg" width="3"><img src="<% ServerURL %>/palimg/component/clear.gif" width="1" height="3"
@@ -275,8 +280,8 @@
 							<td valign="top" class="entryHolderBg"><% !UserPicURL %><div align="center"><a href="<% ServerURL %>/users/<% UserName %>/"><img border="1" src="<% UserPicURL %>"
 											alt="<% UserName %>" class="userpic" /></a></div><% /!UserPicURL %>
 								<span class='ljuser' style='white-space:nowrap;'>
-									<a href='<% ServerURL %>/userinfo.bml?user=<% UserName %>'><img src='<% ServerURL %><% UserInfoIconPath %>' alt='[info]' width='17' height='17'
-											style='vertical-align:bottom;border:0;' /></a><a href='<% ServerURL %>/users/<% UserName %>/'><b><% UserName %></b></a></span>
+									<a href='<% ServerURL %>/userinfo.bml?user=<% PosterUserName %>'><img src='<% ServerURL %><% UserInfoIconPath %>' alt='[info]' width='17' height='17'
+											style='vertical-align:bottom;border:0;' /></a><a href='<% ServerURL %>/users/<% PosterUserName %>/'><b><% PosterUserName %></b></a></span>
 							</td>
 							<td class="entryHolderBg" width="100%" valign="top">
 								<table cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -547,11 +552,19 @@
 <% /!DefaultPicURL %>
 										<tr>
 											<td colspan="3" class="compContent">
+<% !UseJournal %>
+												<div><b>Community:</b>
+													<span class='ljuser' style='white-space:nowrap;'>
+														<a href='<% ServerURL %>/userinfo.bml?user=<% UseJournal %>'><img src='<% ServerURL %><% CommunityInfoIconPath %>' alt='[info]' width='17' height='17'
+																style='vertical-align:bottom;border:0;' /></a><a href='<% ServerURL %>/community/<% UseJournal %>/'><b><% UseJournal %></b></a></span></div>
+<% /!UseJournal %>
+<% !!UseJournal %>
 												<div><b>User:</b>
 													<span class='ljuser' style='white-space:nowrap;'>
 														<a href='<% ServerURL %>/userinfo.bml?user=<% UserName %>'><img src='<% ServerURL %><% UserInfoIconPath %>' alt='[info]' width='17' height='17'
 																style='vertical-align:bottom;border:0;' /></a><a href='<% ServerURL %>/users/<% UserName %>/'><b><% UserName %></b></a></span></div>
 												<div><b>Name:</b> <% FullName %></div>
+<% /!!UseJournal %>
 											</td>
 										</tr>
 									</table>

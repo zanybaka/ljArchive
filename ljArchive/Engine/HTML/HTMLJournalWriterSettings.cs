@@ -27,6 +27,7 @@ namespace EF.ljArchive.Engine.HTML
 			hjws.protectedIconPath = "/img/icon_protected.gif";
 			hjws.privateIconPath = "/img/icon_private.gif";
 			hjws.userInfoIconPath = "/img/userinfo.gif";
+			hjws.communityInfoIconPath = "/img/community.gif";
 			hjws.spacerPath = "/img/dot.gif";
 			hjws.pageBackgroundColor = Color.FromArgb(38, 72, 128);
 			hjws.pageAlternateBackgroundColor = Color.FromArgb(241, 232, 0);
@@ -83,6 +84,17 @@ namespace EF.ljArchive.Engine.HTML
 		{
 			get { return this.userInfoIconPath; }
 			set { this.userInfoIconPath = value; }
+		}
+		
+		/// <summary>
+		/// Relative path for the community info icon.
+		/// </summary>
+		[Category("Advanced")]
+		[Description("Relative path for the community info icon.")]
+		public string CommunityInfoIconPath
+		{
+			get { return this.communityInfoIconPath; }
+			set { this.communityInfoIconPath = value; }
 		}
 
 		/// <summary>
@@ -330,6 +342,7 @@ namespace EF.ljArchive.Engine.HTML
 		private string protectedIconPath;
 		private string privateIconPath;
 		private string userInfoIconPath;
+		private string communityInfoIconPath;
 		private string spacerPath;
 		private Color pageBackgroundColor;
 		private Color pageAlternateBackgroundColor;
