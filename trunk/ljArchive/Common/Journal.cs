@@ -279,6 +279,8 @@ namespace EF.ljArchive.Common {
             
             private DataColumn columnDefaultPicURL;
             
+            private DataColumn columnCommunityPicURL;
+            
             private DataColumn columnFullName;
             
             private DataColumn columnUserName;
@@ -328,6 +330,12 @@ namespace EF.ljArchive.Common {
             internal DataColumn DefaultPicURLColumn {
                 get {
                     return this.columnDefaultPicURL;
+                }
+            }
+            
+            internal DataColumn CommunityPicURLColumn {
+                get {
+                    return this.columnCommunityPicURL;
                 }
             }
             
@@ -385,11 +393,12 @@ namespace EF.ljArchive.Common {
                 this.Rows.Add(row);
             }
             
-            public OptionsRow AddOptionsRow(string ServerURL, string DefaultPicURL, string FullName, string UserName, string HPassword, System.DateTime LastSync, bool GetComments, string UseJournal) {
+            public OptionsRow AddOptionsRow(string ServerURL, string DefaultPicURL, string CommunityPicURL, string FullName, string UserName, string HPassword, System.DateTime LastSync, bool GetComments, string UseJournal) {
                 OptionsRow rowOptionsRow = ((OptionsRow)(this.NewRow()));
                 rowOptionsRow.ItemArray = new object[] {
                         ServerURL,
                         DefaultPicURL,
+                        CommunityPicURL,
                         FullName,
                         UserName,
                         HPassword,
@@ -417,6 +426,7 @@ namespace EF.ljArchive.Common {
             internal void InitVars() {
                 this.columnServerURL = this.Columns["ServerURL"];
                 this.columnDefaultPicURL = this.Columns["DefaultPicURL"];
+                this.columnCommunityPicURL = this.Columns["CommunityPicURL"];
                 this.columnFullName = this.Columns["FullName"];
                 this.columnUserName = this.Columns["UserName"];
                 this.columnHPassword = this.Columns["HPassword"];
@@ -430,6 +440,8 @@ namespace EF.ljArchive.Common {
                 this.Columns.Add(this.columnServerURL);
                 this.columnDefaultPicURL = new DataColumn("DefaultPicURL", typeof(string), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnDefaultPicURL);
+                this.columnCommunityPicURL = new DataColumn("CommunityPicURL", typeof(string), null, System.Data.MappingType.Element);
+                this.Columns.Add(this.columnCommunityPicURL);
                 this.columnFullName = new DataColumn("FullName", typeof(string), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnFullName);
                 this.columnUserName = new DataColumn("UserName", typeof(string), null, System.Data.MappingType.Element);
@@ -524,6 +536,20 @@ namespace EF.ljArchive.Common {
                 }
                 set {
                     this[this.tableOptions.DefaultPicURLColumn] = value;
+                }
+            }
+
+            public string CommunityPicURL {
+                get {
+                    try {
+                        return ((string)(this[this.tableOptions.CommunityPicURLColumn]));
+                    }
+                    catch (InvalidCastException e) {
+                        throw new StrongTypingException("Cannot get value because it is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOptions.CommunityPicURLColumn] = value;
                 }
             }
             
@@ -625,6 +651,14 @@ namespace EF.ljArchive.Common {
             
             public void SetDefaultPicURLNull() {
                 this[this.tableOptions.DefaultPicURLColumn] = System.Convert.DBNull;
+            }
+            
+            public bool IsCommunityPicURLNull() {
+                return this.IsNull(this.tableOptions.CommunityPicURLColumn);
+            }
+            
+            public void SetCommunityPicURLNull() {
+                this[this.tableOptions.CommunityPicURLColumn] = System.Convert.DBNull;
             }
             
             public bool IsFullNameNull() {

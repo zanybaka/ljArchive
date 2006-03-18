@@ -31,9 +31,10 @@ namespace EF.ljArchive.Engine
 			this.Relations.Add("FK_Users_Comments", this.Users.Columns["ID"],
 				this.Comments.Columns["PosterID"], false);
 			this.Comments.Columns.Add("PosterUserName", typeof(string), "Parent.User");
-			base.Options.AddOptionsRow(serverURL, null, null, userName, null,
+			base.Options.AddOptionsRow(serverURL, null, null, null, userName, null,
 				DateTime.MinValue, getComments, useJournal);
 			SetPassword(password);
+			this.version = this.GetType().Assembly.GetName().Version;
 		}
 		#endregion
 
@@ -148,6 +149,7 @@ namespace EF.ljArchive.Engine
 			object[][] eventsRows = (object[][]) si.GetValue("eventsRows", typeof(object[][]));
 			object[][] commentsRows = (object[][]) si.GetValue("commentsRows", typeof(object[][]));
 
+			this.version = (Version) si.GetValue("Version", typeof(Version));
 			for (i = 0; i < optionsRows.Length; ++i)
 				base.Options.Rows.Add((object[]) optionsRows[i]);
 			for (i = 0; i < moodsRows.Length; ++i)
@@ -187,6 +189,7 @@ namespace EF.ljArchive.Engine
 			for (i = 0; i < this.Comments.Rows.Count; ++i)
 				commentsRows[i] = this.Comments.Rows[i].ItemArray;
 
+			si.AddValue("Version", this.GetType().Assembly.GetName().Version);
 			si.AddValue("optionsRows", optionsRows);
 			si.AddValue("moodsRows", moodsRows);
 			si.AddValue("userpicsRows", userpicsRows);
@@ -218,10 +221,22 @@ namespace EF.ljArchive.Engine
 				return base.Options[0];
 			}
 		}
+		
+		/// <summary>
+		/// Gets the <see cref="System.Version"/> of EF.ljArchive.Engine that created this journal.
+		/// </summary>
+		public Version Version
+		{
+			get
+			{
+				return version;
+			}
+		}
 		#endregion
 
 		#region Private Instance Fields
 		private string path;
+		private Version version;
 		#endregion
 	}
 }

@@ -172,7 +172,31 @@ namespace EF.ljArchive.Engine
 			return lr.usejournals;
 		}
 		
+		static public string GetDefaultPicURL(string journalName, string serverURL, bool community)
+		{
+			Uri uri = new Uri(new Uri(serverURL), string.Format(_foafpath,
+			                                                       (community ? "community" : "users"),
+			                                                       journalName));
+			HttpWebRequest w = HttpWebRequestFactory.Create(uri.AbsoluteUri, null);
+			string picURL = null;
+			using (System.IO.Stream s = w.GetResponse().GetResponseStream())
+			{
+				System.Xml.XmlTextReader xr = new System.Xml.XmlTextReader(s);
+				while (xr.Read())
+				{
+					if (xr.NodeType == System.Xml.XmlNodeType.Element && xr.Name == "foaf:img")
+					{
+						picURL = xr.GetAttribute("rdf:resource");
+						break;
+					}
+				}
+				xr.Close();
+			}
+			return picURL;
+		}
+		
 		static private readonly string clientVersion = Environment.OSVersion.Platform.ToString() + "-.NET/" +
 			System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+		static private readonly string _foafpath = ConstReader.GetString("_foafpath");
 	}
 }

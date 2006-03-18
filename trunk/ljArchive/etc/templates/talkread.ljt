@@ -25,6 +25,7 @@
         a:active {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #006699; }
       -->
     </style>
+    <title><% UseJournal %><% !!UseJournal %><% FullName %><% /!!UseJournal %></title>
   </head>
   <body bgcolor="#<% EntryBackgroundColor %>" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" text="#<% PageTextColor %>" link="#<% PageLinkColor %>" vlink="#<% PageVisitedLinkColor %>" alink="#<% PageActiveLinkColor %>">
     <basefont face="Verdana,Arial,Helvetica" color="<% EntryTextColor %>"/>
@@ -50,7 +51,8 @@
 <% !UserPicURL %>
           <td><img src="<% UserPicURL %>" align="absmiddle" hspace="3" title="<% Picture_Keyword %>" alt=""></td>
 <% /!UserPicURL %>
-          <td><% FullName %>( <a href="<% ServerURL %>/userinfo.bml?user=<% UserName %>"><img src="<% ServerURL %><% UserInfoIconPath %>" alt="[info]" width="17" height="17" style="vertical-align: bottom; border: 0;" /></a><a href="<% ServerURL %>/users/<% UserName %>"><b><% UserName %></b></a>) wrote,
+          <td><% !!UseJournal %><% FullName %> (<% /!!UseJournal %><a href="<% ServerURL %>/userinfo.bml?user=<% PosterUserName %>"><img src="<% ServerURL %><% UserInfoIconPath %>" alt="[info]" width="17" height="17" style="vertical-align: bottom; border: 0;" /></a><a href="<% ServerURL %>/users/<% PosterUserName %>"><b><% PosterUserName %></b></a><% !!UseJournal %>)<% /!!UseJournal %> wrote<% !UseJournal %>
+          in <a href="<% ServerURL %>/userinfo.bml?user=<% UseJournal %>"><img src="<% ServerURL %><% CommunityInfoIconPath %>" alt="[info]" width="17" height="17" style="vertical-align: bottom; border: 0;" /></a><a href="<% ServerURL %>/community/<% UseJournal %>"><b><% UseJournal %></b></a><% /!UseJournal %>,
             <br /><font size="-1">@ <% Date %></font>
           </td>
         </tr>

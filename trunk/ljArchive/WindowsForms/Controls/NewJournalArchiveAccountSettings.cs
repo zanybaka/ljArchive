@@ -281,7 +281,7 @@ namespace EF.ljArchive.WindowsForms.Controls
 				if (chkAlternateServer.Checked)
 					return txtServerURL.Text;
 				else
-					return "http://www.livejournal.com/";
+					return "http://www.livejournal.com";
 			}
 		}
 		
@@ -289,10 +289,10 @@ namespace EF.ljArchive.WindowsForms.Controls
 		{
 			get
 			{
-				if (chkCommunity.Checked)
+				if (chkCommunity.Checked && cmbCommunity.Text.Length > 0)
 					return cmbCommunity.Text;
 				else
-					return string.Empty;
+					return null;
 			}
 		}
 

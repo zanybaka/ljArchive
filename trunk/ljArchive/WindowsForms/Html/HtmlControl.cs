@@ -240,20 +240,11 @@ namespace Writer.Html
             NativeMethods.IStream stream = null;
 
 			// added by Erik Frey - UTF preamble
-			if (
-				(content.StartsWith('\xFEFF'.ToString()))
-				|| (content.StartsWith('\xEFBB'.ToString()))
-				|| (content.StartsWith('\xFFFE'.ToString()))
-				|| (content.StartsWith('\x0000'.ToString() + '\xFEFF'.ToString()))
-				)
-			{
-			}
-			else
-			{
-				byte[] preamble = UnicodeEncoding.Unicode.GetPreamble();
-				string byteOrderMark = UnicodeEncoding.Unicode.GetString(preamble, 0, preamble.Length);
+			byte[] preamble = UnicodeEncoding.Unicode.GetPreamble();
+			string byteOrderMark = UnicodeEncoding.Unicode.GetString(preamble, 0, preamble.Length);
+			// i guess .NET 2.0 fixed up unicode string handling
+			if (System.Environment.Version.Major > 1 || !content.StartsWith(byteOrderMark))
 				content = byteOrderMark + content;
-			}
 
             //First we create a COM stream
             IntPtr hglobal = Marshal.StringToHGlobalUni(content);

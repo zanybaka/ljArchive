@@ -42,6 +42,7 @@
       }
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><% UseJournal %><% !!UseJournal %><% FullName %><% /!!UseJournal %></title>
   </head>
   <body bgcolor="#<% PageBackgroundColor %>" text="#<% PageTextColor %>" link="#<% PageLinkColor %>" vlink="#<% PageVisitedLinkColor %>" alink="#<% PageActiveLinkColor %>">
 <% /SECTIONPAGEHEADER %>
@@ -80,13 +81,22 @@
                       <td>
                         <table cellpadding="2" align="center" cellspacing="0" border="0" summary="">
                           <tr align='left'>
-                            <td align="center">
-                              <a href='<% ServerURL %>/users/<% UserName %>/'>
-<% !UserpicURL %>
+                            <td align="center" style="color: #<% EntryTextColor %>">
+<% !UseJournal %>
+                              <a href='<% ServerURL %>/community/<% UseJournal %>/'>
+  <% !UserpicURL %>
                                 <img border="0" src="<% UserpicURL %>" alt=""><br />
-<% /!UserpicURL %>
-                                <% UserName %>
-                              </a>
+  <% /!UserpicURL %>
+                                <% UseJournal %></a><br />
+                                [<a href='<% ServerURL %>/users/<% PosterUserName %>'><% PosterUserName %></a>]
+<% /!UseJournal %>
+<% !!UseJournal %>
+                              <a href='<% ServerURL %>/users/<% PosterUserName %>'>
+  <% !UserpicURL %>
+                                <img border="0" src="<% UserpicURL %>" alt=""><br />
+  <% /!UserpicURL %>
+                                <% PosterUserName %></a>
+<% /!!UseJournal %>
                             </td>
                           </tr>
                         </table>

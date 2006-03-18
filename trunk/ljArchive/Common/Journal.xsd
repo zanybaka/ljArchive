@@ -10,12 +10,13 @@
 						<xs:sequence>
 							<xs:element name="ServerURL" type="xs:string" minOccurs="0" />
 							<xs:element name="DefaultPicURL" type="xs:string" minOccurs="0" />
+							<xs:element name="CommunityPicURL" type="xs:string" minOccurs="0" />
 							<xs:element name="FullName" type="xs:string" minOccurs="0" />
 							<xs:element name="UserName" type="xs:string" minOccurs="0" />
 							<xs:element name="HPassword" type="xs:string" minOccurs="0" />
 							<xs:element name="LastSync" type="xs:dateTime" minOccurs="0" />
 							<xs:element name="GetComments" type="xs:boolean" minOccurs="0" />
-							<xs:element name="UseJournal" type="xs:string" minOccurs="0" />
+							<xs:element name="UseJournal" type="xs:string" minOccurs="0" />							
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
