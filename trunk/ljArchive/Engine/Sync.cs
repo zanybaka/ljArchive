@@ -444,7 +444,13 @@ namespace EF.ljArchive.Engine
 					serverMaxID - localMaxID));
 				using (Stream s = w.GetResponse().GetResponseStream())
 				{
-					XmlCommentReader xcr = new XmlCommentReader(s);
+					System.Text.Encoding ec;
+					if (System.Environment.Version.Major < 2) // .NET 2.0 utf8 cleans strings, so we don't have to
+						ec = new UTF8Clean();
+					else
+						ec = System.Text.Encoding.UTF8;
+					StreamReader sr = new StreamReader(s, ec);
+					XmlCommentReader xcr = new XmlCommentReader(sr);
 					while (xcr.Read())
 						cc.Add(xcr.Comment);
 					xcr.Close();
@@ -452,7 +458,7 @@ namespace EF.ljArchive.Engine
 				count = cc.GetMaxID();
 			}
 		}
-
+		
 		static private void ParseException(Exception ex, ref Exception result)
 		{
 			if (ex.GetType() == typeof(CookComputing.XmlRpc.XmlRpcFaultException))

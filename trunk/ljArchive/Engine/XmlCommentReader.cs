@@ -14,6 +14,13 @@ namespace EF.ljArchive.Engine
 		/// </summary>
 		/// <param name="s">The stream containing the XML data to read.</param>
 		public XmlCommentReader(System.IO.Stream s) : base(s) {}
+		
+		/// <summary>
+		/// Creates a new instance of <see cref="XmlCommentReader"/>.
+		/// </summary>
+		/// <param name="tr">The TextReader containing the XML data to read.</param>
+		public XmlCommentReader(System.IO.TextReader tr) : base(tr) {}
+		
 		/// <summary>
 		/// Reads a comment.
 		/// </summary>

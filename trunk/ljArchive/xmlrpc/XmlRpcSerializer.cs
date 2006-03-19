@@ -66,7 +66,13 @@ namespace CookComputing.XmlRpc
       set { m_encoding = value; }
     }
     Encoding m_encoding = null;
- 
+
+    public Encoding XmlDecoding
+    {
+      get { return m_decoding; }
+      set { m_decoding = value; }
+    }
+    Encoding m_decoding = null;
     // todo:
     //  add indent bool property
     //  add indent size property
@@ -1034,6 +1040,8 @@ namespace CookComputing.XmlRpc
       else
         ret = node.FirstChild.Value;
       parseStack.Pop();
+      if (m_decoding != null)
+      	ret = m_decoding.GetString((new UTF8Encoding()).GetBytes(ret));
       return ret;
     }
 
@@ -1175,6 +1183,7 @@ namespace CookComputing.XmlRpc
       ParseStack parseStack,
       MappingAction mappingAction)
     {
+      Encoding ec = (m_decoding == null ? new UTF8Encoding() : m_decoding);
 		// edit by Erik Frey on May 16, 2004
 		// to allow casting direct to string
 		// if server is not returning the expected type
@@ -1201,7 +1210,7 @@ namespace CookComputing.XmlRpc
       }
       parseStack.Pop();
 	  if (ValueType == typeof(string)) // edit by Erik Frey on May 16
-		return System.Text.Encoding.UTF8.GetString(ret);
+		return ec.GetString(ret);
 	  else
 		return ret;
     }
