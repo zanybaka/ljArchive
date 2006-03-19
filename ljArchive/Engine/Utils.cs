@@ -29,8 +29,10 @@ namespace EF.ljArchive.Engine
 			xpc.Url =  uri.AbsoluteUri;
 			xpc.ProtocolVersion = new Version(1, 0);
 			xpc.KeepAlive = false;
-			xpc.RequestEncoding = new System.Text.UTF8Encoding();
-			xpc.XmlEncoding = new System.Text.UTF8Encoding();
+			xpc.RequestEncoding = System.Text.Encoding.UTF8;
+			xpc.XmlEncoding = System.Text.Encoding.UTF8;
+			if (System.Environment.Version.Major < 2) // .NET 2.0 utf8 cleans strings, so we don't have to
+				xpc.XmlDecoding = new UTF8Clean();
 			return iLJ;
 		}
 
@@ -55,6 +57,7 @@ namespace EF.ljArchive.Engine
 			wr.ProtocolVersion = new Version(1, 0);
 			wr.KeepAlive = false;
 			wr.UserAgent = _useragent;
+			
 			if (ljsession != null && ljsession.Length > 0)
 			{
 				wr.CookieContainer = new CookieContainer();
@@ -126,6 +129,106 @@ namespace EF.ljArchive.Engine
 		}
 
 		static private MD5CryptoServiceProvider md5;
+	}
+	
+	internal class UTF8Clean : System.Text.UTF8Encoding
+	{
+		public UTF8Clean()
+		{
+			d = new Decoder();
+		}
+		
+		public override System.Text.Decoder GetDecoder()
+		{
+			return d;
+		}
+		
+		public override string GetString(byte[] bytes)
+		{
+			return new string(GetChars(bytes));
+		}
+		
+		public override string GetString(byte[] bytes, int index, int count)
+		{
+			return new string(GetChars(bytes, index, count));
+		}
+		
+		public override char[] GetChars(byte[] bytes)
+		{
+			return GetChars(bytes, 0, bytes.Length);
+		}
+		
+		public override int GetChars(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex)
+		{
+			return d.GetChars(bytes, byteIndex, byteCount, chars, charIndex);
+		}
+		
+		public override char[] GetChars(byte[] bytes, int index, int count)
+		{
+			char[] chars = new char[d.GetCharCount(bytes, index, count)];
+			d.GetChars(bytes, index, count, chars, 0);
+			return chars;
+		}
+
+		public override int GetCharCount(byte[] bytes)
+		{
+			return d.GetCharCount(bytes, 0, bytes.Length);
+		}
+		
+		public override int GetCharCount(byte[] bytes, int index, int count)
+		{
+			return d.GetCharCount(bytes, index, count);
+		}
+		
+		private class Decoder : System.Text.Decoder
+		{
+			public Decoder()
+			{
+				decoder = System.Text.Encoding.UTF8.GetDecoder();
+			}
+			
+			public override int GetChars(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex)
+			{
+				char[] unclean = new char[decoder.GetCharCount(bytes, byteIndex, byteCount)];
+				decoder.GetChars(bytes, byteIndex, byteCount, unclean, 0);
+				char[] clean = new char[GetCharCount(bytes, byteIndex, byteCount)];
+				int i = 0;
+				foreach (char c in unclean)
+				{
+					if (IsValidUTF8(c))
+					{
+						clean[i] = c;
+						++i;
+					}
+				}
+				clean.CopyTo(chars, charIndex);
+				return chars.Length;
+			}
+			
+			public override int GetCharCount(byte[] bytes, int index, int count)
+			{
+				char[] unclean = new char[decoder.GetCharCount(bytes, index, count)];
+				int i = 0;
+				decoder.GetChars(bytes, index, count, unclean, 0);
+				foreach (char c in unclean)
+					if (IsValidUTF8(c))
+						++i;
+				return i;
+			}
+			
+			private bool IsValidUTF8(char c)
+			{
+				return (c >= 0x000020 && c <= 0x00d7ff)
+			    		|| (c >= 0x00e000 && c <= 0x00fffd)
+			    		|| (c == 0x09)
+			    		|| (c == 0x0A)
+			    		|| (c == 0x0D);
+			}
+			
+			private System.Text.Decoder decoder;
+		}
+		
+		private Decoder d;
 	}
 
 	/// <summary>

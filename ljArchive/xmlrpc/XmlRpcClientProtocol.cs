@@ -124,6 +124,12 @@ namespace CookComputing.XmlRpc
       get { return xmlEncoding; }
       set { xmlEncoding = value; }
     }
+    
+    public Encoding XmlDecoding
+    {
+      get { return xmlDecoding; }
+      set { xmlDecoding = value; }    	
+    }
 
     // added by Erik Frey 4/3/2004
     public Version ProtocolVersion
@@ -222,6 +228,8 @@ namespace CookComputing.XmlRpc
           throw new XmlRpcServerException(httpResp.StatusDescription);
       }
       XmlRpcSerializer serializer = new XmlRpcSerializer();
+      if (xmlDecoding != null)
+          	serializer.XmlDecoding = xmlDecoding;
       Type retType = returnType;
       if (retType == null)
         retType = req.mi.ReturnType;
@@ -592,6 +600,7 @@ namespace CookComputing.XmlRpc
       = new X509CertificateCollection();
     private IWebProxy proxy = null;
     private Encoding xmlEncoding = null;
+    private Encoding xmlDecoding = null;
     private Version protocolVersion = new Version(1,1);
     private bool keepAlive = true;
     private bool _useIndentation = false;
