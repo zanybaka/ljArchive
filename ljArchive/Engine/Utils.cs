@@ -31,7 +31,9 @@ namespace EF.ljArchive.Engine
 			xpc.KeepAlive = false;
 			xpc.RequestEncoding = System.Text.Encoding.UTF8;
 			xpc.XmlEncoding = System.Text.Encoding.UTF8;
-			if (System.Environment.Version.Major < 2) // .NET 2.0 utf8 cleans strings, so we don't have to
+			if (System.Environment.Version.Major == 1)
+				xpc.Proxy = System.Net.WebProxy.GetDefaultProxy(); // need to test this in 1.1
+			if (System.Environment.Version.Major == 1) // .NET 2.0 utf8 cleans strings, so we don't have to
 				xpc.XmlDecoding = new UTF8Clean();
 			return iLJ;
 		}
@@ -57,6 +59,8 @@ namespace EF.ljArchive.Engine
 			wr.ProtocolVersion = new Version(1, 0);
 			wr.KeepAlive = false;
 			wr.UserAgent = _useragent;
+			if (System.Environment.Version.Major == 1)
+				wr.Proxy = System.Net.WebProxy.GetDefaultProxy(); // need to test this in 1.1
 			
 			if (ljsession != null && ljsession.Length > 0)
 			{

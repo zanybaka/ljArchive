@@ -445,7 +445,7 @@ namespace EF.ljArchive.Engine
 				using (Stream s = w.GetResponse().GetResponseStream())
 				{
 					System.Text.Encoding ec;
-					if (System.Environment.Version.Major < 2) // .NET 2.0 utf8 cleans strings, so we don't have to
+					if (System.Environment.Version.Major == 1) // .NET 2.0 utf8 cleans strings, so we don't have to
 						ec = new UTF8Clean();
 					else
 						ec = System.Text.Encoding.UTF8;
