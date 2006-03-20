@@ -1003,8 +1003,12 @@ namespace EF.ljArchive.WindowsForms
 				BindingManagerBase bm = this.BindingContext[dgEvents.DataSource, dgEvents.DataMember];
 				DataRowView drv = (DataRowView) bm.Current;
 				Common.Journal.EventsRow er = (Common.Journal.EventsRow) drv.Row;
-				Uri baseURI = new Uri(j.Options.ServerURL);
-				Uri uri = new Uri(baseURI, string.Format("/{0}/{1}/{2}.html",
+				Uri uri, baseURI = new Uri(j.Options.ServerURL);
+				if (er.IsAnumNull())
+					uri = new Uri(baseURI, "/users/" +
+					j.Options.UserName + "/" + er.Date.ToString("yyyy\\/MM\\/dd\\/"));
+				else
+					uri = new Uri(baseURI, string.Format("/{0}/{1}/{2}.html",
 				                                         (j.Options.IsUseJournalNull() ? "users" : "community"),
 				                                         (j.Options.IsUseJournalNull() ? j.Options.UserName : j.Options.UseJournal),
 				                                         er.ID * 256 + er.Anum));
