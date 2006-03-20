@@ -289,7 +289,9 @@ namespace EF.ljArchive.Engine
 				else if (syncException.GetType() == typeof(ExpectedSyncException)
 					&& (((ExpectedSyncException) syncException).ExpectedError == ExpectedError.ServerNotResponding
 					||  ((ExpectedSyncException) syncException).ExpectedError ==
-					      ExpectedError.ExportCommentsNotSupported)
+					      ExpectedError.ExportCommentsNotSupported
+					||  ((ExpectedSyncException) syncException).ExpectedError ==
+					      ExpectedError.CommunityAccessDenied)
 					&& lr.moods != null)
 				{
 					socb(new SyncOperationEventArgs(SyncOperation.Merge, 0, 0));
@@ -428,6 +430,12 @@ namespace EF.ljArchive.Engine
 					{
 						xtr.Read();
 						serverMaxID = XmlConvert.ToInt32(xtr.Value);
+					}
+					else if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "h2")
+					{
+						xtr.Read();
+						if (xtr.Value == "Error" && !or.IsUseJournalNull())
+							throw new ExpectedSyncException(ExpectedError.CommunityAccessDenied, null);
 					}
 				}
 				xtr.Close();

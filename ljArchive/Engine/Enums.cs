@@ -67,6 +67,10 @@ namespace EF.ljArchive.Engine
 		/// </summary>
 		RepeatedRequests,
 		/// <summary>
+		/// User doesn't have access to the community being archived.
+		/// </summary>
+		CommunityAccessDenied,
+		/// <summary>
 		/// User has not set encoding settings on the server.
 		/// </summary>
 		NoEncodingSettings,

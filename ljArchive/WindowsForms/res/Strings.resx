@@ -610,4 +610,7 @@ After you have selected a file location, click 'Next'.</value>
   <data name="NewJournalArchiveAccountSettings.grpCommunity.Text" xml:space="preserve">
     <value>Community</value>
   </data>
+  <data name="ExpectedError.ExpectedErrorCategories.SyncCommunityAccessDenied" xml:space="preserve">
+    <value>You do not have moderator access to this community.</value>
+  </data>
 </root>

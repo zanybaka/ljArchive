@@ -260,6 +260,7 @@ namespace EF.ljArchive.WindowsForms.Dialogs
 			FileNotFound,
 			SyncInvalidPassword,
 			SyncRepeatedRequests,
+			SyncCommunityAccessDenied,
 			SyncNoEncodingSettings,
 			SyncXMLRPCNotSupported,
 			SyncExportCommentsNotSupported,

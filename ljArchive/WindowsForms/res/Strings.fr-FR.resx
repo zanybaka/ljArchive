@@ -610,4 +610,7 @@ Apres que vous avez choisi votre endroit, cliquez 'Suivant'.</value>
   <data name="NewJournalArchiveAccountSettings.grpCommunity.Text" xml:space="preserve">
     <value>Communauté</value>
   </data>
+  <data name="ExpectedError.ExpectedErrorCategories.SyncCommunityAccessDenied" xml:space="preserve">
+    <value>Vous n'avez pas accès de modérateur à cette communauté.</value>
+  </data>
 </root>
