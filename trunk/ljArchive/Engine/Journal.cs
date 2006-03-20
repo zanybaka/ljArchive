@@ -132,7 +132,7 @@ namespace EF.ljArchive.Engine
 			return ret;
 		}
 		#endregion
-
+		
 		#region Protected Instance Methods
 		/// <summary>
 		/// Protected serialization constructor.
@@ -149,7 +149,17 @@ namespace EF.ljArchive.Engine
 			object[][] eventsRows = (object[][]) si.GetValue("eventsRows", typeof(object[][]));
 			object[][] commentsRows = (object[][]) si.GetValue("commentsRows", typeof(object[][]));
 
-			this.version = (Version) si.GetValue("Version", typeof(Version));
+			try
+			{
+				this.version = (Version) si.GetValue("Version", typeof(Version));
+			}
+			catch (SerializationException)
+			{
+				this.version = new Version(0, 9, 6, 0); // 0.9.6 and before didn't serialize versions
+			}
+			if (this.version != this.GetType().Assembly.GetName().Version)
+				Migrate(ref optionsRows, ref moodsRows, ref userpicsRows, ref usersRows, ref eventsRows, ref commentsRows);
+				
 			for (i = 0; i < optionsRows.Length; ++i)
 				base.Options.Rows.Add((object[]) optionsRows[i]);
 			for (i = 0; i < moodsRows.Length; ++i)
@@ -162,6 +172,24 @@ namespace EF.ljArchive.Engine
 				this.Events.Rows.Add((object[]) eventsRows[i]);
 			for (i = 0; i < commentsRows.Length; ++i)
 				this.Comments.Rows.Add((object[]) commentsRows[i]);
+		}
+		
+		protected void Migrate(ref object[][] optionsRows, ref object[][] moodsRows, ref object[][] userpicsRows, ref object[][] usersRows, ref object[][] eventsRows, ref object[][] commentsRows)
+		{
+			if (this.version < new Version(0, 9, 7, 0))
+			{
+				for (int i = 0; i < optionsRows.Length; ++i)
+					optionsRows[i] = new object[] {optionsRows[i][0], optionsRows[i][1], null, optionsRows[i][2], 
+					optionsRows[i][3], optionsRows[i][4], optionsRows[i][5], optionsRows[i][6], null};
+				for (int i = 0; i < eventsRows.Length; ++i)
+					eventsRows[i] = new object[] {eventsRows[i][0], eventsRows[i][1], eventsRows[i][2],
+					eventsRows[i][3], eventsRows[i][4], eventsRows[i][5], null, null, eventsRows[i][6],
+					eventsRows[i][7], eventsRows[i][8], eventsRows[i][9], eventsRows[i][10],
+					eventsRows[i][11], eventsRows[i][12], eventsRows[i][13], eventsRows[i][14],
+					eventsRows[i][15], eventsRows[i][16], eventsRows[i][17], eventsRows[i][18],
+					eventsRows[i][19], eventsRows[i][20], eventsRows[i][21]};
+			}
+			this.version = this.GetType().Assembly.GetName().Version;
 		}
 		#endregion
 
