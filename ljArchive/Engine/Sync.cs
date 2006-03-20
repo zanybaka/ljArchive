@@ -270,6 +270,11 @@ namespace EF.ljArchive.Engine
 			catch (Exception ex)
 			{
 				ParseException(ex, ref syncException);
+				if (ex.GetType() == typeof(ThreadAbortException))
+				{
+					socb(new SyncOperationEventArgs(SyncOperation.Failure, 0, 0)); // do this before thread terminates
+					return;
+				}
 			}
 
 			// STEP 8: Merge
