@@ -193,31 +193,16 @@ namespace EF.ljArchive.Engine
 			
 			public override int GetChars(byte[] bytes, int byteIndex, int byteCount, char[] chars, int charIndex)
 			{
-				char[] unclean = new char[decoder.GetCharCount(bytes, byteIndex, byteCount)];
-				decoder.GetChars(bytes, byteIndex, byteCount, unclean, 0);
-				char[] clean = new char[GetCharCount(bytes, byteIndex, byteCount)];
-				int i = 0;
-				foreach (char c in unclean)
-				{
-					if (IsValidUTF8(c))
-					{
-						clean[i] = c;
-						++i;
-					}
-				}
-				clean.CopyTo(chars, charIndex);
-				return chars.Length;
+				int ret = decoder.GetChars(bytes, byteIndex, byteCount, chars, charIndex);
+				for (int i=0; i < chars.Length; ++i)
+					if (!IsValidUTF8(chars[i]))
+						chars[i] = (char) 0xFFFD; // replacement char
+				return ret;
 			}
 			
 			public override int GetCharCount(byte[] bytes, int index, int count)
 			{
-				char[] unclean = new char[decoder.GetCharCount(bytes, index, count)];
-				int i = 0;
-				decoder.GetChars(bytes, index, count, unclean, 0);
-				foreach (char c in unclean)
-					if (IsValidUTF8(c))
-						++i;
-				return i;
+				return decoder.GetCharCount(bytes, index, count);
 			}
 			
 			private bool IsValidUTF8(char c)
