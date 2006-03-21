@@ -183,7 +183,7 @@ namespace EF.ljArchive.Engine
 					optionsRows[i][3], optionsRows[i][4], optionsRows[i][5], optionsRows[i][6], null};
 				for (int i = 0; i < eventsRows.Length; ++i)
 					eventsRows[i] = new object[] {eventsRows[i][0], eventsRows[i][1], eventsRows[i][2],
-					eventsRows[i][3], eventsRows[i][4], eventsRows[i][5], null, null, eventsRows[i][6],
+					eventsRows[i][3], eventsRows[i][4], eventsRows[i][5],  eventsRows[i][6], null,
 					eventsRows[i][7], eventsRows[i][8], eventsRows[i][9], eventsRows[i][10],
 					eventsRows[i][11], eventsRows[i][12], eventsRows[i][13], eventsRows[i][14],
 					eventsRows[i][15], eventsRows[i][16], eventsRows[i][17], eventsRows[i][18],
