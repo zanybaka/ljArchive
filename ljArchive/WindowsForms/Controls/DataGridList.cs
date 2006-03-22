@@ -240,7 +240,12 @@ namespace EF.ljArchive.WindowsForms.Controls
 				string[] sections = value.Split(';');
 				
 				foreach (string s in sections[0].Split('+'))
-					percentages.Add(decimal.Parse(s));
+				{
+					if (s.IndexOf('.') > -1)
+						percentages.Add(decimal.Parse(s));
+					else
+						percentages.Add(0.2M); // fix for international users upgrading to 0.9.7
+				}
 				foreach (string s in sections[1].Split('+'))
 					minimumColumnWidths.Add(int.Parse(s));
 				if (glh == null)
