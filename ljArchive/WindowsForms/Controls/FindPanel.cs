@@ -256,6 +256,7 @@ namespace EF.ljArchive.WindowsForms.Controls
 			string ret = value;
 			ret = ret.Replace("*", "[*]");
 			ret = ret.Replace("%", "[%]");
+			ret = ret.Replace("'", "''");
 			ret = ret.Replace("[", "\\[\\");
 			ret = ret.Replace("]", "[]]");
 			ret = ret.Replace("\\[\\", "[[]");
