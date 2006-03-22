@@ -192,7 +192,7 @@ namespace EF.ljArchive.Engine
 								eventsRows[i][7], eventsRows[i][8], eventsRows[i][9], eventsRows[i][10],
 								eventsRows[i][11], eventsRows[i][12], eventsRows[i][13], eventsRows[i][14],
 								eventsRows[i][15], eventsRows[i][16], eventsRows[i][17], eventsRows[i][18],
-								eventsRows[i][19], eventsRows[i][20], eventsRows[i][21]};
+								eventsRows[i][19], eventsRows[i][20], eventsRows[i][21], eventsRows[i][22]};
 							break;
 						case 22: // 0.9.4.3
 							for (int i = 0; i < eventsRows.Length; ++i)
@@ -201,7 +201,7 @@ namespace EF.ljArchive.Engine
 								eventsRows[i][7], eventsRows[i][8], eventsRows[i][9], eventsRows[i][10],
 								eventsRows[i][11], eventsRows[i][12], eventsRows[i][13], eventsRows[i][14],
 								eventsRows[i][15], eventsRows[i][16], eventsRows[i][17], eventsRows[i][18],
-								eventsRows[i][19], eventsRows[i][20], null};
+								eventsRows[i][19], eventsRows[i][20], eventsRows[i][21], null};
 							break;
 					}
 				}
