@@ -377,16 +377,29 @@ namespace EF.ljArchive.Plugins.Core
 		/// <returns>the bottom three categories averaged from the RID Analysis.</returns>
 		static public string[] GetBottomThreeCategories(RIDBaselines baseline)
 		{
-			SortedList sl = new SortedList();
+			string[] cat = new string[3];
+			double[] avg = {double.MaxValue, double.MaxValue, double.MaxValue};
 
 			foreach (string category in categories)
 			{
 				double d = GetAverage(category, baseline);
-				sl.Add(d, category);
+				if (d < avg[0])
+				{
+					avg[2] = avg[1]; avg[1] = avg[0]; avg[0] = d;
+					cat[2] = cat[1]; cat[1] = cat[0]; cat[0] = category;
+				}
+				else if (d < avg[1])
+				{
+					avg[2] = avg[1]; avg[1] = d;
+					cat[2] = cat[1]; cat[1] = category;
+				}
+				else if (d < avg[2])
+				{
+					avg[2] = d;
+					cat[2] = category;
+				}
 			}
-			return new string[] {(string) sl.GetByIndex(0),
-									(string) sl.GetByIndex(1),
-									(string) sl.GetByIndex(2)};
+			return cat;
 		}
 
 		/// <summary>
@@ -396,16 +409,29 @@ namespace EF.ljArchive.Plugins.Core
 		/// <returns>the top three categories averaged from the RID Analysis.</returns>
 		static public string[] GetTopThreeCategories(RIDBaselines baseline)
 		{
-			SortedList sl = new SortedList();
+			string[] cat = new string[3];
+			double[] avg = {double.MinValue, double.MinValue, double.MinValue};
 
 			foreach (string category in categories)
 			{
 				double d = GetAverage(category, baseline);
-				sl.Add(d, category);
+				if (d > avg[0])
+				{
+					avg[2] = avg[1]; avg[1] = avg[0]; avg[0] = d;
+					cat[2] = cat[1]; cat[1] = cat[0]; cat[0] = category;
+				}
+				else if (d > avg[1])
+				{
+					avg[2] = avg[1]; avg[1] = d;
+					cat[2] = cat[1]; cat[1] = category;
+				}
+				else if (d > avg[2])
+				{
+					avg[2] = d;
+					cat[2] = category;
+				}
 			}
-			return new string[] {(string) sl.GetByIndex(sl.Count - 1),
-								 (string) sl.GetByIndex(sl.Count - 2),
-								 (string) sl.GetByIndex(sl.Count - 3)};
+			return cat;
 		}
 		#endregion
 
@@ -646,7 +672,7 @@ namespace EF.ljArchive.Plugins.Core
 		static private Hashtable hitCounts, frequencies;
 		static private int[] wordLengths;
 		static private string[] categories;
-		private const string ridServerURL = "http://fawx.com/ljArchive/pl/rid.pl";
+		private const string ridServerURL = "http://fawx.com/software/ljarchive/pl/rid.pl";
 		#endregion
 	}
 }
