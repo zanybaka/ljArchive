@@ -183,9 +183,13 @@ namespace EF.ljArchive.Engine
 					optionsRows[i][3], optionsRows[i][4], optionsRows[i][5], optionsRows[i][6], null};
 				if (eventsRows.Length > 0 && eventsRows[0] != null)
 				{
+					int q = eventsRows[0].Length;
+					int qb = this.Events.Columns.Count;
+					DataColumnCollection dc = this.Events.Columns;
+					object[] duh = eventsRows[0];
 					switch (eventsRows[0].Length)
 					{
-						case 22:  // 0.9.5, 0.9.6
+						case 23:  // 0.9.5, 0.9.6
 							for (int i = 0; i < eventsRows.Length; ++i)
 								eventsRows[i] = new object[] {eventsRows[i][0], eventsRows[i][1], eventsRows[i][2],
 								eventsRows[i][3], eventsRows[i][4], eventsRows[i][5],  eventsRows[i][6], null,
@@ -194,7 +198,7 @@ namespace EF.ljArchive.Engine
 								eventsRows[i][15], eventsRows[i][16], eventsRows[i][17], eventsRows[i][18],
 								eventsRows[i][19], eventsRows[i][20], eventsRows[i][21]};
 							break;
-						case 21: // 0.9.4.3
+						case 22: // 0.9.4.3
 							for (int i = 0; i < eventsRows.Length; ++i)
 								eventsRows[i] = new object[] {eventsRows[i][0], eventsRows[i][1], eventsRows[i][2],
 								eventsRows[i][3], eventsRows[i][4], eventsRows[i][5],  eventsRows[i][6], null,
