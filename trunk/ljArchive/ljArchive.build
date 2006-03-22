@@ -1,5 +1,5 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
-<project name = "ljArchive" default = "dist">
+<project name = "ljArchive" default = "build">
 
   <!-- ========== Properties ========== -->
 
@@ -100,7 +100,7 @@
 
   <target name = "doc-zip" depends = "build-doc, init">
     <zip zipfile = "${prefix}-doc.zip">
-      <fileset basedir = "${doc}">
+      <fileset basedir = "${doc.dir}">
         <include name = "**/*"/>
         <exclude name = "ljArchive Documentation.*"/>
         <exclude name = "ndoc.log"/>
@@ -109,7 +109,7 @@
   </target>
 
   <target name = "doc-chm" depends = "build-doc, init">
-    <copy file = "${doc}/ljArchive Documentation.chm"
+    <copy file = "${doc.dir}/ljArchive Documentation.chm"
       tofile = "${prefix}-doc.chm"
       overwrite = "true"/>
   </target>
@@ -126,8 +126,8 @@
     <zip zipfile = "${prefix}-src.zip">
       <fileset basedir = ".">
         <include name = "**/*"/>
-        <exclude name = "**/dist.dir/**"/>
-        <exclude name = "**/doc/**"/>
+        <exclude name = "**/${dist.dir}/**"/>
+        <exclude name = "**/${doc.dir}/**"/>
         <exclude name = "**/bin/**"/>
         <exclude name = "**/obj/**"/>
         <exclude name = "**/*.suo"/>
@@ -137,7 +137,7 @@
   </target>
 
   <target name = "common-lib" depends = "build-core">
-    <copy file = "Common/bin/Release/EF.ljArchive.Common.dll"
+    <copy file = "${build.dir}/EF.ljArchive.Common.dll"
       tofile = "${dist.dir}/EF.ljArchive.Common-${version}.dll"
       overwrite = "true"/>
   </target>
@@ -152,7 +152,8 @@
     <delete>
       <fileset>
         <include name="${dist.dir}/**" />
-        <include name="bin/**" />
+        <include name="${doc.dir}/**" />
+        <include name="${build.dir}/**" />
         <include name="*/bin/**" />
         <include name="*/doc/**" />
         <include name="*/obj/**" />
