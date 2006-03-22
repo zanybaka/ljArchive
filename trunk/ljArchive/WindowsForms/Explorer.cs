@@ -383,7 +383,6 @@ namespace EF.ljArchive.WindowsForms
 		{
 			DataGridColumnStyle col;
 			Hashtable imageMap = new Hashtable();
-			string fix;
 
 			// prefs
 			prefs = Genghis.Preferences.GetUserNode(this.GetType());
@@ -468,13 +467,8 @@ namespace EF.ljArchive.WindowsForms
 			eventsTableStyle.GridColumnStyles.Add(col);
 			col = new Controls.DataGridTextViewColumn("Body", "Event Text", 480, true);
 			eventsTableStyle.GridColumnStyles.Add(col);
-			// fix for upgrading users:
-			fix = prefs.GetString("dgEvents.ColumnSettings", string.Empty);
-			if (Application.CurrentCulture.TwoLetterISOLanguageName == "en" && fix.IndexOf(',') > -1)
-				prefs.SetProperty("dgEvents.ColumnSettings", fix.Replace(",", "+"));
 			dgEvents.ColumnSettings = prefs.GetString("dgEvents.ColumnSettings",
-				".2+.2+.2+.2+.2;20+20+20+20+20".Replace(".",
-				Application.CurrentCulture.NumberFormat.NumberDecimalSeparator));
+				".2+.2+.2+.2+.2;20+20+20+20+20");
 
 			// dgComments
 			commentsTableStyle.GridColumnStyles.Clear();
@@ -492,13 +486,8 @@ namespace EF.ljArchive.WindowsForms
 			commentsTableStyle.GridColumnStyles.Add(col);
 			col = new Controls.DataGridTextViewColumn("Body", "Body", 120, true);
 			commentsTableStyle.GridColumnStyles.Add(col);
-			// fix for upgrading users:
-			fix = prefs.GetString("dgComments.ColumnSettings", string.Empty);
-			if (Application.CurrentCulture.TwoLetterISOLanguageName == "en" && fix.IndexOf(',') > -1)
-				prefs.SetProperty("dgComments.ColumnSettings", fix.Replace(",", "+"));
 			dgComments.ColumnSettings = prefs.GetString("dgComments.ColumnSettings",
-				".16+.16+.16+.16+.16+.16;20+20+20+20+20+20".Replace(".",
-				Application.CurrentCulture.NumberFormat.NumberDecimalSeparator));
+				".16+.16+.16+.16+.16+.16;20+20+20+20+20+20");
 
 			// moveToComment
 			moveToComment = -1;
