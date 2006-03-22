@@ -155,7 +155,7 @@ namespace EF.ljArchive.Engine
 			}
 			catch (SerializationException)
 			{
-				this.version = new Version(0, 9, 6, 0); // 0.9.6 and before didn't serialize versions
+				this.version = new Version(0, 0, 0, 0); // 0.9.6 and before didn't serialize versions
 			}
 			if (this.version != this.GetType().Assembly.GetName().Version)
 				Migrate(ref optionsRows, ref moodsRows, ref userpicsRows, ref usersRows, ref eventsRows, ref commentsRows);
@@ -181,13 +181,30 @@ namespace EF.ljArchive.Engine
 				for (int i = 0; i < optionsRows.Length; ++i)
 					optionsRows[i] = new object[] {optionsRows[i][0], optionsRows[i][1], null, optionsRows[i][2], 
 					optionsRows[i][3], optionsRows[i][4], optionsRows[i][5], optionsRows[i][6], null};
-				for (int i = 0; i < eventsRows.Length; ++i)
-					eventsRows[i] = new object[] {eventsRows[i][0], eventsRows[i][1], eventsRows[i][2],
-					eventsRows[i][3], eventsRows[i][4], eventsRows[i][5],  eventsRows[i][6], null,
-					eventsRows[i][7], eventsRows[i][8], eventsRows[i][9], eventsRows[i][10],
-					eventsRows[i][11], eventsRows[i][12], eventsRows[i][13], eventsRows[i][14],
-					eventsRows[i][15], eventsRows[i][16], eventsRows[i][17], eventsRows[i][18],
-					eventsRows[i][19], eventsRows[i][20], eventsRows[i][21]};
+				if (eventsRows.Length > 0 && eventsRows[0] != null)
+				{
+					switch (eventsRows[0].Length)
+					{
+						case 22:  // 0.9.5, 0.9.6
+							for (int i = 0; i < eventsRows.Length; ++i)
+								eventsRows[i] = new object[] {eventsRows[i][0], eventsRows[i][1], eventsRows[i][2],
+								eventsRows[i][3], eventsRows[i][4], eventsRows[i][5],  eventsRows[i][6], null,
+								eventsRows[i][7], eventsRows[i][8], eventsRows[i][9], eventsRows[i][10],
+								eventsRows[i][11], eventsRows[i][12], eventsRows[i][13], eventsRows[i][14],
+								eventsRows[i][15], eventsRows[i][16], eventsRows[i][17], eventsRows[i][18],
+								eventsRows[i][19], eventsRows[i][20], eventsRows[i][21]};
+							break;
+						case 21: // 0.9.4.3
+							for (int i = 0; i < eventsRows.Length; ++i)
+								eventsRows[i] = new object[] {eventsRows[i][0], eventsRows[i][1], eventsRows[i][2],
+								eventsRows[i][3], eventsRows[i][4], eventsRows[i][5],  eventsRows[i][6], null,
+								eventsRows[i][7], eventsRows[i][8], eventsRows[i][9], eventsRows[i][10],
+								eventsRows[i][11], eventsRows[i][12], eventsRows[i][13], eventsRows[i][14],
+								eventsRows[i][15], eventsRows[i][16], eventsRows[i][17], eventsRows[i][18],
+								eventsRows[i][19], eventsRows[i][20], null};
+							break;
+					}
+				}
 			}
 			this.version = this.GetType().Assembly.GetName().Version;
 		}
