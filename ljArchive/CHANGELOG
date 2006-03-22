@@ -1,3 +1,31 @@
+2006-03-22  Erik Frey <erikfrey@users.sourceforge.net>
+
+* Bump version numbers for 0.9.7.
+
+* Community archiving.
+
+* Proper "go to entry" instead of "go to day entry".
+
+* Displays lj comm tag.
+
+* XP-theming if built on .NET 2.0.
+
+* Cleans invalid UTF8 characters.
+
+* Proxy support for .NET 1.1.
+
+* ljArchive core builds in Mono.
+
+* Fixed some internationalization issues regarding how ljArchive stores dates and numbers.
+
+* Manual build files.
+
+* Fixed ' (single tick) crashing search.
+
+* Fixed thread abort error when cancelling a Sync.
+
+* Better archive file format support.
+
 2006-02-19  Deb Hooker <deb@users.sourceforge.net>
 
 * Bump version numbers for 0.9.6.
