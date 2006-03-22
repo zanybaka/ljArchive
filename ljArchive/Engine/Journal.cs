@@ -183,10 +183,6 @@ namespace EF.ljArchive.Engine
 					optionsRows[i][3], optionsRows[i][4], optionsRows[i][5], optionsRows[i][6], null};
 				if (eventsRows.Length > 0 && eventsRows[0] != null)
 				{
-					int q = eventsRows[0].Length;
-					int qb = this.Events.Columns.Count;
-					DataColumnCollection dc = this.Events.Columns;
-					object[] duh = eventsRows[0];
 					switch (eventsRows[0].Length)
 					{
 						case 23:  // 0.9.5, 0.9.6
