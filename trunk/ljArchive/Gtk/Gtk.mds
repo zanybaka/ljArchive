@@ -1,0 +1,40 @@
+<Combine name="Gtk" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry configuration="Debug" build="True" name="Gtk" />
+      <Entry configuration="Debug" build="True" name="Common" />
+      <Entry configuration="Debug" build="True" name="Engine" />
+      <Entry configuration="Debug" build="True" name="MIDIJournalWriter" />
+      <Entry configuration="Debug" build="True" name="PluginsCore" />
+      <Entry configuration="Debug" build="True" name="XMLJournalWriter" />
+      <Entry configuration="Debug" build="True" name="xmlrpc" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry configuration="Debug" build="True" name="Gtk" />
+      <Entry configuration="Debug" build="True" name="Common" />
+      <Entry configuration="Debug" build="True" name="Engine" />
+      <Entry configuration="Debug" build="True" name="MIDIJournalWriter" />
+      <Entry configuration="Debug" build="True" name="PluginsCore" />
+      <Entry configuration="Debug" build="True" name="XMLJournalWriter" />
+      <Entry configuration="Debug" build="True" name="xmlrpc" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="Gtk" single="True">
+    <Execute type="None" entry="Gtk" />
+    <Execute type="None" entry="Common" />
+    <Execute type="None" entry="Engine" />
+    <Execute type="None" entry="MIDIJournalWriter" />
+    <Execute type="None" entry="PluginsCore" />
+    <Execute type="None" entry="XMLJournalWriter" />
+    <Execute type="None" entry="xmlrpc" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./Gtk.mdp" />
+    <Entry filename="../Common/Common.mdp" />
+    <Entry filename="../Engine/Engine.mdp" />
+    <Entry filename="../MIDIJournalWriter/MIDIJournalWriter.mdp" />
+    <Entry filename="../PluginsCore/PluginsCore.mdp" />
+    <Entry filename="../XMLJournalWriter/XMLJournalWriter.mdp" />
+    <Entry filename="../xmlrpc/xmlrpc.mdp" />
+  </Entries>
+</Combine>
