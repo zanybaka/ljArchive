@@ -173,6 +173,7 @@ namespace EF.ljArchive.Engine
 			Sync.j = j;
 			Sync.socb = socb;
 			t = new Thread(new ThreadStart(Sync.ThreadStart));
+			t.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 			t.Start();
 		}
 
