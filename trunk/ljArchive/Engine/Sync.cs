@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Xml;
@@ -173,7 +174,7 @@ namespace EF.ljArchive.Engine
 			Sync.j = j;
 			Sync.socb = socb;
 			t = new Thread(new ThreadStart(Sync.ThreadStart));
-			t.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+			t.CurrentCulture = CultureInfo.InvariantCulture;
 			t.Start();
 		}
 
@@ -297,7 +298,7 @@ namespace EF.ljArchive.Engine
 				{
 					socb(new SyncOperationEventArgs(SyncOperation.Merge, 0, 0));
 					if (sic.Count > 0)
-						lastSync = DateTime.Parse(sic.GetOldest().time).AddSeconds(-1);
+						lastSync = DateTime.Parse(sic.GetOldest().time, CultureInfo.InvariantCulture).AddSeconds(-1);
 					Merge(j, ec, cc, umc, deletedsic, lr, communityPicURL, lastSync);
 					socb(new SyncOperationEventArgs(SyncOperation.PartialSync, ec.Count, cc.Count));
 				}
@@ -373,7 +374,7 @@ namespace EF.ljArchive.Engine
 			while (sic.Count > 0)
 			{
 				SyncItem oldest = sic.GetOldest();
-				DateTime oldestTime = DateTime.Parse(oldest.time).AddSeconds(-1);
+				DateTime oldestTime = DateTime.Parse(oldest.time, CultureInfo.InvariantCulture).AddSeconds(-1);
 				GetChallengeResponse gcr = iLJ.GetChallenge();
 				string auth_response = MD5Hasher.Compute(gcr.challenge + or.HPassword);
 				GetEventsParams gep = new GetEventsParams(or.UserName, "challenge", gcr.challenge,
@@ -561,7 +562,7 @@ namespace EF.ljArchive.Engine
 					er.ID = e.itemid;
 					j.Events.AddEventsRow(er);
 				}
-				er.Date = DateTime.Parse(e.eventtime);
+				er.Date = DateTime.Parse(e.eventtime, CultureInfo.InvariantCulture);
 				er.Security = e.security;
 				er.AllowMask = e.allowmask;
 				er.Subject = e.subject;

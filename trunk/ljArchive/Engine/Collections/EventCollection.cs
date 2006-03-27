@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Globalization;
 using EF.ljArchive.Engine.XMLStructs;
 
 namespace EF.ljArchive.Engine.Collections
@@ -76,7 +77,7 @@ namespace EF.ljArchive.Engine.Collections
 			DateTime ret = DateTime.MinValue;
 			foreach (Event e in this)
 			{
-				DateTime dt = DateTime.Parse(e.eventtime);
+				DateTime dt = DateTime.Parse(e.eventtime, CultureInfo.InvariantCulture);
 				if (dt > ret)
 					ret = dt;
 			}
