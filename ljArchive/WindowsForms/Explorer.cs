@@ -521,11 +521,14 @@ namespace EF.ljArchive.WindowsForms
 		{
 			switch (soe.SyncOperation)
 			{
-				case Engine.SyncOperation.ExportCommentsMeta:
 				case Engine.SyncOperation.Initialize:
 				case Engine.SyncOperation.Login:
 				case Engine.SyncOperation.SessionGenerate:
 					sbpProgressText.Text = Localizer.GetString("SyncOperation." + soe.SyncOperation);
+					break;
+				case Engine.SyncOperation.ExportCommentsMeta:
+					sbpProgressText.Text = string.Format(Localizer.GetString("SyncOperation.ExportCommentsMeta"),
+						soe.Param1, soe.Param2);
 					break;
 				case Engine.SyncOperation.ExportCommentsBody:
 					sbpProgressText.Text = string.Format(Localizer.GetString("SyncOperation.ExportCommentsBody"),

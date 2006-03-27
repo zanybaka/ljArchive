@@ -318,7 +318,7 @@
     <value>Downloading comments - {0} of {1}...</value>
   </data>
   <data name="SyncOperation.ExportCommentsMeta" xml:space="preserve">
-    <value>Downloading comment index...</value>
+    <value>Downloading comment index - {0} of {1}...</value>
   </data>
   <data name="SyncOperation.Failure" xml:space="preserve">
     <value>Sync Error</value>
