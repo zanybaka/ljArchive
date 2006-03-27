@@ -217,7 +217,7 @@ namespace EF.ljArchive.Engine
 			Journal.OptionsRow or = null;
 			SyncItemCollection sic = null, deletedsic = null;
             EventCollection ec = null;
-			CommentCollection cc = null;
+			CommentCollection ccbody = null, ccmeta = null;
 			UserMapCollection umc = null;
 			LoginResponse lr = new LoginResponse();
 			string communityPicURL = null;
@@ -235,7 +235,8 @@ namespace EF.ljArchive.Engine
 				sic = new SyncItemCollection();
 				deletedsic = new SyncItemCollection();
 				ec = new EventCollection();
-				cc = new CommentCollection();
+				ccmeta = new CommentCollection();
+				ccbody = new CommentCollection();
 				umc = new UserMapCollection();
 
 				// STEP 2: Login
@@ -262,11 +263,11 @@ namespace EF.ljArchive.Engine
 					// STEP 6: ExportCommentsMeta
 					socb(new SyncOperationEventArgs(SyncOperation.ExportCommentsMeta, 0, 0));
 					localMaxID = serverMaxID = j.GetMaxCommentID();
-					ExportCommentsMeta(or, iLJ, sgr, ref serverMaxID, umc);
+					ExportCommentsMeta(or, iLJ, sgr, ref serverMaxID, localMaxID, umc, ccmeta);
 
 					// STEP 7: ExportCommentsBody
 					socb(new SyncOperationEventArgs(SyncOperation.ExportCommentsBody, 0, 0));
-					ExportCommentsBody(or, iLJ, sgr, serverMaxID, localMaxID, cc);
+					ExportCommentsBody(or, iLJ, sgr, serverMaxID, localMaxID, ccbody);
 				}
 			}
 			catch (Exception ex)
@@ -285,8 +286,8 @@ namespace EF.ljArchive.Engine
 				if (syncException == null)
 				{
 					socb(new SyncOperationEventArgs(SyncOperation.Merge, 0, 0));
-					Merge(j, ec, cc, umc, deletedsic, lr, communityPicURL, lastSync);
-					socb(new SyncOperationEventArgs(SyncOperation.Success, ec.Count, cc.Count));
+					Merge(j, ec, ccmeta, ccbody, umc, deletedsic, lr, communityPicURL, lastSync);
+					socb(new SyncOperationEventArgs(SyncOperation.Success, ec.Count, ccbody.Count));
 				}
 				else if (syncException.GetType() == typeof(ExpectedSyncException)
 					&& (((ExpectedSyncException) syncException).ExpectedError == ExpectedError.ServerNotResponding
@@ -299,8 +300,8 @@ namespace EF.ljArchive.Engine
 					socb(new SyncOperationEventArgs(SyncOperation.Merge, 0, 0));
 					if (sic.Count > 0)
 						lastSync = DateTime.Parse(sic.GetOldest().time, CultureInfo.InvariantCulture).AddSeconds(-1);
-					Merge(j, ec, cc, umc, deletedsic, lr, communityPicURL, lastSync);
-					socb(new SyncOperationEventArgs(SyncOperation.PartialSync, ec.Count, cc.Count));
+					Merge(j, ec, ccmeta, ccbody, umc, deletedsic, lr, communityPicURL, lastSync);
+					socb(new SyncOperationEventArgs(SyncOperation.PartialSync, ec.Count, ccbody.Count));
 				}
 				else
 				{
@@ -406,41 +407,58 @@ namespace EF.ljArchive.Engine
 		}
 
 		static private void ExportCommentsMeta(Journal.OptionsRow or, ILJServer iLJ, SessionGenerateResponse sgr,
-			ref int serverMaxID, UserMapCollection umc)
+			ref int serverMaxID, int localMaxID, UserMapCollection umc, CommentCollection cc)
 		{
-			// this is a vaguely unnecessary step
-			// the main reason we call export comments meta is to get the user map
-			// it doesn't make sense to call a full export comments meta AND a full export comments body
+			// this is a an unfortunately necessary step
+			// we call export comments meta is to get the user map and to check if comment state has changed
+			// it would be better to be able to provide a lastsync, but alas
 			// see http://www.livejournal.com/developer/exporting.bml for more info
-			Uri uri = new Uri(new Uri(or.ServerURL), string.Format(_exportcommentsmetapath, serverMaxID + 1));
-			if (!or.IsUseJournalNull())
-				uri = new Uri(uri.AbsoluteUri + string.Format("&authas={0}", or.UseJournal));
-			HttpWebRequest w = HttpWebRequestFactory.Create(uri.AbsoluteUri, sgr.ljsession);
-			using (Stream s = w.GetResponse().GetResponseStream())
+			int maxID = -1;
+			while (maxID < serverMaxID)
 			{
-				XmlTextReader xtr = new XmlTextReader(s);
-				while (xtr.Read())
+				Uri uri = new Uri(new Uri(or.ServerURL), string.Format(_exportcommentsmetapath, maxID + 1));
+				if (!or.IsUseJournalNull())
+					uri = new Uri(uri.AbsoluteUri + string.Format("&authas={0}", or.UseJournal));
+				HttpWebRequest w = HttpWebRequestFactory.Create(uri.AbsoluteUri, sgr.ljsession);
+				using (Stream s = w.GetResponse().GetResponseStream())
 				{
-					if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "usermap")
+					XmlTextReader xtr = new XmlTextReader(s);
+					while (xtr.Read())
 					{
-						string id = xtr.GetAttribute("id");
-						string user = xtr.GetAttribute("user");
-						if (id != null && user != null)
-							umc.Add(new UserMap(XmlConvert.ToInt32(id), user));
+						if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "usermap")
+						{
+							string id = xtr.GetAttribute("id");
+							string user = xtr.GetAttribute("user");
+							if (id != null && user != null && !umc.ContainsID(XmlConvert.ToInt32(id)))
+								umc.Add(new UserMap(XmlConvert.ToInt32(id), user));
+						}
+						else if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "maxid")
+						{
+							xtr.Read();
+							serverMaxID = XmlConvert.ToInt32(xtr.Value);
+							socb(new SyncOperationEventArgs(SyncOperation.ExportCommentsMeta, Math.Max(maxID, 0), serverMaxID));
+						}
+						else if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "comment")
+						{
+							string id = xtr.GetAttribute("id");
+							string posterid = xtr.GetAttribute("posterid");
+							string state = xtr.GetAttribute("state");
+							if (posterid == null) posterid = "0";
+							if (state == null) state = "A";
+							if (id != null)
+								cc.Add(new Comment(XmlConvert.ToInt32(id), XmlConvert.ToInt32(posterid),
+								                   state, 0, 0, string.Empty, string.Empty, DateTime.MinValue));
+						}
+						else if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "h2")
+						{
+							xtr.Read();
+							if (xtr.Value == "Error" && !or.IsUseJournalNull())
+								throw new ExpectedSyncException(ExpectedError.CommunityAccessDenied, null);
+						}
 					}
-					else if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "maxid")
-					{
-						xtr.Read();
-						serverMaxID = XmlConvert.ToInt32(xtr.Value);
-					}
-					else if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "h2")
-					{
-						xtr.Read();
-						if (xtr.Value == "Error" && !or.IsUseJournalNull())
-							throw new ExpectedSyncException(ExpectedError.CommunityAccessDenied, null);
-					}
+					xtr.Close();
 				}
-				xtr.Close();
+				maxID = cc.GetMaxID();
 			}
 		}
 
@@ -448,14 +466,14 @@ namespace EF.ljArchive.Engine
 			int serverMaxID, int localMaxID, CommentCollection cc)
 		{
 			// note that the export comments body web request may be called more than once
-			int count = localMaxID;
-			while (count < serverMaxID)
+			int maxID = localMaxID;
+			while (maxID < serverMaxID)
 			{
-				Uri uri = new Uri(new Uri(or.ServerURL), string.Format(_exportcommentsbodypath, count + 1));
+				Uri uri = new Uri(new Uri(or.ServerURL), string.Format(_exportcommentsbodypath, maxID + 1));
 				if (!or.IsUseJournalNull())
 					uri = new Uri(uri.AbsoluteUri + string.Format("&authas={0}", or.UseJournal));
 				HttpWebRequest w = HttpWebRequestFactory.Create(uri.AbsoluteUri, sgr.ljsession);
-				socb(new SyncOperationEventArgs(SyncOperation.ExportCommentsBody, count - localMaxID,
+				socb(new SyncOperationEventArgs(SyncOperation.ExportCommentsBody, maxID - localMaxID,
 					serverMaxID - localMaxID));
 				using (Stream s = w.GetResponse().GetResponseStream())
 				{
@@ -470,7 +488,7 @@ namespace EF.ljArchive.Engine
 						cc.Add(xcr.Comment);
 					xcr.Close();
 				}
-				count = cc.GetMaxID();
+				maxID = cc.GetMaxID();
 			}
 		}
 		
@@ -518,8 +536,9 @@ namespace EF.ljArchive.Engine
 				result = ex;
 		}
 
-		static private void Merge(Journal j, EventCollection ec, CommentCollection cc, UserMapCollection umc,
-			SyncItemCollection deletedsic, LoginResponse lr, string communityPicURL, DateTime lastSync)
+		static private void Merge(Journal j, EventCollection ec, CommentCollection ccMeta,
+			CommentCollection ccBody, UserMapCollection umc, SyncItemCollection deletedsic, LoginResponse lr,
+			string communityPicURL, DateTime lastSync)
 		{
 			// update various metadata
 
@@ -588,9 +607,20 @@ namespace EF.ljArchive.Engine
 			}
 			j.Events.EndLoadData();
 
-			// update comments
+			// update comment meta (posterid and state can change)
+			foreach (Comment c in ccMeta)
+			{
+				Journal.CommentsRow cr = j.Comments.FindByID(c.id);
+				if (cr != null)
+				{
+					cr.PosterID = c.posterid;
+					cr.State = c.state;
+				}
+			}
+			
+			// update comment bodies
 			j.Comments.BeginLoadData();
-			foreach (Comment c in cc)
+			foreach (Comment c in ccBody)
 			{
 				Journal.CommentsRow cr = j.Comments.FindByID(c.id);
 				if (cr == null)

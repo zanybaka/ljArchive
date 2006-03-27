@@ -49,6 +49,14 @@ namespace EF.ljArchive.Engine.Collections
 			// If value is not of type UserMap, this will return false.
 			return( List.Contains( value ) );
 		}
+		
+		public bool ContainsID(int id)
+		{
+			foreach (UserMap um in List)
+				if (um.id == id)
+					return true;
+			return false;
+		}
 		#endregion
 		
 		#region Protected Instance Methods

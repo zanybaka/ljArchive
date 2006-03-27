@@ -318,7 +318,7 @@
     <value>Téléchargement de commentaires - {0} de {1}...</value>
   </data>
   <data name="SyncOperation.ExportCommentsMeta" xml:space="preserve">
-    <value>Téléchargement de l'index de commentaires...</value>
+    <value>Téléchargement de l'index de commentaires - {0} de {1}...</value>
   </data>
   <data name="SyncOperation.Failure" xml:space="preserve">
     <value>Erreur de Synchronisation</value>
