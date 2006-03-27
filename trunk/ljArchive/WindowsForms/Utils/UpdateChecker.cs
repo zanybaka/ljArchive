@@ -21,6 +21,7 @@ namespace EF.ljArchive.WindowsForms
 		{
 			UpdateChecker.uccb = uccb;
 			t = new Thread(new ThreadStart(ThreadStart));
+			t.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 			t.Start();
 		}
 
