@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Globalization;
 using EF.ljArchive.Engine.XMLStructs;
 
 namespace EF.ljArchive.Engine.Collections
@@ -68,7 +69,7 @@ namespace EF.ljArchive.Engine.Collections
 			DateTime ret = DateTime.MinValue;
 			foreach (SyncItem s in List)
 			{
-				DateTime dt = DateTime.Parse(s.time);
+				DateTime dt = DateTime.Parse(s.time, CultureInfo.InvariantCulture);
 				if (dt > ret)
 					ret = dt;
 			}
@@ -81,7 +82,7 @@ namespace EF.ljArchive.Engine.Collections
 			DateTime dtMin = DateTime.MaxValue;
 			foreach (SyncItem s in List)
 			{
-				DateTime dt = DateTime.Parse(s.time);
+				DateTime dt = DateTime.Parse(s.time, CultureInfo.InvariantCulture);
 				if (dt < dtMin)
 				{
 					dtMin = dt;
