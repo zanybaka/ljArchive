@@ -74,7 +74,7 @@ namespace EF.ljArchive.Engine
 		}
 		static private readonly string _useragent = ConstReader.GetString("_useragent");
 	}
-
+	
 	/// <summary>
 	/// Reads internal global consts.
 	/// </summary>
