@@ -4,6 +4,8 @@
 <glade-interface>
 
 <widget class="GtkWindow" id="MainWindow">
+  <property name="width_request">640</property>
+  <property name="height_request">480</property>
   <property name="visible">True</property>
   <property name="title" translatable="yes">ljArchive</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
@@ -200,7 +202,7 @@
 	  <property name="show_arrow">True</property>
 
 	  <child>
-	    <widget class="GtkToolButton" id="toolbutton1">
+	    <widget class="GtkToolButton" id="tbBack">
 	      <property name="visible">True</property>
 	      <property name="stock_id">gtk-go-back</property>
 	      <property name="visible_horizontal">True</property>
@@ -214,7 +216,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="toolbutton2">
+	    <widget class="GtkToolButton" id="tbForward">
 	      <property name="visible">True</property>
 	      <property name="stock_id">gtk-go-forward</property>
 	      <property name="visible_horizontal">True</property>
@@ -241,7 +243,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="toolbutton4">
+	    <widget class="GtkToolButton" id="tbFind">
 	      <property name="visible">True</property>
 	      <property name="stock_id">gtk-find</property>
 	      <property name="visible_horizontal">True</property>
@@ -268,7 +270,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="toolbutton3">
+	    <widget class="GtkToolButton" id="tbSync">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Sync</property>
 	      <property name="use_underline">True</property>
@@ -284,7 +286,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="toolbutton5">
+	    <widget class="GtkToolButton" id="tbStop">
 	      <property name="visible">True</property>
 	      <property name="stock_id">gtk-stop</property>
 	      <property name="visible_horizontal">True</property>
@@ -311,7 +313,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="toolbutton6">
+	    <widget class="GtkToolButton" id="tbPlugins">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Plugins</property>
 	      <property name="use_underline">True</property>
