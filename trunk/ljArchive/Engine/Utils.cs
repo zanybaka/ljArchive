@@ -62,14 +62,13 @@ namespace EF.ljArchive.Engine
 			if (System.Environment.Version.Major == 1)
 				wr.Proxy = System.Net.WebProxy.GetDefaultProxy(); // need to test this in 1.1
 			
-			if (ljsession != null && ljsession.Length > 0)
+			if (ljsession != null && ljsession.Length > 0) // force Mono to generate cookie header like MS.NET
 			{
-				wr.CookieContainer = new CookieContainer();
-				// Old-style session cookies, just in case.
-				wr.CookieContainer.Add(new Cookie("ljsession", ljsession, "/", uri.Host));
-				// New-style session cookies.
-				wr.CookieContainer.Add(new Cookie("ljmastersession", ljsession, "/", uri.Host));
-				wr.CookieContainer.Add(new Cookie("ljloggedin", ljsession.Substring(ljsession.IndexOf(":") + 1, ljsession.LastIndexOf(":") - ljsession.IndexOf(":") - 1), "/", uri.Host));
+				StringBuilder cookieHeader = new StringBuilder();
+				cookieHeader.Append(new Cookie("ljsession", ljsession, null, null).ToString());
+				cookieHeader.Append("; ").Append(new Cookie("ljmastersession", ljsession, null, null).ToString());
+				cookieHeader.Append("; ").Append(new Cookie("ljloggedin", ljsession.Substring(ljsession.IndexOf(":") + 1, ljsession.LastIndexOf(":") - ljsession.IndexOf(":") - 1), null, null).ToString());				
+				wr.Headers.Add("Cookie", cookieHeader.ToString());
 			}
 			return wr;
 		}
