@@ -62,21 +62,24 @@ namespace EF.ljArchive.Gtk
 			// mniFileQuit
 			mniFileQuit.Activated += MenuItem_Activated;
 			
+			// mniFileNew
+			mniFileNew.Activated += MenuItem_Activated;
+			
 			// cmbSearchType
 			cmbSearchType.Active = 0;
 			
-			// fcd
-			fcd = new FileChooserDialog("Open ljArchive file", MainWindow, FileChooserAction.Open);
-			fcd.AddButton(Stock.Open, ResponseType.Accept);
-			fcd.AddButton(Stock.Cancel, ResponseType.Cancel);
+			// fcdOpen
+			fcdOpen = new FileChooserDialog("Open ljArchive file", MainWindow, FileChooserAction.Open);
+			fcdOpen.AddButton(Stock.Open, ResponseType.Accept);
+			fcdOpen.AddButton(Stock.Cancel, ResponseType.Cancel);
 			FileFilter ff = new FileFilter();
 			ff.Name = "ljArchive files";
 			ff.AddPattern("*.lja");
-			fcd.AddFilter(ff);
+			fcdOpen.AddFilter(ff);
 			ff = new FileFilter();
 			ff.Name = "All files";
 			ff.AddPattern("*");
-			fcd.AddFilter(ff);
+			fcdOpen.AddFilter(ff);
 			
 			// tbSync
 			tbSync.Clicked += ToolButton_Clicked;
@@ -143,10 +146,26 @@ namespace EF.ljArchive.Gtk
 		{
 			if (sender == mniFileOpen)
 			{
-				ResponseType rt = (ResponseType) fcd.Run();
-				fcd.Hide();
-				if (rt == ResponseType.Accept && fcd.Filename != null)
-					Open(fcd.Filename);
+				ResponseType rt = (ResponseType) fcdOpen.Run();
+				fcdOpen.Hide();
+				if (rt == ResponseType.Accept && fcdOpen.Filename != null)
+					Open(fcdOpen.Filename);
+				tvEvents.Selection.SelectPath(new TreePath(new int[] {0}));
+			}
+			else if (sender == mniFileNew)
+			{
+				if (NewJournalController.Go() == ResponseType.Ok)
+				{
+					j = new Engine.Journal(NewJournalController.ServerURL,
+						NewJournalController.UserName,
+						NewJournalController.Password,
+						NewJournalController.GetComments,
+						NewJournalController.UseJournal);
+					j.Save(NewJournalController.Filename);
+					estore = new Components.EntriesStore(j); 
+					tvEvents.Model = estore;
+					Engine.Sync.Start(j, new Engine.SyncOperationCallBack(Sync_SyncOperationCallBack));
+				}
 			}
 			else if (sender == mniFileQuit)
 			{
@@ -178,6 +197,8 @@ namespace EF.ljArchive.Gtk
 					StatusBar.Push(1, soe.SyncOperation.ToString() + "...");
 					break;
 				case Engine.SyncOperation.Failure:
+				    StatusBar.Pop(1);
+				    StatusBar.Push(1, "FLAGRANT SYSTEM ERROR!!!");
 					Console.WriteLine(Engine.Sync.SyncException.ToString());
 					break;
 				case Engine.SyncOperation.Success:
@@ -200,6 +221,8 @@ namespace EF.ljArchive.Gtk
 		[Widget]
 		private MenuItem mniFileQuit;
 		[Widget]
+		private MenuItem mniFileNew;
+		[Widget]
 		private ToolButton tbSync;
 		[Widget]
 		private Statusbar StatusBar;
@@ -210,7 +233,7 @@ namespace EF.ljArchive.Gtk
 		private Components.HTMLAdvanced html;
 		private Engine.Journal j;
 		private Components.EntriesStore estore;
-		private FileChooserDialog fcd;
+		private FileChooserDialog fcdOpen;
 		private delegate void UpdateStatusDelegate(Engine.SyncOperationEventArgs soe);
 	}
 }

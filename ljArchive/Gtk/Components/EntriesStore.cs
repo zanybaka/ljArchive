@@ -5,15 +5,16 @@ using System.Text.RegularExpressions;
 
 namespace EF.ljArchive.Gtk.Components
 {
-	public class JournalStore : ListStore
+	public class EntriesStore : ListStore
 	{
-		public JournalStore(EF.ljArchive.Engine.Journal j) : base(typeof(string), typeof(string), typeof(string), typeof(string), typeof(string))
+		public EntriesStore(EF.ljArchive.Engine.Journal j) : base(typeof(string), typeof(string), typeof(string), typeof(string), typeof(string))
 		{
 			foreach (EF.ljArchive.Engine.Journal.EventsRow er in j.Events)
 			{
 				string subject = er.IsSubjectNull() ? string.Empty : CleanHTML(er.Subject);
 				string body = er.IsBodyNull() ? string.Empty : CleanHTML(er.Body);
-				this.AppendValues("0", er.ID.ToString(), er.Date.ToString(), subject, body);
+				string security = er.IsSecurityNull() ? string.Empty : er.Security;
+				this.AppendValues(security, er.ID.ToString(), er.Date.ToString(), subject, body);
 			}
 		}
 		
