@@ -540,18 +540,17 @@ namespace EF.ljArchive.Engine
 			CommentCollection ccBody, UserMapCollection umc, SyncItemCollection deletedsic, LoginResponse lr,
 			string communityPicURL, DateTime lastSync)
 		{
-			// update various metadata
+			j.AcceptChanges(); // row states must be set to unchanged for loaddatarow to merge properly
 
 			// update moods
 			j.Moods.BeginLoadData();
 			foreach (Mood m in lr.moods)
-				if (j.Moods.FindByID(m.id) == null)
-					j.Moods.AddMoodsRow(m.id, m.name, m.parent);
+				j.Moods.LoadDataRow(new object[] {m.id, m.name, m.parent}, false);
 			j.Moods.EndLoadData();
 
 			// update userpics
-			j.UserPics.BeginLoadData();
 			j.UserPics.Clear();
+			j.UserPics.BeginLoadData();
 			for (int i = 0; i < lr.pickws.Length; ++i)
 				j.UserPics.AddUserPicsRow(lr.pickws[i], lr.pickwurls[i]);
 			j.UserPics.EndLoadData();
@@ -559,55 +558,43 @@ namespace EF.ljArchive.Engine
 			// update users
 			j.Users.BeginLoadData();
 			foreach (UserMap u in umc)
-			{
-				Common.Journal.UsersRow ur = j.Users.FindByID(u.id);
-				if (ur == null)
-					j.Users.AddUsersRow(u.id, u.user);
-				else
-					ur.User = u.user;
-			}
-			if (j.Users.FindByID(0) == null)
-				j.Users.AddUsersRow(0, "anonymous");
+				j.Users.LoadDataRow(new object[] {u.id, u.user}, false);
+			j.Users.LoadDataRow(new object[] {0, "anonymous"}, false);
 			j.Users.EndLoadData();
 
 			// update new/updated journal events
 			j.Events.BeginLoadData();
 			foreach (Event e in ec)
-			{
-				Common.Journal.EventsRow er = j.Events.FindByID(e.itemid);
-				if (er == null)
-				{
-					er = j.Events.NewEventsRow();
-					er.ID = e.itemid;
-					j.Events.AddEventsRow(er);
-				}
-				er.Date = DateTime.Parse(e.eventtime, CultureInfo.InvariantCulture);
-				er.Security = e.security;
-				er.AllowMask = e.allowmask;
-				er.Subject = e.subject;
-				er.Body = e.eventText;
-				er.Poster = e.poster;
-				er.Anum = e.anum;
-				er.CurrentMood = e.props.current_mood;
-				er.CurrentMoodID = e.props.current_moodid;
-				er.CurrentMusic = e.props.current_music;
-				er.Preformatted = (e.props.opt_preformatted == 1);
-				er.NoComments = (e.props.opt_nocomments == 1);
-				er.PictureKeyword = e.props.picture_keyword;
-				er.Backdated = (e.props.opt_backdated == 1);
-				er.NoEmail = (e.props.opt_noemail == 1);
-				er.Unknown8Bit = (e.props.unknown8bit == 1);
-				er.ScreenedComments = (e.props.hasscreened == 1);
-				er.NumberOfRevisions= e.props.revnum;
-				er.CommentAlter = e.props.commentalter;
-				er.SyndicationURL = e.props.syn_link;
-				er.SyndicationID = e.props.syn_id;
-				er.LastRevision = new DateTime(1970, 1, 1).AddSeconds(e.props.revtime);
-				er.TagList = e.props.taglist;
-			}
+				j.Events.LoadDataRow(new object[] {
+										e.itemid,
+										DateTime.Parse(e.eventtime, CultureInfo.InvariantCulture),
+										e.security,
+										e.allowmask,
+										e.subject,
+										e.eventText,
+										e.poster,
+										e.anum,
+										e.props.current_mood,
+										e.props.current_moodid,
+										e.props.current_music,
+										e.props.opt_preformatted == 1,
+										e.props.opt_nocomments == 1,
+										e.props.picture_keyword,
+										e.props.opt_backdated == 1,
+										e.props.opt_noemail == 1,
+										e.props.unknown8bit == 1,
+										e.props.hasscreened == 1,
+										e.props.revnum,
+										e.props.commentalter,
+										e.props.syn_link,
+										e.props.syn_id,
+										new DateTime(1970, 1, 1).AddSeconds(e.props.revtime),
+										e.props.taglist
+				                     }, false);
 			j.Events.EndLoadData();
 
 			// update comment meta (posterid and state can change)
+			j.Comments.BeginLoadData();
 			foreach (Comment c in ccMeta)
 			{
 				Journal.CommentsRow cr = j.Comments.FindByID(c.id);
@@ -617,26 +604,21 @@ namespace EF.ljArchive.Engine
 					cr.State = c.state;
 				}
 			}
+			j.Comments.EndLoadData();
 			
 			// update comment bodies
 			j.Comments.BeginLoadData();
 			foreach (Comment c in ccBody)
-			{
-				Journal.CommentsRow cr = j.Comments.FindByID(c.id);
-				if (cr == null)
-				{
-					cr = j.Comments.NewCommentsRow();
-					cr.ID = c.id;
-					j.Comments.AddCommentsRow(cr);
-				}
-				cr.Body = c.body;
-				cr.Date = c.date;
-				cr.JItemID = c.jitemid;
-				cr.ParentID = c.parentid;
-				cr.PosterID = c.posterid;
-				cr.State = c.state;
-				cr.Subject = c.subject;
-			}
+				j.Comments.LoadDataRow(new object[] {
+										c.id,
+										c.posterid,
+										c.state,
+										c.jitemid,
+										c.parentid,
+										c.body,
+										c.subject,
+										c.date
+				                       }, false);
 			j.Comments.EndLoadData();
 
 			// update deleted journal events
