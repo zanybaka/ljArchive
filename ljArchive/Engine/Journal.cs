@@ -35,6 +35,11 @@ namespace EF.ljArchive.Engine
 				DateTime.MinValue, getComments, useJournal);
 			SetPassword(password);
 			this.version = this.GetType().Assembly.GetName().Version;
+            if ((int) System.Environment.OSVersion.Platform == 4
+            ||  (int) System.Environment.OSVersion.Platform == 128)
+                foreach (DataTable dt in this.Tables)
+                    dt.NewRow(); // mono bug: doesn't initialize default
+                                 // column values when calling LoadDataRow
 		}
 		#endregion
 
@@ -53,6 +58,11 @@ namespace EF.ljArchive.Engine
 			j.Relations.Add("FK_Users_Comments", j.Users.Columns["ID"], j.Comments.Columns["PosterID"], false);
 			j.Comments.Columns.Add("PosterUserName", typeof(string), "Parent.User");
 			j.path = path;
+            if ((int) System.Environment.OSVersion.Platform == 4
+            ||  (int) System.Environment.OSVersion.Platform == 128)
+                foreach (DataTable dt in this.Tables)
+                    dt.NewRow(); // mono bug: doesn't initialize default
+                                 // column values when calling LoadDataRow
 			return j;
 		}
 		#endregion
