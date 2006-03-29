@@ -52,10 +52,24 @@ namespace EF.ljArchive.Gtk.Components
 					using (Stream s = SimpleCache.Cache.GetStream(url))
 						while ((n = s.Read(buffer, 0, 8192)) != 0)
 							handle.Write(buffer, n);
+					Application.Invoke(DownloadSucceeded);
 				}
-				catch (System.Net.WebException) {} // don't care about 404's and such
+				catch (System.Net.WebException)
+				{
+					Application.Invoke(DownloadFailed);
+				}
 				catch (System.Threading.ThreadAbortException) {} // stream is gone
-				// handle.Close(HTMLStreamStatus.Ok);   why is this breaking gtkhtml?
+				   // there's still a threading problem
+			}
+			
+			public void DownloadSucceeded(object sender, System.EventArgs e)
+			{
+				handle.Close(HTMLStreamStatus.Ok);
+			}
+			
+			public void DownloadFailed(object sender, System.EventArgs e)
+			{
+				handle.Close(HTMLStreamStatus.Error);
 			}
 			
 			public string url;
