@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Gtk;
 using Glade;
 
@@ -23,25 +24,42 @@ namespace EF.ljArchive.Gtk
 			
 			// TreeView
 			TreeViewColumn tc;
-			this.TreeView.AppendColumn(string.Empty, new CellRendererText(), "text", 0);
-			this.TreeView.AppendColumn("ID", new CellRendererText(), "text", 1);
-			this.TreeView.AppendColumn("Date", new CellRendererText(), "text", 2).Resizable = true;
-			tc = this.TreeView.AppendColumn("Subject", new CellRendererText(), "text", 3);
-			tc.Resizable = true;
-			tc.FixedWidth = 100;
+			tc = new TreeViewColumn(string.Empty, new CellRendererText(), "text", 0);
 			tc.Sizing = TreeViewColumnSizing.Fixed;
-			this.TreeView.AppendColumn("Body", new CellRendererText(), "text", 4).Resizable = true;
-			this.TreeView.Selection.Changed += TreeView_Selection_Changed;
-			this.TreeView.SearchColumn = 3;
+			tc.FixedWidth = 24;
+			tvEvents.AppendColumn(tc);
+			tc = new TreeViewColumn("ID", new CellRendererText(), "text", 1);
+			tc.Sizing = TreeViewColumnSizing.Fixed;
+			tc.FixedWidth = 100;
+			tvEvents.AppendColumn(tc);
+			tc = new TreeViewColumn("Date", new CellRendererText(), "text", 2);
+			tc.Sizing = TreeViewColumnSizing.Fixed;
+			tc.FixedWidth = 100;
+			tc.Resizable = true;
+			tvEvents.AppendColumn(tc);
+			tc = new TreeViewColumn("Subject", new CellRendererText(), "text", 3);
+			tc.Sizing = TreeViewColumnSizing.Fixed;
+			tc.FixedWidth = 100;
+			tc.Resizable = true;
+			tvEvents.AppendColumn(tc);
+			tc = new TreeViewColumn("Body", new CellRendererText(), "text", 4);
+			tc.Sizing = TreeViewColumnSizing.Fixed;
+			tvEvents.AppendColumn(tc);
+			tvEvents.Selection.Changed += TreeView_Selection_Changed;
+			tvEvents.SearchColumn = 3;
 			
 			// html
 			html = new Components.HTMLAdvanced();
+			html.LoadFromString("Hey!  Open a file.");
 			
 			// mniFileOpen
 			mniFileOpen.Activated += MenuItem_Activated;
 			
 			// mniFileQuit
 			mniFileQuit.Activated += MenuItem_Activated;
+			
+			// cmbSearchType
+			cmbSearchType.Active = 0;
 			
 			// fcd
 			fcd = new FileChooserDialog("Open ljArchive file", MainWindow, FileChooserAction.Open);
@@ -62,21 +80,29 @@ namespace EF.ljArchive.Gtk
 			// StatusBar
 			StatusBar.Push(1, "What up.");
 			
-			ScrolledWindowHTML.Add(html);
+			swHTML.Add(html);
 			
 			MainWindow.ShowAll();
 		}
 		
 		private void Initialize()
 		{
-			this.TreeView.Selection.SelectPath(new TreePath(new int[] {0}));
+			string transform;
+			using (FileStream fs = File.Open("../../../etc/templates/talkread.ljt", FileMode.Open, FileAccess.Read))
+			{
+				StreamReader sr = new StreamReader(fs);
+				transform = sr.ReadToEnd();
+			}
+			hjw = new Engine.HTML.HTMLJournalWriter();
+			hjw.Transform = transform;
 		}
 		
 		protected void Open(string path)
 		{
 			j = EF.ljArchive.Engine.Journal.Load(path);
 			jstore = new Components.JournalStore(j); 
-			this.TreeView.Model = jstore;
+			tvEvents.Model = jstore;
+			tvEvents.Selection.SelectPath(new TreePath(new int[] {0}));
 		}
 		
 		private void MainWindow_Delete (object sender, DeleteEventArgs e)
@@ -88,12 +114,25 @@ namespace EF.ljArchive.Gtk
 		{
 			TreeIter iter;
 			TreeModel model;
- 
+			string htmltoload = "Nothing selected.";
+			Engine.Journal.EventsRow er;
+			
 			if (((TreeSelection) sender).GetSelected (out model, out iter))
 			{
 				int val = int.Parse((string) model.GetValue (iter, 1));
-				html.LoadFromString(j.Events.FindByID(val).Body);
+				using (MemoryStream ms = new MemoryStream())
+				{
+					er = j.Events.FindByID(val);
+					if (er != null)
+					{
+						hjw.WriteJournal(ms, j, new int[] {er.ID}, null, true, true);
+						ms.Seek(0, SeekOrigin.Begin);
+						using (StreamReader sr = new StreamReader(ms))
+							htmltoload = sr.ReadToEnd();
+					}
+				}
 			}
+			html.LoadFromString(htmltoload);
 		}
 		
 		private void MenuItem_Activated(object sender, EventArgs e)
@@ -134,11 +173,14 @@ namespace EF.ljArchive.Gtk
 					StatusBar.Pop(1);
 					StatusBar.Push(1, soe.SyncOperation.ToString() + "...");
 					break;
+				case Engine.SyncOperation.Failure:
+					Console.WriteLine(Engine.Sync.SyncException.ToString());
+					break;
 				case Engine.SyncOperation.Success:
 					StatusBar.Pop(1);
 					StatusBar.Push(1, soe.SyncOperation.ToString());
 					jstore = new Components.JournalStore(j); 
-					this.TreeView.Model = jstore;
+					tvEvents.Model = jstore;
 					break;
 			}
 		}		
@@ -146,9 +188,9 @@ namespace EF.ljArchive.Gtk
 		[Widget]
 		private Window MainWindow;
 		[Widget]
-		private ScrolledWindow ScrolledWindowHTML;
+		private ScrolledWindow swHTML;
 		[Widget]
-		private TreeView TreeView;
+		private TreeView tvEvents;
 		[Widget]
 		private MenuItem mniFileOpen;
 		[Widget]
@@ -157,9 +199,12 @@ namespace EF.ljArchive.Gtk
 		private ToolButton tbSync;
 		[Widget]
 		private Statusbar StatusBar;
+		[Widget]
+		private ComboBox cmbSearchType;
+		private Engine.HTML.HTMLJournalWriter hjw;
 		private Glade.XML gxml;
 		private Components.HTMLAdvanced html;
-		private EF.ljArchive.Engine.Journal j;
+		private Engine.Journal j;
 		private Components.JournalStore jstore;
 		private FileChooserDialog fcd;
 		private delegate void UpdateStatusDelegate(Engine.SyncOperationEventArgs soe);
