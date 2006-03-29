@@ -21,6 +21,10 @@ namespace EF.ljArchive.Gtk
 			
 			// MainWindow
 			MainWindow.DeleteEvent += MainWindow_Delete;
+			MainWindow.IconList = new Gdk.Pixbuf[] {
+				new Gdk.Pixbuf(null, "App16x16.xpm"),
+				new Gdk.Pixbuf(null, "App32x32.xpm")
+			};
 			
 			// TreeView
 			TreeViewColumn tc;
@@ -100,8 +104,8 @@ namespace EF.ljArchive.Gtk
 		protected void Open(string path)
 		{
 			j = EF.ljArchive.Engine.Journal.Load(path);
-			jstore = new Components.JournalStore(j); 
-			tvEvents.Model = jstore;
+			estore = new Components.EntriesStore(j); 
+			tvEvents.Model = estore;
 			tvEvents.Selection.SelectPath(new TreePath(new int[] {0}));
 		}
 		
@@ -179,8 +183,8 @@ namespace EF.ljArchive.Gtk
 				case Engine.SyncOperation.Success:
 					StatusBar.Pop(1);
 					StatusBar.Push(1, soe.SyncOperation.ToString());
-					jstore = new Components.JournalStore(j); 
-					tvEvents.Model = jstore;
+					estore = new Components.EntriesStore(j); 
+					tvEvents.Model = estore;
 					break;
 			}
 		}		
@@ -205,7 +209,7 @@ namespace EF.ljArchive.Gtk
 		private Glade.XML gxml;
 		private Components.HTMLAdvanced html;
 		private Engine.Journal j;
-		private Components.JournalStore jstore;
+		private Components.EntriesStore estore;
 		private FileChooserDialog fcd;
 		private delegate void UpdateStatusDelegate(Engine.SyncOperationEventArgs soe);
 	}
