@@ -60,7 +60,7 @@ namespace EF.ljArchive.Engine
 			j.path = path;
             if ((int) System.Environment.OSVersion.Platform == 4
             ||  (int) System.Environment.OSVersion.Platform == 128)
-                foreach (DataTable dt in this.Tables)
+                foreach (DataTable dt in j.Tables)
                     dt.NewRow(); // mono bug: doesn't initialize default
                                  // column values when calling LoadDataRow
 			return j;
