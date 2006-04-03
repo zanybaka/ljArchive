@@ -572,7 +572,7 @@ namespace EF.ljArchive.Plugins.Core
 			// wordlists
 			wordLists = new Hashtable();
 			using (StreamReader sr = new StreamReader(
-					   Assembly.GetExecutingAssembly().GetManifestResourceStream("EF.ljArchive.Plugins.Core.RID.txt")))
+					   Assembly.GetExecutingAssembly().GetManifestResourceStream(_ridWordsResource)))
 			{
 				while (sr.Peek() > -1)
 				{
@@ -673,6 +673,11 @@ namespace EF.ljArchive.Plugins.Core
 		static private int[] wordLengths;
 		static private string[] categories;
 		private const string ridServerURL = "http://fawx.com/software/ljarchive/pl/rid.pl";
+#if __MonoCS__
+		static private readonly string _ridWordsResource = "RID.txt";
+#else
+		static private readonly string _ridWordsResource = "EF.ljArchive.Plugins.Core.RID.txt";
+#endif
 		#endregion
 	}
 }
