@@ -24,7 +24,7 @@ namespace EF.ljArchive.Plugins.Core
 		static WordCount()
 		{
 			using (StreamReader sr = new StreamReader(
-					   Assembly.GetExecutingAssembly().GetManifestResourceStream("EF.ljArchive.Plugins.Core.CommonWords.txt")))
+					   Assembly.GetExecutingAssembly().GetManifestResourceStream(_commonWordsResource)))
 				commonWordList = sr.ReadToEnd().Split(' ');
 		}
 
@@ -78,5 +78,10 @@ namespace EF.ljArchive.Plugins.Core
 		}
 
 		static private string[] commonWordList;
+#if __MonoCS__
+		static private readonly string _commonWordsResource = "CommonWords.txt";
+#else
+		static private readonly string _commonWordsResource = "EF.ljArchive.Plugins.Core.CommonWords.txt";
+#endif
 	}
 }
