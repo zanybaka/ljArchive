@@ -22,6 +22,10 @@ namespace EF.ljArchive.Gtk
 			// fcdNew
 			gxml = new Glade.XML(null, "ljarchive.glade", "NewJournalDialog", null);
 			gxml.Autoconnect(this);
+			
+			// NewJournalDialog
+			this.NewJournalDialog.CurrentName = "archive.lja";
+			this.NewJournalDialog.KeyReleaseEvent += NewJournalDialog_KeyRelease;
 		}
 		
 		static public ResponseType Go()
@@ -71,6 +75,16 @@ namespace EF.ljArchive.Gtk
 					return null;
 			}
 		}
+		
+		private void NewJournalDialog_KeyRelease(object sender, EventArgs e)
+		{
+			btnSave.Sensitive = (
+			entUserName.Text.Length > 0
+			&& entPassword.Text.Length > 0
+			&& NewJournalDialog.Filename != null
+			&& NewJournalDialog.Filename.Length > 0
+			&& !Directory.Exists(NewJournalDialog.Filename));
+		}
 
 		[Widget]
 		private Entry entUserName;
@@ -84,6 +98,8 @@ namespace EF.ljArchive.Gtk
 		private CheckButton chkDownloadComments;
 		[Widget]
 		private FileChooserDialog NewJournalDialog;
+		[Widget]
+		private Button btnSave;
 		static private NewJournalController njc;
 		private Glade.XML gxml;
 		static private Engine.Journal j;

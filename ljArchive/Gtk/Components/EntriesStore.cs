@@ -9,6 +9,8 @@ namespace EF.ljArchive.Gtk.Components
 	{
 		public EntriesStore(EF.ljArchive.Engine.Journal j) : base(typeof(string), typeof(string), typeof(string), typeof(string), typeof(string))
 		{
+			if (j == null)
+				return;
 			foreach (EF.ljArchive.Engine.Journal.EventsRow er in j.Events)
 			{
 				string subject = er.IsSubjectNull() ? string.Empty : CleanHTML(er.Subject);

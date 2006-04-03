@@ -8,6 +8,7 @@
       <Entry configuration="Debug" build="True" name="PluginsCore" />
       <Entry configuration="Debug" build="True" name="XMLJournalWriter" />
       <Entry configuration="Debug" build="True" name="xmlrpc" />
+      <Entry configuration="Debug" build="True" name="GtkPlugins" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry configuration="Debug" build="True" name="Gtk" />
@@ -17,6 +18,7 @@
       <Entry configuration="Debug" build="True" name="PluginsCore" />
       <Entry configuration="Debug" build="True" name="XMLJournalWriter" />
       <Entry configuration="Debug" build="True" name="xmlrpc" />
+      <Entry configuration="Debug" build="True" name="GtkPlugins" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Gtk" single="True">
@@ -27,6 +29,7 @@
     <Execute type="None" entry="PluginsCore" />
     <Execute type="None" entry="XMLJournalWriter" />
     <Execute type="None" entry="xmlrpc" />
+    <Execute type="None" entry="GtkPlugins" />
   </StartMode>
   <Entries>
     <Entry filename="./Gtk.mdp" />
@@ -36,5 +39,6 @@
     <Entry filename="../PluginsCore/PluginsCore.mdp" />
     <Entry filename="../XMLJournalWriter/XMLJournalWriter.mdp" />
     <Entry filename="../xmlrpc/xmlrpc.mdp" />
+    <Entry filename="../GtkPlugins/GtkPlugins.mdp" />
   </Entries>
 </Combine>
