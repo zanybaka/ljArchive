@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>EF.ljArchive</RootNamespace>
+    <RootNamespace>EF.ljArchive.PDF</RootNamespace>
     <AssemblyName>EF.ljArchive.PDFJournalWriter</AssemblyName>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -35,22 +35,28 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="sharpPDF">
-      <HintPath>..\lib\sharpPDF.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="PDFJournalWriter.cs" />
-    <Compile Include="Layout.cs" />
+    <Compile Include="JournalReport.cs" />
+    <EmbeddedResource Include="res\userinfo.jpg" />
+    <EmbeddedResource Include="res\community.jpg" />
+    <Compile Include="SimpleCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.2005.csproj">
       <Project>{4685249B-BEB1-4443-8CF2-ED9EC71A1FFA}</Project>
       <Name>Common</Name>
+      <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\ReportNET\Report.NET.csproj">
+      <Project>{4982CEF7-4CF3-48C0-8925-5E14AFD3C94D}</Project>
+      <Name>Report.NET</Name>
+    </ProjectReference>
+    <Folder Include="res" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
