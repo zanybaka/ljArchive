@@ -1,8 +1,5 @@
 using System;
 using System.Collections;
-using sharpPDF;
-using sharpPDF.Enumerators;
-using sharpPDF.Elements;
 using EF.ljArchive.Common;
 
 namespace EF.ljArchive.PDF
@@ -19,23 +16,12 @@ namespace EF.ljArchive.PDF
 		#region IJournalWriter Members
 		public void WriteJournal(System.IO.Stream s, Journal j, int[] eventIDs, int[] commentIDs, bool header, bool footer)
 		{
-			pdfDocument pdf = new pdfDocument(j.Options[0].UserName + "'s Journal", j.Options[0].UserName);
-			Layout l = new Layout(pdf);
+			JournalReport jr = new JournalReport(j);
 			foreach (Journal.EventsRow er in j.Events)
 			{
-				if (eventIDs != null && !((IList) eventIDs).Contains(er.ID))
-					continue;
-				l.AddPage();
-				l.Font = pdf.getFontReference(predefinedFont.csCourierBold);
-				if (!er.IsSubjectNull())
-					l.AddParagraph("Subject: " + er.Subject);
-				if (!er.IsDateNull())
-					l.AddParagraph("Date: " + er.Date.ToString());
-				l.Font = pdf.getFontReference(predefinedFont.csCourier);
-				l.LineBreak();
-				l.AddParagraph(er.Body);
+				jr.AddEvent(er);
 			}
-			pdf.createPDF(s);
+			jr.formatter.Create(jr, s);
 		}
 
 		public string Filter
