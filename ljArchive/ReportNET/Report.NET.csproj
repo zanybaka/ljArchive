@@ -1,0 +1,123 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4982CEF7-4CF3-48C0-8925-5E14AFD3C94D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Root.Reports</RootNamespace>
+    <AssemblyName>Report.NET</AssemblyName>
+    <TargetFrameworkVersion>v1.1</TargetFrameworkVersion>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <NoStdLib>False</NoStdLib>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Compatible_0_8</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>PdbOnly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DebugTools.cs" />
+    <Compile Include="Formatter.cs" />
+    <Compile Include="ImageData.cs" />
+    <Compile Include="LayoutManager\FlowLayoutManager.cs" />
+    <Compile Include="LayoutManager\LayoutManager.cs" />
+    <Compile Include="LayoutManager\ListLayoutManager.cs" />
+    <Compile Include="LayoutManager\TableLayoutManager.cs" />
+    <Compile Include="LayoutManager\TlmBase.cs" />
+    <Compile Include="LayoutManager\TlmCell.cs" />
+    <Compile Include="LayoutManager\TlmCellDef.cs" />
+    <Compile Include="LayoutManager\TlmColumn.cs" />
+    <Compile Include="LayoutManager\TlmColumnDef.cs" />
+    <Compile Include="LayoutManager\TlmRow.cs" />
+    <Compile Include="LayoutManager\TlmRowDef.cs" />
+    <Compile Include="MatrixD.cs" />
+    <Compile Include="PDF\AdobeFromUnicode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PDF\PdfFontDefX.cs" />
+    <Compile Include="PDF\PdfIndirectObject_Font.cs" />
+    <Compile Include="PDF\PdfIndirectObject_PageContents.cs" />
+    <Compile Include="PDF\PdfFileElement.cs" />
+    <Compile Include="PDF\PdfIndirectObject.cs" />
+    <Compile Include="PDF\GraphicsState.cs" />
+    <Compile Include="PDF\PdfReport.cs" />
+    <Compile Include="PDF\PdfFontData.cs" />
+    <Compile Include="PDF\PdfFontPropData.cs" />
+    <Compile Include="PDF\PdfFormatter.cs" />
+    <Compile Include="PDF\PdfGraphicsStateData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Prop\BrushProp.cs" />
+    <Compile Include="Prop\FontData.cs" />
+    <Compile Include="Prop\FontDef.cs" />
+    <Compile Include="Prop\FontProp.cs" />
+    <Compile Include="Prop\FontPropData.cs" />
+    <Compile Include="Prop\GraphicsStateData.cs" />
+    <Compile Include="Prop\PenProp.cs" />
+    <Compile Include="Prop\TrueTypeFontData.cs" />
+    <Compile Include="Prop\Type1FontData.cs" />
+    <Compile Include="RepObj\Container.cs" />
+    <Compile Include="RepObj\Page.cs" />
+    <Compile Include="RepObj\PageData.cs" />
+    <Compile Include="PDF\PdfRepObjX.cs" />
+    <Compile Include="RepObj\RepArc.cs" />
+    <Compile Include="RepObj\RepImage.cs" />
+    <Compile Include="RepObj\RepLine.cs" />
+    <Compile Include="RepObj\RepObj.cs" />
+    <Compile Include="RepObj\RepPoly.cs" />
+    <Compile Include="RepObj\RepRect.cs" />
+    <Compile Include="RepObj\RepString.cs" />
+    <Compile Include="RepObj\StaticContainer.cs" />
+    <Compile Include="Report.cs" />
+    <Compile Include="ReportException.cs" />
+    <Compile Include="RT.cs" />
+    <EmbeddedResource Include="RT.resx">
+      <DependentUpon>RT.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PDF\afm\Courier-Bold.afm" />
+    <EmbeddedResource Include="PDF\afm\Courier-BoldOblique.afm" />
+    <EmbeddedResource Include="PDF\afm\Courier-Oblique.afm" />
+    <EmbeddedResource Include="PDF\afm\Courier.afm" />
+    <EmbeddedResource Include="PDF\afm\Helvetica-Bold.afm" />
+    <EmbeddedResource Include="PDF\afm\Helvetica-BoldOblique.afm" />
+    <EmbeddedResource Include="PDF\afm\Helvetica-Oblique.afm" />
+    <EmbeddedResource Include="PDF\afm\Helvetica.afm" />
+    <EmbeddedResource Include="PDF\afm\Symbol.afm" />
+    <EmbeddedResource Include="PDF\afm\Times-Bold.afm" />
+    <EmbeddedResource Include="PDF\afm\Times-BoldItalic.afm" />
+    <EmbeddedResource Include="PDF\afm\Times-Italic.afm" />
+    <EmbeddedResource Include="PDF\afm\Times-Roman.afm" />
+    <EmbeddedResource Include="PDF\afm\ZapfDingbats.afm" />
+    <EmbeddedResource Include="PDF\afm\MustRead.html" />
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+</Project>
