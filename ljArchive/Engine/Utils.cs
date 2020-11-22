@@ -66,8 +66,8 @@ namespace EF.ljArchive.Engine
 			{
 				StringBuilder cookieHeader = new StringBuilder();
 				cookieHeader.Append(new Cookie("ljsession", ljsession, null, null).ToString());
-				cookieHeader.Append("; ").Append(new Cookie("ljmastersession", ljsession, null, null).ToString());
-				cookieHeader.Append("; ").Append(new Cookie("ljloggedin", ljsession.Substring(ljsession.IndexOf(":") + 1, ljsession.LastIndexOf(":") - ljsession.IndexOf(":") - 1), null, null).ToString());				
+				// cookieHeader.Append("; ").Append(new Cookie("ljmastersession", ljsession, null, null).ToString());
+				// cookieHeader.Append("; ").Append(new Cookie("ljloggedin", ljsession.Substring(ljsession.IndexOf(":") + 1, ljsession.LastIndexOf(":") - ljsession.IndexOf(":") - 1), null, null).ToString());				
 				wr.Headers.Add("Cookie", cookieHeader.ToString());
 			}
 			return wr;
