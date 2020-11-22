@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -16,6 +16,11 @@
     <BaseAddress>4194304</BaseAddress>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <FileAlignment>4096</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
@@ -82,63 +87,97 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="EntryPoint.cs" />
-    <Compile Include="Explorer.cs" />
+    <Compile Include="Explorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Explorer.resx">
       <DependentUpon>Explorer.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\CalendarPanel.cs" />
+    <Compile Include="Controls\CalendarPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\CalendarPanel.resx">
       <DependentUpon>CalendarPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\CommandBarManager.cs" />
+    <Compile Include="Controls\CommandBarManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\CommandBarManager.resx">
       <DependentUpon>CommandBarManager.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\DataGridImageColumn.cs" />
+    <Compile Include="Controls\DataGridImageColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\DataGridList.cs" />
-    <Compile Include="Controls\DataGridTextViewColumn.cs" />
-    <Compile Include="Controls\FindPanel.cs" />
+    <Compile Include="Controls\DataGridTextViewColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\FindPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\FindPanel.resx">
       <DependentUpon>FindPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\LineControl.cs" />
-    <Compile Include="Controls\NewJournalArchiveAccountSettings.cs" />
+    <Compile Include="Controls\LineControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NewJournalArchiveAccountSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\NewJournalArchiveAccountSettings.resx">
       <DependentUpon>NewJournalArchiveAccountSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\NewJournalArchiveFinish.cs" />
+    <Compile Include="Controls\NewJournalArchiveFinish.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\NewJournalArchiveFinish.resx">
       <DependentUpon>NewJournalArchiveFinish.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Controls\NewJournalArchiveIntroPage.cs" />
+    <Compile Include="Controls\NewJournalArchiveIntroPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="Controls\NewJournalArchiveIntroPage.resx">
       <DependentUpon>NewJournalArchiveIntroPage.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Dialogs\About.cs" />
+    <Compile Include="Dialogs\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Dialogs\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Dialogs\ExpectedError.cs" />
+    <Compile Include="Dialogs\ExpectedError.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Dialogs\ExpectedError.resx">
       <DependentUpon>ExpectedError.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Dialogs\Export.cs" />
+    <Compile Include="Dialogs\Export.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Dialogs\Export.resx">
       <DependentUpon>Export.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Dialogs\GeneralError.cs" />
+    <Compile Include="Dialogs\GeneralError.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Dialogs\GeneralError.resx">
       <DependentUpon>GeneralError.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Dialogs\Options.cs" />
+    <Compile Include="Dialogs\Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Dialogs\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Dialogs\Properties.cs" />
+    <Compile Include="Dialogs\Properties.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="Dialogs\Properties.resx">
       <DependentUpon>Properties.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Html\HtmlControl.cs" />
+    <Compile Include="Html\HtmlControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Html\HtmlElement.cs" />
     <Compile Include="Html\HtmlSite.cs" />
     <Compile Include="Html\NativeMethods.cs" />
@@ -154,12 +193,12 @@
     <Compile Include="Utils\UpdateChecker.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Documents and Settings\ERIK FREY\My Documents\code\ljArchive\Common\Common.2005.csproj">
+    <ProjectReference Include="..\Common\Common.2019.csproj">
       <Project>{4685249B-BEB1-4443-8CF2-ED9EC71A1FFA}</Project>
       <Name>Common</Name>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="C:\Documents and Settings\ERIK FREY\My Documents\code\ljArchive\Engine\Engine.2005.csproj">
+    <ProjectReference Include="..\Engine\Engine.2019.csproj">
       <Project>{0E0F2AE6-4AD3-44E0-AA37-FDF91ECC27C6}</Project>
       <Name>Engine</Name>
       <Private>True</Private>

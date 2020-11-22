@@ -1,0 +1,5 @@
+ljArchive/**/.vs
+ljArchive/**/Backup
+ljArchive/**/bin
+ljArchive/**/obj
+ljArchive/**/UpgradeLog.htm
