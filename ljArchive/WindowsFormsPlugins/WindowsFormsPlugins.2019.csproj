@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,6 +14,11 @@
     <BaseAddress>4194304</BaseAddress>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <FileAlignment>4096</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
@@ -74,31 +79,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="CommentCount.cs" />
+    <Compile Include="CommentCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="CommentCount.resx">
       <DependentUpon>CommentCount.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="EntryReader.cs" />
+    <Compile Include="EntryReader.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="EntryReader.resx">
       <DependentUpon>EntryReader.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="PostFrequency.cs" />
+    <Compile Include="PostFrequency.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="PostFrequency.resx">
       <DependentUpon>PostFrequency.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="RIDAnalysis.cs" />
+    <Compile Include="RIDAnalysis.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="RIDAnalysis.resx">
       <DependentUpon>RIDAnalysis.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="RIDBaseline.cs" />
+    <Compile Include="RIDBaseline.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="RIDBaseline.resx">
       <DependentUpon>RIDBaseline.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="WordCount.cs" />
+    <Compile Include="WordCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="WordCount.resx">
       <DependentUpon>WordCount.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="ZedGraphControl.cs" />
+    <Compile Include="ZedGraphControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="ZedGraphControl.resx">
       <DependentUpon>ZedGraphControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,12 +129,12 @@
     <EmbeddedResource Include="res\WordCount.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Documents and Settings\ERIK FREY\My Documents\code\ljArchive\Common\Common.2005.csproj">
+    <ProjectReference Include="..\Common\Common.2019.csproj">
       <Project>{4685249B-BEB1-4443-8CF2-ED9EC71A1FFA}</Project>
       <Name>Common</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="C:\Documents and Settings\ERIK FREY\My Documents\code\ljArchive\PluginsCore\PluginsCore.2005.csproj">
+    <ProjectReference Include="..\PluginsCore\PluginsCore.2019.csproj">
       <Project>{32C6A155-7578-47A2-9119-7149B533A4C5}</Project>
       <Name>PluginsCore</Name>
       <Private>True</Private>

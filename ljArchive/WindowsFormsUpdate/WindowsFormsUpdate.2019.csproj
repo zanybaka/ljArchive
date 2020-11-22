@@ -1,31 +1,38 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C539F973-BDA1-4331-922E-56048222BE2D}</ProjectGuid>
-    <RootNamespace>EF.ljArchive.MIDIJournalWriter</RootNamespace>
-    <AssemblyName>EF.ljArchive.MIDIJournalWriter</AssemblyName>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{6A9E35E4-DAE9-4486-B80F-D972F14A017D}</ProjectGuid>
+    <RootNamespace>EF.ljArchive.WindowsForms.Update</RootNamespace>
+    <AssemblyName>Update</AssemblyName>
+    <OutputType>WinExe</OutputType>
+    <ApplicationIcon>App.ico</ApplicationIcon>
     <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
+    <StartupObject>EF.ljArchive.WindowsForms.Update.ApplicationWindow</StartupObject>
     <NoConfig>false</NoConfig>
-    <DebugType>None</DebugType>
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <BaseAddress>4194304</BaseAddress>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <FileAlignment>4096</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <DebugSymbols>false</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <OutputPath>..\bin\Debug\plugins\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
@@ -35,8 +42,9 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
-    <OutputPath>..\bin\Release\plugins\</OutputPath>
+    <OutputPath>..\bin\Release\</OutputPath>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>None</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Doc|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
@@ -46,8 +54,9 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
-    <OutputPath>..\bin\Doc\plugins\</OutputPath>
+    <OutputPath>..\bin\Doc\</OutputPath>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>None</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -56,23 +65,31 @@
     <Reference Include="System.Data">
       <HintPath>C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Data.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Windows.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml">
       <HintPath>C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.XML.dll</HintPath>
     </Reference>
-    <Reference Include="EF.SimpleMIDI">
-      <HintPath>..\lib\EF.SimpleMIDI.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="ApplicationWindow.resx">
+      <DependentUpon>ApplicationWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="MIDIJournalWriter.cs" />
+    <Compile Include="Localizer.cs" />
+    <Compile Include="WebDownloader.cs" />
+    <EmbeddedResource Include="res\Strings.resx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Documents and Settings\ERIK FREY\My Documents\code\ljArchive\Common\Common.2005.csproj">
-      <Project>{4685249B-BEB1-4443-8CF2-ED9EC71A1FFA}</Project>
-      <Name>Common</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <Content Include="App.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

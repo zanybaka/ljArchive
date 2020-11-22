@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <RootNamespace>EF.ljArchive.PDF</RootNamespace>
@@ -15,6 +15,11 @@
     <FileAlignment>4096</FileAlignment>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>..\bin\Debug\plugins\</OutputPath>
@@ -47,16 +52,11 @@
     <Compile Include="SimpleCache.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.2005.csproj">
+    <ProjectReference Include="..\Common\Common.2019.csproj">
       <Project>{4685249B-BEB1-4443-8CF2-ED9EC71A1FFA}</Project>
       <Name>Common</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\ReportNET\Report.NET.csproj">
-      <Project>{4982CEF7-4CF3-48C0-8925-5E14AFD3C94D}</Project>
-      <Name>Report.NET</Name>
-    </ProjectReference>
-    <Folder Include="res" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

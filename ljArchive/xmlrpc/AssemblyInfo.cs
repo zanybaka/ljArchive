@@ -40,8 +40,8 @@ using System.Security;
 [assembly: AssemblyProduct("XML-RPC.Net")]
 [assembly: AssemblyCopyright("Charles Cook (c) 2001,2002")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]		
-
+[assembly: AssemblyCulture("")]
+[assembly: SecurityRules(SecurityRuleSet.Level1)]
 //
 // Version information for an assembly consists of the following four values:
 //

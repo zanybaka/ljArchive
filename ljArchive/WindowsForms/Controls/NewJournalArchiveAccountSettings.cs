@@ -307,22 +307,26 @@ namespace EF.ljArchive.WindowsForms.Controls
 		void cmbCommunity_DropDown(object sender, System.EventArgs e)
 		{
 			cmbCommunity.Items.Clear();
-			try
-			{
-				cmbCommunity.Items.AddRange(Engine.Server.GetUseJournals(this.UserName, this.Password, this.ServerURL));
-			}
-			catch (EF.ljArchive.Engine.ExpectedSyncException ese)
-			{
-				switch (ese.ExpectedError)
-				{
-					case EF.ljArchive.Engine.ExpectedError.InvalidPassword:
-						Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.SyncInvalidPassword, ese, this.ParentForm);
-						break;
-					case EF.ljArchive.Engine.ExpectedError.ServerNotResponding:
-						Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.SyncServerNotResponding, ese, this.ParentForm);
-						break;
-				}
-			}
+            try
+            {
+                cmbCommunity.Items.AddRange(Engine.Server.GetUseJournals(this.UserName, this.Password, this.ServerURL));
+            }
+            catch (EF.ljArchive.Engine.ExpectedSyncException ese)
+            {
+                switch (ese.ExpectedError)
+                {
+                    case EF.ljArchive.Engine.ExpectedError.InvalidPassword:
+                        Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.SyncInvalidPassword, ese, this.ParentForm);
+                        break;
+                    case EF.ljArchive.Engine.ExpectedError.ServerNotResponding:
+                        Dialogs.ExpectedError.Go(Dialogs.ExpectedError.ExpectedErrorCategories.SyncServerNotResponding, ese, this.ParentForm);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
 		}
 	}
 }

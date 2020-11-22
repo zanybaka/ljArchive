@@ -1,31 +1,36 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4685249B-BEB1-4443-8CF2-ED9EC71A1FFA}</ProjectGuid>
-    <RootNamespace>EF.ljArchive.Common</RootNamespace>
-    <AssemblyName>EF.ljArchive.Common</AssemblyName>
+    <ProjectGuid>{32C6A155-7578-47A2-9119-7149B533A4C5}</ProjectGuid>
+    <RootNamespace>EF.ljArchive.Plugins.Core</RootNamespace>
+    <AssemblyName>EF.ljArchive.Plugins.Core</AssemblyName>
     <OutputType>Library</OutputType>
     <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
     <NoConfig>false</NoConfig>
-    <DebugType>None</DebugType>
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <BaseAddress>4194304</BaseAddress>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <FileAlignment>4096</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
     <WarningLevel>4</WarningLevel>
-    <DebugSymbols>false</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <OutputPath>bin\Debug\</OutputPath>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
@@ -37,6 +42,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <OutputPath>bin\Release\</OutputPath>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>None</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Doc|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
@@ -48,6 +54,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <OutputPath>bin\Doc\</OutputPath>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>None</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -59,24 +66,30 @@
     <Reference Include="System.Xml">
       <HintPath>C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.XML.dll</HintPath>
     </Reference>
+    <Reference Include="ZedGraph">
+      <HintPath>..\lib\ZedGraph.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing">
       <HintPath>C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="IJournalWriter.cs" />
-    <Compile Include="IPlugin.cs" />
-    <None Include="Journal.xml" />
-    <Compile Include="Journal.cs">
-      <DependentUpon>Journal.xsd</DependentUpon>
-    </Compile>
-    <None Include="Journal.xsx">
-      <DependentUpon>Journal.xsd</DependentUpon>
-    </None>
+    <Compile Include="CommentCount.cs" />
+    <EmbeddedResource Include="CommonWords.txt" />
+    <Compile Include="NormalDist.cs" />
+    <Compile Include="PostFrequency.cs" />
+    <EmbeddedResource Include="RID.txt" />
+    <Compile Include="RIDAnalysis.cs" />
+    <Compile Include="WordCount.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Journal.xsd" />
+    <ProjectReference Include="..\Common\Common.2019.csproj">
+      <Project>{4685249B-BEB1-4443-8CF2-ED9EC71A1FFA}</Project>
+      <Name>Common</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
