@@ -525,14 +525,17 @@ namespace CookComputing.XmlRpc
       }
       else if (node is XmlText)
       {
-        if (valType != null && valType != typeof(string))
+        if (valType != null && valType != typeof(string) && !IsIntType(valType))
         {
           throw new XmlRpcTypeMismatchException(parseStack.ParseType 
             + " contains implicit string value where " 
             + XmlRpcServiceInfo.GetXmlRpcTypeString(valType) 
             + " expected " + StackDump(parseStack));
         }
-        retObj = node.Value;
+        if (IsIntType(valType))
+          retObj = StringAsInt(node.Value, valType);
+        else
+          retObj = node.Value;
       }
       else 
       {
@@ -1026,7 +1029,10 @@ namespace CookComputing.XmlRpc
       ParseStack parseStack,
       MappingAction mappingAction)
     {
-      if (ValueType != null && ValueType != typeof(System.String) && ValueType != typeof(Object))
+      // some servers send an int member as <string>, ParseInt above is lenient
+      // in the other direction
+      if (ValueType != null && ValueType != typeof(System.String) && ValueType != typeof(Object)
+        && ValueType != typeof(System.Int32) && ValueType != typeof(XmlRpcInt))
       {
         throw new XmlRpcTypeMismatchException(parseStack.ParseType 
           + " contains string value where " 
@@ -1042,7 +1048,33 @@ namespace CookComputing.XmlRpc
       parseStack.Pop();
       if (m_decoding != null)
       	ret = m_decoding.GetString((new UTF8Encoding()).GetBytes(ret));
+      if (IsIntType(ValueType))
+        return StringAsInt(ret, ValueType);
       return ret;
+    }
+
+    static bool IsIntType(Type ValueType)
+    {
+      return ValueType == typeof(System.Int32) || ValueType == typeof(XmlRpcInt);
+    }
+
+    // an empty or malformed value becomes 0
+    static Object StringAsInt(string value, Type ValueType)
+    {
+      int retVal = 0;
+      // no Int32.TryParse, the 2003 solution targets .NET 1.1
+      try
+      {
+        if (value != null && value.Trim().Length > 0)
+          retVal = Int32.Parse(value.Trim());
+      }
+      catch(Exception)
+      {
+        retVal = 0;
+      }
+      if (ValueType == typeof(XmlRpcInt))
+        return new XmlRpcInt(retVal);
+      return retVal;
     }
 
     Object ParseBoolean(
