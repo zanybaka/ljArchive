@@ -1,0 +1,36 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: microsoft/setup-msbuild@v2
+
+      # the project files predate TargetFrameworkVersion, so pin it here
+      # instead of editing nine csproj files
+      - name: Build Release
+        run: >
+          msbuild ljArchive\ljArchive.2019.sln
+          /p:Configuration=Release
+          /p:Platform="Any CPU"
+          /p:TargetFrameworkVersion=v4.8
+          /verbosity:minimal
+          /maxcpucount
+
+      - name: Show what was built
+        run: dir /s /b ljArchive\bin\Release
+        shell: cmd
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ljArchive-release
+          path: ljArchive/bin/Release
+          if-no-files-found: error
