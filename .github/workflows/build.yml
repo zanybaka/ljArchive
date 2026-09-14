@@ -34,3 +34,9 @@ jobs:
           name: ljArchive-release
           path: ljArchive/bin/Release
           if-no-files-found: error
+
+      # files unpacked from a downloaded zip carry the Internet zone mark,
+      # the application has to start anyway (#2)
+      - name: Launch with the Internet zone mark
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File .github\scripts\smoke.ps1 -Dir ljArchive\bin\Release -Expect ok
+        shell: cmd
