@@ -25,6 +25,11 @@ jobs:
           /verbosity:minimal
           /maxcpucount
 
+      # the installer takes the templates from etc, the zip needs them next to the exe too
+      - name: Add templates
+        run: xcopy /I /Y ljArchive\etc\templates ljArchive\bin\Release\templates
+        shell: cmd
+
       - name: Show what was built
         run: dir /s /b ljArchive\bin\Release
         shell: cmd
@@ -34,3 +39,9 @@ jobs:
           name: ljArchive-release
           path: ljArchive/bin/Release
           if-no-files-found: error
+
+      # files unpacked from a downloaded zip carry the Internet zone mark,
+      # the application has to start anyway (#2)
+      - name: Launch with the Internet zone mark
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File .github\scripts\smoke.ps1 -Dir ljArchive\bin\Release -Expect ok
+        shell: cmd

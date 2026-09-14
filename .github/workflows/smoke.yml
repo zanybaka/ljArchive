@@ -1,0 +1,58 @@
+name: smoke
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/smoke.yml
+      - .github/scripts/smoke.ps1
+
+# launch the published builds the way the reporter of #2 did, with the Internet
+# zone mark on every file: 0.9.7.1 has to fail as in the report, the same files
+# with the new config have to start, 0.9.7.2 has to start. The unmarked run
+# shows the runner can run the application at all
+jobs:
+  launch:
+    name: ${{ matrix.name }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: 0.9.7.2 unmarked
+            tag: v0.9.7.2
+            zone: none
+            expect: ok
+          - name: 0.9.7.1 marked
+            tag: v0.9.7.1
+            zone: internet
+            expect: error
+          - name: 0.9.7.1 marked with the new config
+            tag: v0.9.7.1
+            zone: internet
+            config: checkout
+            expect: ok
+          - name: 0.9.7.2 marked
+            tag: v0.9.7.2
+            zone: internet
+            expect: ok
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download ${{ matrix.tag }}
+        run: gh release download ${{ matrix.tag }} --pattern "*.zip" --output release.zip
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Unpack
+        run: Expand-Archive release.zip -DestinationPath release
+        shell: powershell
+
+      - name: Add the config from the checkout
+        if: matrix.config == 'checkout'
+        run: Copy-Item ljArchive\WindowsForms\App.config release\ljArchive.exe.config
+        shell: powershell
+
+      - name: Launch
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File .github\scripts\smoke.ps1 -Dir release -Expect ${{ matrix.expect }} -Zone ${{ matrix.zone }}
+        shell: cmd
