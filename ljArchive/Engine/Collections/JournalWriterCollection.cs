@@ -45,6 +45,7 @@ namespace EF.ljArchive.Engine.Collections
 				}
 				catch (System.BadImageFormatException) {}
 				catch (System.IO.FileNotFoundException) {}
+				catch (System.IO.FileLoadException) {}
 				catch (System.Reflection.ReflectionTypeLoadException) {}
 			}
 		}
